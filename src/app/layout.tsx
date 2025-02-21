@@ -52,7 +52,7 @@ export default function RootLayout({
 						<Grid
 							templateColumns="repeat(6, 1fr)"
 							gap={4}
-							display={{ lgDown: "none", md: "grid" }}
+							hideBelow="lg"
 						>
 							<GridItem
 								colSpan={1}
@@ -65,7 +65,7 @@ export default function RootLayout({
 							</GridItem>
 							<GridItem colSpan={5}>{children}</GridItem>
 						</Grid>
-						<VStack display={{ lgDown: "block", md: "none" }}>
+						<VStack hideFrom="lg">
 							<HStack overflowX="auto">
 								<Links />
 							</HStack>

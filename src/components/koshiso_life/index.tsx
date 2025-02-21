@@ -74,7 +74,7 @@ function SwitchButtons({
 					color="white"
 					hideBelow="md"
 				>
-					<Highlight query="スペシャリスト">スペシャリストを目指そう</Highlight>
+					<Highlight query="スペシャリスト" styles={{ color: "green.200" }}>スペシャリストを目指そう</Highlight>
 				</Heading>
 				<Heading
 					size="4xl"
@@ -82,7 +82,7 @@ function SwitchButtons({
 					hideFrom="md"
 					whiteSpace="pre-line"
 				>
-					<Highlight query="スペシャリスト">
+					<Highlight query="スペシャリスト" styles={{ color: "green.fg" }}>
 						{"スペシャリストを\n目指そう"}
 					</Highlight>
 				</Heading>
