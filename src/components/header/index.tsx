@@ -3,15 +3,15 @@ import {
 	Button,
 	Container,
 	Flex,
-	Heading,
 	HStack,
+	Heading,
 	Link,
 	VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { Links } from "./links";
 import type React from "react";
 import { ColorMode } from "./color_mode";
+import { Links } from "./links";
 
 export default function Header() {
 	return (

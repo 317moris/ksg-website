@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": ["./src/components/ui/*", "./public/*"]
+		"ignore": ["./src/components/ui/*", "./public/*", ".next/*"]
 	},
 	"formatter": {
 		"enabled": true,

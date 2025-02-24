@@ -1,21 +1,21 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import {
 	Bleed,
 	EmptyState,
 	Flex,
+	HStack,
 	Heading,
 	Highlight,
-	HStack,
 	IconButton,
 	Show,
 	VStack,
 } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaXmark } from "react-icons/fa6";
-import { ExistsImage } from "./fetch";
 import { PaginationItems, PaginationRoot } from "../ui/pagination";
 import { Switch } from "../ui/switch";
+import { ExistsImage } from "./fetch";
 
 interface SwitchButtonsProps {
 	imageExists: boolean;
@@ -74,7 +74,9 @@ function SwitchButtons({
 					color="white"
 					hideBelow="md"
 				>
-					<Highlight query="スペシャリスト" styles={{ color: "green.200" }}>スペシャリストを目指そう</Highlight>
+					<Highlight query="スペシャリスト" styles={{ color: "green.200" }}>
+						スペシャリストを目指そう
+					</Highlight>
 				</Heading>
 				<Heading
 					size="4xl"

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
+import { Links } from "@/components/header/links";
 import { SideBar } from "@/components/sidebar";
 import {
 	Box,
@@ -14,7 +15,6 @@ import {
 	Show,
 	VStack,
 } from "@chakra-ui/react";
-import { Links } from "@/components/header/links";
 
 const inter = Inter({
 	variable: "--font-inter",
@@ -49,11 +49,7 @@ export default function RootLayout({
 				<Provider>
 					<Header />
 					<Container maxW="8xl" mt={4}>
-						<Grid
-							templateColumns="repeat(6, 1fr)"
-							gap={4}
-							hideBelow="lg"
-						>
+						<Grid templateColumns="repeat(6, 1fr)" gap={4} hideBelow="lg">
 							<GridItem
 								colSpan={1}
 								pos="sticky"

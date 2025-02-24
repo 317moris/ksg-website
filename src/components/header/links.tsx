@@ -1,9 +1,9 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { links } from "./links_data";
 import { Button } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { usePathname } from "next/navigation";
+import { links } from "./links_data";
 
 export function Links() {
 	const path = usePathname();
