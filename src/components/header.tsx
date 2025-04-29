@@ -1,39 +1,60 @@
 import {
 	Box,
-	Button,
+	ClientOnly,
 	Container,
 	Flex,
 	HStack,
+	IconButton,
 	Image,
 	Link,
-	Text,
 } from "@chakra-ui/react";
-import { ColorModeButton } from "./ui/color-mode-custom";
 import NextImage from "next/image";
+import NextLink from "next/link";
+import { FaList } from "react-icons/fa6";
 import { Pages } from "./pages";
+import { ColorModeButton } from "./ui/color-mode-custom";
 
 export function Header() {
+	const kosho = (
+		<Image asChild boxSize={9} rounded="full">
+			<NextImage src="/icon/kosho.png" alt="校章" width={600} height={600} />
+		</Image>
+	);
+
+	const home = (
+		<Link asChild fontWeight="bold">
+			<NextLink href="/">
+				<HStack>
+					{kosho}
+					<Box hideBelow="lg">埼玉県立越谷総合技術高等学校</Box>
+				</HStack>
+			</NextLink>
+		</Link>
+	);
+
 	return (
-		<Box borderBottomWidth={1} as="header">
+		<Box
+			borderBottomWidth={1}
+			as="header"
+			pos="sticky"
+			zIndex="docked"
+			top={0}
+			bg="bg"
+		>
 			<Container maxW="8xl">
 				<Flex align="center" justify="space-between" py={2}>
-					<HStack>
-						<Link asChild fontWeight="bold">
+					<IconButton variant="ghost" hideFrom="md">
+						<FaList />
+					</IconButton>
+					<Box hideFrom="md">{home}</Box>
+					<HStack hideBelow="md" gap={4}>
+						{home}
+						<ClientOnly>
 							<HStack>
-								<Image asChild boxSize={6} rounded="full">
-									<NextImage
-										src="/icon/kosho.png"
-										alt="校章"
-										width={80}
-										height={80}
-									/>
-								</Image>
-								越谷総合技術高校
+								<Pages />
 							</HStack>
-						</Link>
-						<Pages />
+						</ClientOnly>
 					</HStack>
-
 					<ColorModeButton />
 				</Flex>
 			</Container>

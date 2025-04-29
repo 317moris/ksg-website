@@ -1,31 +1,13 @@
 "use client";
 
-import { Button, Menu, Portal } from "@chakra-ui/react";
-import { usePathname } from "next/navigation";
-import type { IconType } from "react-icons";
-import {
-	FaCalendar,
-	FaCheck,
-	FaGlasses,
-	FaInfo,
-	FaMicrochip,
-	FaPlug,
-	FaReceipt,
-	FaUtensils,
-} from "react-icons/fa6";
+import { courses } from "@/const/course";
+import type { PageProps } from "@/interfaces/pages";
+import { Button, type ButtonProps, Menu, Portal } from "@chakra-ui/react";
 import NextLink from "next/link";
-
-type PageProps = {
-	name: string;
-	description: string;
-	href: string;
-	icon: IconType;
-	children?: {
-		name: string;
-		href: string;
-		icon: IconType;
-	}[];
-};
+import { usePathname } from "next/navigation";
+import { useId } from "react";
+import { FaCalendar, FaInfo, FaRoad } from "react-icons/fa6";
+import { Tooltip } from "./ui/tooltip";
 
 const pages: PageProps[] = [
 	{
@@ -44,39 +26,14 @@ const pages: PageProps[] = [
 		name: "学科",
 		description: "各学科の詳細",
 		href: "/course",
-		icon: FaInfo,
-		children: [
-			{
-				name: "情報技術科",
-				href: "info-tech",
-				icon: FaMicrochip,
-			},
-			{
-				name: "情報処理科",
-				href: "info-processing",
-				icon: FaReceipt,
-			},
-			{
-				name: "食物調理科",
-				href: "culinary",
-				icon: FaUtensils,
-			},
-			{
-				name: "服飾デザイン科",
-				href: "fashion-design",
-				icon: FaGlasses,
-			},
-			{
-				name: "電子機械科",
-				href: "electro-mechanics",
-				icon: FaPlug,
-			},
-		],
+		icon: FaRoad,
+		children: courses,
 	},
 ];
 
-export function Pages() {
+export function Pages(props: ButtonProps) {
 	const path = usePathname();
+	const triggerId = useId();
 
 	return pages.map((page) => {
 		let isActive = false;
@@ -86,67 +43,88 @@ export function Pages() {
 		)
 			isActive = true;
 
-		if (page.children)
+		if (page.children && isActive) {
 			return (
-				<Menu.Root key={page.name}>
-					<Menu.Trigger asChild>
-						<Button
-							key={page.name}
-							variant={isActive ? "subtle" : "ghost"}
-							color={isActive ? "fg" : "fg.subtle"}
-						>
-							<page.icon />
-							{page.name}
-						</Button>
-					</Menu.Trigger>
+				<Menu.Root key={page.name} ids={{ trigger: triggerId }}>
+					<Tooltip
+						content={page.description}
+						showArrow
+						ids={{ trigger: triggerId }}
+					>
+						<Menu.Trigger asChild>
+							<Button
+								key={page.name}
+								variant={isActive ? "subtle" : "outline"}
+								color={isActive ? "fg" : "fg.subtle"}
+								{...props}
+							>
+								<page.icon />
+								{page.name}
+							</Button>
+						</Menu.Trigger>
+					</Tooltip>
 					<Portal>
 						<Menu.Positioner>
 							<Menu.Content>
-								<Menu.RadioItemGroup value={path}>
-									{page.children.map((child) => {
-										let isActiveChild = false;
-										const childPath = `${page.href}/${child.href}`;
+								{page.children.map((child) => {
+									let isActiveChild = false;
+									const childPath = `${page.href}/${child.href}`;
 
-										console.log(childPath, path);
-										if (
-											childPath === path ||
-											(childPath !== "/" && path.split("/")[2] === childPath)
-										)
-											isActiveChild = true;
+									if (
+										childPath === path ||
+										(childPath !== "/" && path.split("/")[2] === childPath)
+									)
+										isActiveChild = true;
 
-										return (
-											<Menu.RadioItem
-												color={isActiveChild ? "fg" : "fg.muted"}
+									return (
+										<Tooltip
+											key={child.name}
+											positioning={{
+												placement: "right",
+											}}
+											showArrow
+											content={child.excerpt}
+										>
+											<Menu.Item
+												color={
+													isActiveChild
+														? child.color
+															? `${child.color}.fg`
+															: "fg"
+														: "fg.muted"
+												}
 												borderWidth={isActiveChild ? 1 : 0}
 												asChild
-												key={child.name}
 												value={childPath}
 											>
 												<NextLink href={`${page.href}/${child.href}`}>
-													<Menu.ItemIndicator />
+													<child.icon />
 													{child.name}
 												</NextLink>
-											</Menu.RadioItem>
-										);
-									})}
-								</Menu.RadioItemGroup>
+											</Menu.Item>
+										</Tooltip>
+									);
+								})}
 							</Menu.Content>
 						</Menu.Positioner>
 					</Portal>
 				</Menu.Root>
 			);
+		}
 
 		return (
-			<Button
-				key={page.name}
-				variant={isActive ? "subtle" : "ghost"}
-				asChild
-				color={isActive ? "fg" : "fg.subtle"}
-			>
-				<NextLink href={page.href}>
-					<page.icon /> {page.name}
-				</NextLink>
-			</Button>
+			<Tooltip key={page.name} content={page.description} showArrow>
+				<Button
+					variant={isActive ? "subtle" : "outline"}
+					asChild
+					color={isActive ? "fg" : "fg.subtle"}
+					{...props}
+				>
+					<NextLink href={page.href}>
+						<page.icon /> {page.name}
+					</NextLink>
+				</Button>
+			</Tooltip>
 		);
 	});
 }
