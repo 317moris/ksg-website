@@ -1,6 +1,6 @@
 import { Prose } from "@/components/ui/prose-custom";
 import type { Params } from "@/interfaces/params";
-import { getPostBySlug } from "@/lib/api";
+import { getAllPosts, getPostBySlug } from "@/lib/api";
 import { Container, Image } from "@chakra-ui/react";
 import NextImage from "next/image";
 import { notFound } from "next/navigation";
@@ -31,4 +31,12 @@ export default async function Page(props: Params) {
 			</Prose>
 		</Container>
 	);
+}
+
+export async function generateStaticParams() {
+	const posts = await getAllPosts();
+
+	return posts.map((post) => ({
+		slug: post.slug,
+	}));
 }
