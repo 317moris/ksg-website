@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
-import { Provider } from "@/components/ui/provider";
 import { Header } from "@/components/header";
+import { Provider } from "@/components/ui/provider-custom";
 
 const inter = Inter({
 	variable: "--font-inter",
@@ -22,7 +22,15 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
 	title: "KSG",
 	description: "埼玉県立越谷総合技術高等学校",
-	icons: "/icon/kosho.png"
+	icons: {
+		icon: [
+			{ url: "/icon/kosho_orig.png" },
+			{
+				url: "/icon/kosho_orig_white.png",
+				media: "(prefers-color-scheme: dark)",
+			},
+		],
+	},
 };
 
 export default function RootLayout({
