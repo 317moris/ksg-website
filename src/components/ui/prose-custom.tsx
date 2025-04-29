@@ -5,7 +5,6 @@ import { chakra } from "@chakra-ui/react";
 export const Prose = chakra("div", {
 	base: {
 		color: "fg.muted",
-		maxWidth: "65ch",
 		fontSize: "sm",
 		lineHeight: "1.7em",
 		"& p": {
@@ -19,7 +18,7 @@ export const Prose = chakra("div", {
 			borderInlineStartWidth: "0.25em",
 		},
 		"& a": {
-			color: "fg",
+			color: "green.fg",
 			textDecoration: "underline",
 			textUnderlineOffset: "3px",
 			textDecorationThickness: "2px",
