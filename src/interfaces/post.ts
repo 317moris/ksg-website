@@ -1,11 +1,23 @@
-import type { Author } from "./author";
-
 export type Post = {
-	slug: string;
+	id: string;
+	createdAt: string;
+	publishedAt: string;
+	revisedAt: string;
 	title: string;
-	description: string;
-	date: Date;
-	coverImage: string;
-	author: Author;
 	content: string;
+	category: {
+		id: string;
+		createdAt: string;
+		updatedAt: string;
+		publishedAt: string;
+		revisedAt: string;
+		name: string;
+	};
+};
+
+export type Posts = {
+	contents: Post[];
+	totalCount: number;
+	offset: number;
+	limit: number;
 };

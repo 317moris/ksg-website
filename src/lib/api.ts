@@ -1,32 +1,16 @@
-import fs from "node:fs/promises";
-import { join } from "node:path";
-import type { Post } from "@/interfaces/post";
-import matter from "gray-matter";
+"use server";
 
-const newsDir = join(process.cwd(), "_news");
-
-export async function getPostSlugs() {
-	return await fs.readdir(newsDir);
-}
+import type { Post, Posts } from "@/interfaces/post";
+import { cmsClient } from "./microcms";
 
 export async function getPostBySlug(slug: string) {
-	const realSlug = slug.replace(/\.md$/, "");
-	const fullPath = join(newsDir, `${realSlug}.md`);
-	const { data, content } = matter(await fs.readFile(fullPath, "utf-8"));
-	data.date = new Date(data.date);
+	const post: Post = await cmsClient.get({ endpoint: "news", contentId: slug });
 
-	return {
-		...data,
-		slug: realSlug,
-		content,
-	} as Post;
+	return post;
 }
 
 export async function getAllPosts() {
-	const slugs = await getPostSlugs();
-	const posts = (
-		await Promise.all(slugs.map((slug) => getPostBySlug(slug)))
-	).sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+	const posts: Posts = await cmsClient.get({ endpoint: "news" });
 
 	return posts;
 }

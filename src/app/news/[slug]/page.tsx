@@ -1,12 +1,8 @@
-import { Prose } from "@/components/ui/prose-custom";
+import { Prose } from "@/components/ui/prose";
 import type { Params } from "@/interfaces/params";
 import { getAllPosts, getPostBySlug } from "@/lib/api";
-import { Container, Image } from "@chakra-ui/react";
-import NextImage from "next/image";
+import { Container } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import remarkRehype from "remark-rehype";
 
 export default async function Page(props: Params) {
 	const params = await props.params;
@@ -16,19 +12,16 @@ export default async function Page(props: Params) {
 
 	return (
 		<Container as="main" maxW="4xl">
-			<Image asChild w="full" rounded="lg">
+			{/* <Image asChild w="full" rounded="lg">
 				<NextImage
 					src={post.coverImage}
 					alt={post.title}
 					width={1280}
 					height={720}
 				/>
-			</Image>
-			<Prose>
-				<Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[remarkRehype]}>
-					{post.content}
-				</Markdown>
-			</Prose>
+			</Image> */}
+			{/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+			<Prose dangerouslySetInnerHTML={{ __html: post.content }} />
 		</Container>
 	);
 }
@@ -36,7 +29,7 @@ export default async function Page(props: Params) {
 export async function generateStaticParams() {
 	const posts = await getAllPosts();
 
-	return posts.map((post) => ({
-		slug: post.slug,
+	return posts.contents.map((post) => ({
+		slug: post.id,
 	}));
 }
