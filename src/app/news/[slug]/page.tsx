@@ -1,10 +1,10 @@
 import { Prose } from "@/components/ui/prose";
-import { customRequestInit } from "@/const/cmsclient-requestinit";
 import type { Params } from "@/interfaces/params";
 import { getPostBySlug } from "@/lib/api";
-import { cmsClient } from "@/lib/microcms";
 import { Container } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
+
+export const runtime = "edge";
 
 export default async function Page(props: Params) {
 	const params = await props.params;
@@ -26,15 +26,4 @@ export default async function Page(props: Params) {
 			<Prose dangerouslySetInnerHTML={{ __html: post.content }} />
 		</Container>
 	);
-}
-
-export async function generateStaticParams() {
-	const ids = await cmsClient.getAllContentIds({
-		endpoint: "news",
-		customRequestInit,
-	});
-
-	return ids.map((id) => ({
-		slug: id,
-	}));
 }
