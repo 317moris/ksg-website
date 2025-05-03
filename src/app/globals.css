@@ -1,8 +1,0 @@
-:root {
-	--main-font: var(--font-inter), var(--font-noto-sans-jp), sans-serif;
-	--code-font: var(--font-jetbrains-mono), monospace;
-
-	--chakra-fonts-body: var(--main-font);
-	--chakra-fonts-heading: var(--main-font);
-	--chakra-fonts-mono: var(--code-font);
-}

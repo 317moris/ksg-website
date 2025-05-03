@@ -1,35 +1,31 @@
-import {
-	createSystem,
-	defaultBaseConfig,
-	defineConfig,
-} from "@chakra-ui/react";
-import { animationStyles } from "./animation-styles";
-import { breakpoints } from "./breakpoints";
-import { globalCss } from "./global-css";
-import { keyframes } from "./keyframes";
-import { layerStyles } from "./layer-styles";
+import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+// import { animationStyles } from "./animation-styles";
+// import { breakpoints } from "./breakpoints";
+// import { globalCss } from "./global-css";
+// import { keyframes } from "./keyframes";
+// import { layerStyles } from "./layer-styles";
 import { recipes } from "./recipes";
-import { semanticTokens } from "./semantic-tokens";
-import { slotRecipes } from "./slot-recipes";
-import { textStyles } from "./text-styles";
+// import { semanticTokens } from "./semantic-tokens";
+// import { slotRecipes } from "./slot-recipes";
+// import { textStyles } from "./text-styles";
 import { tokens } from "./tokens";
 
 const themeConfig = defineConfig({
-	preflight: true,
-	cssVarsPrefix: "chakra",
-	cssVarsRoot: ":where(:root, :host)",
-	globalCss,
+	// preflight: true,
+	// cssVarsPrefix: "chakra",
+	// cssVarsRoot: ":where(:root, :host)",
+	// globalCss,
 	theme: {
-		breakpoints,
-		keyframes,
+		// breakpoints,
+		// keyframes,
 		tokens,
-		semanticTokens,
+		// semanticTokens,
 		recipes,
-		slotRecipes,
-		textStyles,
-		layerStyles,
-		animationStyles,
+		// slotRecipes,
+		// textStyles,
+		// layerStyles,
+		// animationStyles,
 	},
 });
 
-export const system = createSystem(defaultBaseConfig, themeConfig);
+export const system = createSystem(defaultConfig, themeConfig);
