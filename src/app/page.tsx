@@ -9,6 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
 	return (
 		<Container as="main" maxW="8xl">
