@@ -1,16 +1,13 @@
 "use server";
 
+import { customRequestInit } from "@/const/cmsclient-requestinit";
 import type { Post, Posts } from "@/interfaces/post";
 import { cmsClient } from "./microcms";
 
 export async function getPostBySlug(slug: string) {
 	const post: Post = await cmsClient.get({
 		endpoint: "news",
-		customRequestInit: {
-			next: {
-				revalidate: 60,
-			},
-		},
+		customRequestInit,
 		contentId: slug,
 	});
 
@@ -20,11 +17,7 @@ export async function getPostBySlug(slug: string) {
 export async function getAllPosts() {
 	const posts: Posts = await cmsClient.get({
 		endpoint: "news",
-		customRequestInit: {
-			next: {
-				revalidate: 60,
-			},
-		},
+		customRequestInit,
 	});
 
 	return posts;

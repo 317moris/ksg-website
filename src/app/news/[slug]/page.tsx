@@ -1,6 +1,8 @@
 import { Prose } from "@/components/ui/prose";
+import { customRequestInit } from "@/const/cmsclient-requestinit";
 import type { Params } from "@/interfaces/params";
-import { getAllPosts, getPostBySlug } from "@/lib/api";
+import { getPostBySlug } from "@/lib/api";
+import { cmsClient } from "@/lib/microcms";
 import { Container } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
@@ -27,9 +29,12 @@ export default async function Page(props: Params) {
 }
 
 export async function generateStaticParams() {
-	const posts = await getAllPosts();
+	const ids = await cmsClient.getAllContentIds({
+		endpoint: "news",
+		customRequestInit,
+	});
 
-	return posts.contents.map((post) => ({
-		slug: post.id,
+	return ids.map((id) => ({
+		slug: id,
 	}));
 }
