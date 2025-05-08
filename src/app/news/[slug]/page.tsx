@@ -1,8 +1,9 @@
 import { Prose } from "@/components/ui/prose";
 import type { Params } from "@/interfaces/params";
 import { getPostBySlug } from "@/lib/api";
-import { Container } from "@chakra-ui/react";
+import { Container, Image } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
+import NextImage from "next/image";
 
 export default async function Page(props: Params) {
 	const params = await props.params;
@@ -12,14 +13,16 @@ export default async function Page(props: Params) {
 
 	return (
 		<Container as="main" maxW="4xl">
-			{/* <Image asChild w="full" rounded="lg">
-				<NextImage
-					src={post.coverImage}
-					alt={post.title}
-					width={1280}
-					height={720}
-				/>
-			</Image> */}
+			{post.coverImage ? (
+				<Image asChild w="full" rounded="lg">
+					<NextImage
+						src={post.coverImage.url}
+						alt={post.title}
+						width={post.coverImage.width}
+						height={post.coverImage.height}
+					/>
+				</Image>
+			) : null}
 			{/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
 			<Prose dangerouslySetInnerHTML={{ __html: post.content }} />
 		</Container>

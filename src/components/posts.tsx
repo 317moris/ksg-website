@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { DateFormatter } from "./date-formatter";
-import { Prose } from "./ui/prose";
 
 export default async function Posts() {
 	const posts = await getAllPosts();
@@ -31,13 +30,7 @@ export default async function Posts() {
 								</LinkOverlay>
 							</Card.Title>
 						</Card.Header>
-						<Card.Body>
-							<Prose
-								size="md"
-								/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */
-								dangerouslySetInnerHTML={{ __html: post.content }}
-							/>
-						</Card.Body>
+						{post.subtitle ? <Card.Body>{post.subtitle}</Card.Body> : null}
 					</Card.Root>
 				</LinkBox>
 			)}
