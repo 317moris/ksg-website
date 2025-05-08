@@ -4,8 +4,6 @@ import { getPostBySlug } from "@/lib/api";
 import { Container } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
-export const runtime = "edge";
-
 export default async function Page(props: Params) {
 	const params = await props.params;
 	const post = await getPostBySlug(params.slug);
