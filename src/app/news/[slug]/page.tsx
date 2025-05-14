@@ -2,8 +2,8 @@ import { Prose } from "@/components/ui/prose";
 import type { Params } from "@/interfaces/params";
 import { getPostBySlug } from "@/lib/api";
 import { Container, Image } from "@chakra-ui/react";
-import { notFound } from "next/navigation";
 import NextImage from "next/image";
+import { notFound } from "next/navigation";
 
 export default async function Page(props: Params) {
 	const params = await props.params;
@@ -27,4 +27,8 @@ export default async function Page(props: Params) {
 			<Prose dangerouslySetInnerHTML={{ __html: post.content }} />
 		</Container>
 	);
+}
+
+export function generateStaticParams() {
+	return [];
 }

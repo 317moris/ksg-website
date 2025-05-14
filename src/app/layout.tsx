@@ -3,8 +3,6 @@ import { Provider } from "@/components/ui/provider";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Noto_Sans_JP } from "next/font/google";
 
-export const runtime = "edge";
-
 const inter = Inter({
 	variable: "--font-inter",
 	subsets: ["latin"],
