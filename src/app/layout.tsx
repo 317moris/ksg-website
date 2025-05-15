@@ -21,15 +21,7 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
 	title: "KSG",
 	description: "埼玉県立越谷総合技術高等学校",
-	icons: {
-		icon: [
-			{ url: "/icon/kosho_orig.png" },
-			{
-				url: "/icon/kosho_orig_white.png",
-				media: "(prefers-color-scheme: dark)",
-			},
-		],
-	},
+	icons: "/icon/kosho_rounded.png",
 };
 
 export default function RootLayout({

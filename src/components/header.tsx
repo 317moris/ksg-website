@@ -7,6 +7,7 @@ import {
 	IconButton,
 	Image,
 	Link,
+	StackSeparator,
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
@@ -30,7 +31,7 @@ export function Header() {
 					<IconButton variant="ghost" hideFrom="md">
 						<FaList />
 					</IconButton>
-					<HStack hideBelow="md" gap={4}>
+					<HStack hideBelow="md" gap={4} separator={<StackSeparator />}>
 						<Link asChild fontWeight="bold">
 							<NextLink href="/">
 								<HStack>
