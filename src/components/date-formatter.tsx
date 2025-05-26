@@ -29,9 +29,9 @@ export function DateFormatter({ date }: { date: string }) {
 	} else if (daysDiff <= 3) {
 		formattedDate = `${daysDiff}日前`;
 	} else if (parsedDate.getFullYear() === now.getFullYear()) {
-		formattedDate = format(parsedDate, "MM/dd");
+		formattedDate = format(parsedDate, "M月d日");
 	} else {
-		formattedDate = format(parsedDate, "yyyy/MM/dd");
+		formattedDate = format(parsedDate, "yyyy月M日d");
 	}
 
 	return <time>{formattedDate}</time>;
