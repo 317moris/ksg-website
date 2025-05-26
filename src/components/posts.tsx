@@ -18,7 +18,7 @@ export default async function Posts() {
 			{(post) => (
 				<LinkBox key={post.id}>
 					<Card.Root maxH="xs" overflowY="clip">
-						<Card.Header>
+						<Card.Body>
 							<ClientOnly>
 								<Text color="fg.muted" fontFamily="mono">
 									<DateFormatter date={post.createdAt} />
@@ -29,8 +29,10 @@ export default async function Posts() {
 									<NextLink href={`/news/${post.id}`}>{post.title}</NextLink>
 								</LinkOverlay>
 							</Card.Title>
-						</Card.Header>
-						{post.subtitle ? <Card.Body>{post.subtitle}</Card.Body> : null}
+							{post.subtitle ? (
+								<Card.Description>{post.subtitle}</Card.Description>
+							) : null}
+						</Card.Body>
 					</Card.Root>
 				</LinkBox>
 			)}

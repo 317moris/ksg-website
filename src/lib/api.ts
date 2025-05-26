@@ -6,7 +6,7 @@ export async function getAllPosts() {
 	const posts: MicroCMSListResponse<Post> = await cmsClient.getList({
 		endpoint: "news",
 		queries: {
-			fields: "id,title,subtitle",
+			fields: "id,title,subtitle,createdAt",
 		},
 		customRequestInit: {
 			next: {
