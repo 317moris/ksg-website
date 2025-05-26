@@ -1,7 +1,7 @@
 "use client";
 
 import { courses } from "@/const/course";
-import type { PageProps } from "@/interfaces/pages";
+import type { PageChildrenProps, PageProps } from "@/interfaces/pages";
 import { Button, HStack, Menu, Portal } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,6 +19,7 @@ import {
 	FaGraduationCap,
 	FaHand,
 	FaHandPointUp,
+	FaHouse,
 	FaInfo,
 	FaLocationPin,
 	FaPenFancy,
@@ -145,7 +146,7 @@ export function Pages({
 			return (
 				<Button
 					key={page.name}
-					variant={isActive ? "subtle" : "outline"}
+					variant={isActive ? "surface" : "outline"}
 					asChild
 					color={isActive ? "green.fg" : "fg.subtle"}
 					justifyContent={drawer ? "space-between" : "center"}
@@ -162,6 +163,15 @@ export function Pages({
 
 		if (!page.children) return;
 
+		let children: PageChildrenProps[];
+		if (page.hasHome) {
+			children = [{ name: "トップ", href: "", icon: FaHouse }].concat(
+				page.children,
+			);
+		} else {
+			children = page.children;
+		}
+
 		return (
 			<Menu.Root
 				key={page.name}
@@ -170,7 +180,7 @@ export function Pages({
 				<Menu.Trigger asChild>
 					<Button
 						key={page.name}
-						variant={isActive ? "subtle" : "outline"}
+						variant={isActive ? "surface" : "outline"}
 						color={isActive ? "green.fg" : "fg.subtle"}
 						justifyContent={drawer ? "space-between" : "center"}
 					>
@@ -184,7 +194,7 @@ export function Pages({
 				<Portal container={contentRef}>
 					<Menu.Positioner>
 						<Menu.Content>
-							{page.children.map((child) => {
+							{children.map((child) => {
 								let isActiveChild = false;
 								const childPath = `${page.href}/${child.href}`;
 
