@@ -27,7 +27,9 @@ export function Header() {
 		>
 			<Container maxW="8xl">
 				<Flex align="center" justify="space-between" py={2}>
-					<HeaderDrawer />
+					<ClientOnly fallback={<Skeleton boxSize="10" />}>
+						<HeaderDrawer />
+					</ClientOnly>
 					<HStack hideBelow="lg" gap={4} separator={<StackSeparator />}>
 						<Link asChild fontWeight="bold">
 							<NextLink href="/">
