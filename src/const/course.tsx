@@ -1,5 +1,13 @@
 import type { CourseProps } from "@/interfaces/pages";
 import {
+	DotGothic16,
+	IBM_Plex_Sans_JP,
+	Kaisei_Decol,
+	Klee_One,
+	Noto_Sans_JP,
+	Zen_Kurenaido,
+} from "next/font/google";
+import {
 	FaBriefcase,
 	FaGlasses,
 	FaMicrochip,
@@ -8,53 +16,116 @@ import {
 	FaUtensils,
 } from "react-icons/fa6";
 
+const dotGothic16 = DotGothic16({
+	subsets: ["latin"],
+	weight: ["400"],
+	variable: "--font-dot-gothic-16",
+});
+const notoSansJP = Noto_Sans_JP({
+	subsets: ["latin"],
+	variable: "--font-noto-sans-jp",
+});
+const kleeOne = Klee_One({
+	subsets: ["latin"],
+	variable: "--font-klee-one",
+	weight: ["400", "600"],
+});
+const ibmPlexSansJP = IBM_Plex_Sans_JP({
+	subsets: ["latin"],
+	variable: "--font-ibm-plex-sans-jp",
+	weight: ["400", "600"],
+});
+const kaiseiDecol = Kaisei_Decol({
+	subsets: ["latin"],
+	variable: "--font-kaisei-decol",
+	weight: ["400", "700"],
+});
+const zenKurenaido = Zen_Kurenaido({
+	subsets: ["latin"],
+	variable: "--font-zen-kurenaido",
+	weight: ["400"],
+});
+
+const fonts = {
+	dotGothic16: {
+		font: dotGothic16,
+		variable: "--font-dot-gothic-16",
+	},
+	notoSansJP: {
+		font: notoSansJP,
+		variable: "--font-noto-sans-jp",
+	},
+	kleeOne: {
+		font: kleeOne,
+		variable: "--font-klee-one",
+	},
+	ibmPlexSansJP: {
+		font: ibmPlexSansJP,
+		variable: "--font-ibm-plex-sans-jp",
+	},
+	kaiseiDecol: {
+		font: kaiseiDecol,
+		variable: "--font-kaisei-decol",
+	},
+	zenKurenaido: {
+		font: zenKurenaido,
+		variable: "--font-zen-kurenaido",
+	},
+};
+
 export const courses: CourseProps[] = [
 	{
 		name: "電子機械科",
-		description:
-			"ハイテク時代の産業を支えている各種ロボットやコンピュータ制御の工作機械などを理解するために、基礎・基本から応用まで幅広く学び、将来の産業界を担う創造性豊かな輝ける技術者を育成します。",
+		description: "各種ロボットやコンピュータ制御の工作機械",
 		href: "electro-mechanics",
 		icon: FaPlug,
 		color: "blue",
+		coverImage: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/95/65/big",
+		font: fonts.dotGothic16,
 	},
 	{
 		name: "情報技術科",
-		description:
-			"コンピュータの仕組み「ハードウェア」やプログラミング「ソフトウェア」さらに「ネットワーク」を柱として学習します。\n本校情報技術科は一部の大学や専門学校でしか認められていない、情報処理技術者試験（経済産業省）の基本情報技術者試験における埼玉県立高校唯一の午前試験免除校です。",
+		description: "ハードウェア、ソフトウェア、ネットワーク",
 		href: "information-technology",
 		icon: FaMicrochip,
 		color: "cyan",
+		coverImage: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/95/12223/big",
+		font: fonts.notoSansJP,
 	},
 	{
 		name: "流通経済科",
-		description:
-			"マーケティング、簿記会計、情報処理、経済など、ビジネスに関する知識や技術を基礎から幅広く学び、これらに関連した様々な資格の取得を行います。\nまた、挨拶などのビジネスマナーを日常的に実践し、社会人として必要なコミュニケーション能力を育みます。",
+		description: "マーケティング、簿記会計、情報処理、経済、マナー指導",
 		href: "business",
 		icon: FaBriefcase,
 		color: "green",
+		coverImage: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/95/9265/big",
+		font: fonts.kleeOne,
 	},
 	{
 		name: "情報処理科",
-		description:
-			"ビジネスに必要なコンピュータ実務に関する様々な知識・技術を身につけます。さらに、簿記会計の知識を深く学び、ビジネス情報を自在に使いこなせる社会人を育成します。最新のコンピュータを活用し、社会で通用する事務系、情報処理系の高度な資格取得を目指し、主に日本商工会議所主催「簿記会計2級」、国家資格「ITパスポート試験」を目標に学習します。また、コミュニケーション能力、社会人としてのマナーを身につけられるよう普段から指導を行い、進路実現に向けて取り組みます。",
+		description: "コンピューター実務、簿記、マナー指導",
 		href: "information-processing",
 		icon: FaReceipt,
 		color: "teal",
+		coverImage: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/95/10003/big",
+		font: fonts.ibmPlexSansJP,
 	},
 	{
 		name: "服飾デザイン科",
-		description:
-			"自分でデザインした服のデザイン画から型紙を作り、服に縫い上げてファッションショーで発表するまでを学習します。色や形を基礎から学び、さらにはイメージ通りのデザイン画を描く「ファッションデザイン」や、縫製の技をしっかり身につける「ファッション造形」、さらには染色、刺繍、編み物などの「服飾手芸」などを学びます。",
+		description: "ファッションデザイン、ファッション造形、服飾手芸",
 		href: "fashion-design",
 		icon: FaGlasses,
 		color: "red",
+		coverImage: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/95/7762/big",
+		font: fonts.kaiseiDecol,
 	},
 	{
 		name: "食物調理科",
-		description:
-			"普通教科の知識を基礎として「栄養」「食品」「食文化」「公衆衛生」「食品衛生」などを学習します。実習では。心構えや基本的な調理技術を学ぶ１年次の「基礎調理」、社会人講師の指導による２、３年次の「西洋料理」「日本料理」「中国料理」があります。また、座学や実習で学んだ内容を全て活用し、３年次の「総合調理」が行われます。これらの知識、技術を土台とし、レストランや割烹などで活躍できる人材を育成します。",
+		description: "栄養、食品、食文化、公衆衛生、食品衛生",
 		href: "culinary-arts",
 		icon: FaUtensils,
 		color: "orange",
+		coverImage: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/95/11351/big",
+		font: fonts.zenKurenaido,
 	},
 ];

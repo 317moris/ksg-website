@@ -1,3 +1,4 @@
+import type { NextFontWithVariable } from "next/dist/compiled/@next/font";
 import type { IconType } from "react-icons";
 
 export type PageChildrenProps = {
@@ -21,4 +22,6 @@ export type CourseProps = {
 	href: string;
 	icon: IconType;
 	color: string;
+	coverImage: string;
+	font: { font: NextFontWithVariable; variable: string };
 };
