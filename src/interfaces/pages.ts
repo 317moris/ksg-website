@@ -1,16 +1,18 @@
 import type { IconType } from "react-icons";
 
+export type PageChildrenProps = {
+	name: string;
+	href: string;
+	icon: IconType;
+	color?: string;
+};
+
 export type PageProps = {
 	name: string;
 	href: string;
 	hasHome?: boolean;
 	icon: IconType;
-	children?: {
-		name: string;
-		href: string;
-		icon: IconType;
-		color?: string;
-	}[];
+	children?: PageChildrenProps[];
 };
 
 export type CourseProps = {
