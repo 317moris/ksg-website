@@ -35,6 +35,9 @@ export default function RootLayout({
 			lang="ja"
 			suppressHydrationWarning
 		>
+			<head>
+				<meta name="darkreader-lock" />
+			</head>
 			<body>
 				<Provider>
 					<Header />
