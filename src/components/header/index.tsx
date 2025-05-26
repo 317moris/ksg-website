@@ -1,20 +1,19 @@
+import { ColorModeButton } from "@/components/ui/color-mode";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Box,
 	ClientOnly,
 	Container,
 	Flex,
 	HStack,
-	IconButton,
 	Image,
 	Link,
 	StackSeparator,
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { FaList } from "react-icons/fa6";
+import { HeaderDrawer } from "./drawer";
 import { Pages } from "./pages";
-import { ColorModeButton } from "./ui/color-mode";
-import { Skeleton } from "./ui/skeleton";
 
 export function Header() {
 	return (
@@ -28,10 +27,8 @@ export function Header() {
 		>
 			<Container maxW="8xl">
 				<Flex align="center" justify="space-between" py={2}>
-					<IconButton variant="ghost" hideFrom="md">
-						<FaList />
-					</IconButton>
-					<HStack hideBelow="md" gap={4} separator={<StackSeparator />}>
+					<HeaderDrawer />
+					<HStack hideBelow="lg" gap={4} separator={<StackSeparator />}>
 						<Link asChild fontWeight="bold">
 							<NextLink href="/">
 								<HStack>
@@ -43,13 +40,13 @@ export function Header() {
 											height={600}
 										/>
 									</Image>
-									<Box hideBelow="lg">埼玉県立越谷総合技術高等学校</Box>
+									<Box hideBelow="xl">埼玉県立越谷総合技術高等学校</Box>
 								</HStack>
 							</NextLink>
 						</Link>
 						<ClientOnly fallback={<Skeleton w="md" h={10} />}>
 							<HStack>
-								<Pages />
+								<Pages drawer={false} />
 							</HStack>
 						</ClientOnly>
 					</HStack>

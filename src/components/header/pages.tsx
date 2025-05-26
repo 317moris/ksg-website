@@ -2,9 +2,10 @@
 
 import { courses } from "@/const/course";
 import type { PageProps } from "@/interfaces/pages";
-import { Button, type ButtonProps, Menu, Portal } from "@chakra-ui/react";
+import { Button, HStack, Menu, Portal } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
+import type { Dispatch, RefObject, SetStateAction } from "react";
 import {
 	Fa1,
 	Fa2,
@@ -121,7 +122,15 @@ const pages: PageProps[] = [
 	},
 ];
 
-export function Pages(props: ButtonProps) {
+export function Pages({
+	drawer,
+	setOpen,
+	contentRef,
+}: {
+	drawer: boolean;
+	setOpen?: Dispatch<SetStateAction<boolean>>;
+	contentRef?: RefObject<HTMLDivElement | null>;
+}) {
 	const path = usePathname();
 
 	return pages.map((page) => {
@@ -138,11 +147,15 @@ export function Pages(props: ButtonProps) {
 					key={page.name}
 					variant={isActive ? "subtle" : "outline"}
 					asChild
-					color={isActive ? "fg" : "fg.subtle"}
-					{...props}
+					color={isActive ? "green.fg" : "fg.subtle"}
+					justifyContent={drawer ? "space-between" : "center"}
+					{...(setOpen && { onClick: () => setOpen(false) })}
 				>
 					<NextLink href={page.href}>
-						<page.icon /> {page.name} {page.hasHome ? <FaAngleDown /> : null}
+						<HStack>
+							<page.icon /> {page.name}
+						</HStack>
+						{page.hasHome ? <FaAngleDown /> : null}
 					</NextLink>
 				</Button>
 			);
@@ -150,20 +163,25 @@ export function Pages(props: ButtonProps) {
 		if (!page.children) return;
 
 		return (
-			<Menu.Root key={page.name}>
+			<Menu.Root
+				key={page.name}
+				positioning={{ placement: drawer ? "bottom-end" : undefined }}
+			>
 				<Menu.Trigger asChild>
 					<Button
 						key={page.name}
 						variant={isActive ? "subtle" : "outline"}
-						color={isActive ? "fg" : "fg.subtle"}
-						{...props}
+						color={isActive ? "green.fg" : "fg.subtle"}
+						justifyContent={drawer ? "space-between" : "center"}
 					>
-						<page.icon />
-						{page.name}
+						<HStack>
+							<page.icon />
+							{page.name}
+						</HStack>
 						<FaCaretDown />
 					</Button>
 				</Menu.Trigger>
-				<Portal>
+				<Portal container={contentRef}>
 					<Menu.Positioner>
 						<Menu.Content>
 							{page.children.map((child) => {
@@ -189,6 +207,7 @@ export function Pages(props: ButtonProps) {
 										borderWidth={isActiveChild ? 1 : 0}
 										asChild
 										value={childPath}
+										{...(setOpen && { onClick: () => setOpen(false) })}
 									>
 										<NextLink href={`${page.href}/${child.href}`}>
 											<child.icon />
