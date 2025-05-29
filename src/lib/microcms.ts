@@ -1,7 +1,10 @@
 import { createClient } from "microcms-js-sdk";
+import { setGlobalDispatcher, EnvHttpProxyAgent } from "undici";
 
 if (!process.env.MICRO_CMS_API_KEY)
 	throw new Error("MICRO_CMS_API_KEY is undefined in env");
+
+setGlobalDispatcher(new EnvHttpProxyAgent());
 
 export const cmsClient = createClient({
 	serviceDomain: "ksg",
