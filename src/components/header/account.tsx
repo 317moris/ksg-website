@@ -5,34 +5,35 @@ import {
 	type ButtonProps,
 	CloseButton,
 	Drawer,
-	Group,
+	IconButton,
 	Menu,
 	Portal,
+	SimpleGrid,
 	VStack,
 } from "@chakra-ui/react";
 import type { IconType } from "react-icons";
-import { FaMoon, FaSun } from "react-icons/fa6";
+import { FaMoon, FaSun, FaUser } from "react-icons/fa6";
 import { useColorMode } from "../ui/color-mode";
 
 export function AccountButton() {
 	return (
-		<Menu.Root>
+		<Menu.Root positioning={{ placement: "bottom-end" }}>
 			<Menu.Trigger asChild>
-				<Button variant="outline" size="sm">
-					Open
-				</Button>
+				<IconButton variant="outline" color="fg.muted">
+					<FaUser />
+				</IconButton>
 			</Menu.Trigger>
 			<Portal>
 				<Menu.Positioner>
 					<Menu.Content>
-						<Menu.Item value="new-txt">New Text File</Menu.Item>
+						{/* <Menu.Item value="new-txt">New Text File</Menu.Item>
 						<Menu.Item value="new-file">New File...</Menu.Item>
 						<Menu.Item value="new-win">New Window</Menu.Item>
 						<Menu.Item value="open-file">Open File...</Menu.Item>
-						<Menu.Item value="export">Export</Menu.Item>
-						<Group attached grow>
+						<Menu.Item value="export">Export</Menu.Item> */}
+						<SimpleGrid columns={2} gap="1">
 							<SelectColorMode />
-						</Group>
+						</SimpleGrid>
 					</Menu.Content>
 				</Menu.Positioner>
 			</Portal>
@@ -44,9 +45,9 @@ export function AccountButtonSm() {
 	return (
 		<Drawer.Root>
 			<Drawer.Trigger asChild>
-				<Button variant="outline" size="sm">
-					Open Drawer
-				</Button>
+				<IconButton variant="outline" color="fg.muted">
+					<FaUser />
+				</IconButton>
 			</Drawer.Trigger>
 			<Portal>
 				<Drawer.Backdrop />
@@ -56,9 +57,9 @@ export function AccountButtonSm() {
 							<Drawer.Title>Drawer Title</Drawer.Title>
 						</Drawer.Header>
 						<Drawer.Body>
-							<Group attached grow>
+							<SimpleGrid columns={2} gap="1">
 								<SelectColorMode />
-							</Group>
+							</SimpleGrid>
 						</Drawer.Body>
 						<Drawer.Footer>
 							<Button variant="outline">Cancel</Button>
