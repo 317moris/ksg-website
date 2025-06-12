@@ -1,4 +1,3 @@
-import { ColorModeButton } from "@/components/ui/color-mode";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Box,
@@ -12,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
+import { AccountButton, AccountButtonSm } from "./account";
 import { HeaderDrawer } from "./drawer";
 import { Pages } from "./pages";
 
@@ -24,6 +24,8 @@ export function Header() {
 			zIndex="docked"
 			top={0}
 			bg="bg"
+			shadow="sm"
+			roundedBottom="lg"
 		>
 			<Container maxW="8xl">
 				<Flex align="center" justify="space-between" py={2}>
@@ -52,7 +54,12 @@ export function Header() {
 							</HStack>
 						</ClientOnly>
 					</HStack>
-					<ColorModeButton />
+					<Box hideBelow="lg">
+						<AccountButton />
+					</Box>
+					<Box hideFrom="lg">
+						<AccountButtonSm />
+					</Box>
 				</Flex>
 			</Container>
 		</Box>
