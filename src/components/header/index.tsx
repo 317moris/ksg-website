@@ -11,9 +11,9 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { AccountButton, AccountButtonSm } from "./account";
 import { HeaderDrawer } from "./drawer";
 import { Pages } from "./pages";
+import { Settings } from "./settings";
 
 export function Header() {
 	return (
@@ -54,12 +54,9 @@ export function Header() {
 							</HStack>
 						</ClientOnly>
 					</HStack>
-					<Box hideBelow="lg">
-						<AccountButton />
-					</Box>
-					<Box hideFrom="lg">
-						<AccountButtonSm />
-					</Box>
+					<ClientOnly fallback={<Skeleton boxSize="10" />}>
+						<Settings />
+					</ClientOnly>
 				</Flex>
 			</Container>
 		</Box>
