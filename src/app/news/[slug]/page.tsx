@@ -1,6 +1,8 @@
-import { Container, Image } from "@chakra-ui/react";
+import { Heading, HStack, Image, Separator } from "@chakra-ui/react";
 import NextImage from "next/image";
 import { notFound } from "next/navigation";
+import { DateFormatter } from "@/components/date-formatter";
+import { MainContainer } from "@/components/ui/main-container";
 import { Prose } from "@/components/ui/prose";
 import type { Params } from "@/interfaces/params";
 import { getPostBySlug } from "@/lib/api";
@@ -12,7 +14,7 @@ export default async function Page(props: Params) {
 	if (!post) return notFound();
 
 	return (
-		<Container as="main" maxW="4xl">
+		<MainContainer maxW="4xl" py="10" spaceY="10">
 			{post.coverImage ? (
 				<Image asChild w="full" rounded="lg">
 					<NextImage
@@ -23,9 +25,14 @@ export default async function Page(props: Params) {
 					/>
 				</Image>
 			) : null}
+			<HStack w="full" align="end" justify="space-between">
+				<Heading size="4xl">{post.title}</Heading>
+				<DateFormatter createdAt={post.createdAt} />
+			</HStack>
+			<Separator w="full" />
 			{/** biome-ignore lint/security/noDangerouslySetInnerHtml: <false> */}
-			<Prose dangerouslySetInnerHTML={{ __html: post.content }} />
-		</Container>
+			<Prose w="full" dangerouslySetInnerHTML={{ __html: post.content }} />
+		</MainContainer>
 	);
 }
 
