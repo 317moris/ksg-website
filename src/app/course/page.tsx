@@ -1,4 +1,3 @@
-import { courses } from "@/const/course";
 import {
 	Card,
 	Container,
@@ -12,6 +11,7 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { courses } from "@/const/course";
 
 export default function Page() {
 	return (

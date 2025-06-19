@@ -1,5 +1,5 @@
-import { Selecter } from "@/components/club/selecter";
 import { Container } from "@chakra-ui/react";
+import { Selecter } from "@/components/club/selecter";
 
 export default function Layout({
 	children,

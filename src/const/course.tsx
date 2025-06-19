@@ -1,4 +1,3 @@
-import type { CourseProps } from "@/interfaces/pages";
 import {
 	DotGothic16,
 	IBM_Plex_Sans_JP,
@@ -15,6 +14,7 @@ import {
 	FaReceipt,
 	FaUtensils,
 } from "react-icons/fa6";
+import type { CourseProps } from "@/interfaces/pages";
 
 const dotGothic16 = DotGothic16({
 	subsets: ["latin"],

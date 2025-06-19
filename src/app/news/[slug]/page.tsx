@@ -1,9 +1,9 @@
-import { Prose } from "@/components/ui/prose";
-import type { Params } from "@/interfaces/params";
-import { getPostBySlug } from "@/lib/api";
 import { Container, Image } from "@chakra-ui/react";
 import NextImage from "next/image";
 import { notFound } from "next/navigation";
+import { Prose } from "@/components/ui/prose";
+import type { Params } from "@/interfaces/params";
+import { getPostBySlug } from "@/lib/api";
 
 export default async function Page(props: Params) {
 	const params = await props.params;

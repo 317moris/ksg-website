@@ -1,4 +1,3 @@
-import Posts from "@/components/posts";
 import {
 	Code,
 	Container,
@@ -8,6 +7,7 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { Suspense } from "react";
+import Posts from "@/components/posts";
 
 export default function Home() {
 	return (

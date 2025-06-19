@@ -1,5 +1,5 @@
-import type { Post } from "@/interfaces/post";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
+import type { Post } from "@/interfaces/post";
 import { cmsClient } from "./microcms";
 
 export async function getAllPosts() {

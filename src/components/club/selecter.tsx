@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Portal, Select, createListCollection } from "@chakra-ui/react";
+import { createListCollection, Flex, Portal, Select } from "@chakra-ui/react";
 
 const categories = createListCollection({
 	items: [
@@ -26,7 +26,7 @@ const sportClubs = createListCollection({
 	],
 });
 
-const clubs = {
+const _clubs = {
 	culture: cultureClubs,
 	sport: sportClubs,
 };

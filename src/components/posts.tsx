@@ -1,4 +1,3 @@
-import { getAllPosts } from "@/lib/api";
 import {
 	Card,
 	ClientOnly,
@@ -9,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { FaUpload } from "react-icons/fa6";
+import { getAllPosts } from "@/lib/api";
 import { DateFormatter } from "./date-formatter";
 
 export default async function Posts() {

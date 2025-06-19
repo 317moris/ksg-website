@@ -1,7 +1,5 @@
 "use client";
 
-import { courses } from "@/const/course";
-import type { PageChildrenProps, PageProps } from "@/interfaces/pages";
 import { Button, HStack, Menu, Portal } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
@@ -28,6 +26,8 @@ import {
 	FaTimeline,
 	FaVolleyball,
 } from "react-icons/fa6";
+import { courses } from "@/const/course";
+import type { PageChildrenProps, PageProps } from "@/interfaces/pages";
 
 const pages: PageProps[] = [
 	{

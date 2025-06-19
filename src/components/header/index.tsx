@@ -1,4 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Box,
 	ClientOnly,
@@ -11,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 import { HeaderDrawer } from "./drawer";
 import { Pages } from "./pages";
 import { Settings } from "./settings";
