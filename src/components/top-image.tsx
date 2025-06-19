@@ -1,7 +1,15 @@
 "use client";
 
-import { Image, Presence } from "@chakra-ui/react";
+import {
+	ButtonGroup,
+	IconButton,
+	Image,
+	Pagination,
+	Presence,
+	VStack,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 const images = [
 	{
@@ -48,36 +56,68 @@ const images = [
 
 export function TopImage() {
 	const [imageIndex, setImageIndex] = useState(0);
+	const [changedImage, setChangedImage] = useState(false);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setImageIndex((i) => (i < images.length - 1 ? i + 1 : 0));
+			if (changedImage) {
+				setChangedImage(false);
+			} else {
+				setImageIndex((i) => (i < images.length - 1 ? i + 1 : 0));
+			}
 		}, 5000);
 
 		return () => {
 			clearInterval(interval);
 		};
-	}, []);
+	}, [changedImage]);
 
-	return images.map((image, i) => {
-		return (
-			<Presence
-				key={image.src}
-				present={i === imageIndex}
-				_open={{
-					animation: "ease-in",
-					animationDuration: "slowest",
-					animationName: "fade-in",
-				}}
-				w="full"
-				// _closed={{
-				//    animation: "ease-in",
-				// animationDuration: "slowest",
-				// animationName: "fade-out"
-				//    }}
+	return (
+		<VStack w="full">
+			{images.map((image, i) => {
+				const showing = i === imageIndex;
+
+				return (
+					<Presence
+						key={image.src}
+						present={showing}
+						_open={{
+							animation: "ease-in",
+							animationDuration: "slowest",
+							animationName: "fade-in",
+						}}
+						w="full"
+					>
+						<Image
+							rounded="lg"
+							h="sm"
+							w="full"
+							src={image.src}
+							alt={image.alt}
+						/>
+					</Presence>
+				);
+			})}
+			<Pagination.Root
+				count={images.length}
+				pageSize={1}
+				page={imageIndex + 1}
+				onPageChange={(e) => setImageIndex(e.page - 1)}
 			>
-				<Image rounded="lg" h="sm" w="full" src={image.src} alt={image.alt} />
-			</Presence>
-		);
-	});
+				<ButtonGroup variant="ghost" size="sm">
+					<Pagination.PrevTrigger asChild>
+						<IconButton onClick={() => setChangedImage(true)}>
+							<FaAngleLeft />
+						</IconButton>
+					</Pagination.PrevTrigger>
+					<Pagination.PageText />
+					<Pagination.NextTrigger asChild>
+						<IconButton onClick={() => setChangedImage(true)}>
+							<FaAngleRight />
+						</IconButton>
+					</Pagination.NextTrigger>
+				</ButtonGroup>
+			</Pagination.Root>
+		</VStack>
+	);
 }
