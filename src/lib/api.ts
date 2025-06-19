@@ -1,9 +1,8 @@
-import type { MicroCMSListResponse } from "microcms-js-sdk";
 import type { Post } from "@/interfaces/post";
 import { cmsClient } from "./microcms";
 
 export async function getAllPosts() {
-	const posts: MicroCMSListResponse<Post> = await cmsClient.getList({
+	const posts = await cmsClient.getList<Post>({
 		endpoint: "news",
 		queries: {
 			fields: "id,title,subtitle,createdAt",
@@ -19,7 +18,7 @@ export async function getAllPosts() {
 }
 
 export async function getPostBySlug(slug: string) {
-	const post: Post = await cmsClient.getListDetail({
+	const post = await cmsClient.getListDetail<Post>({
 		endpoint: "news",
 		contentId: slug,
 		customRequestInit: {
