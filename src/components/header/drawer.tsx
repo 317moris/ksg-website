@@ -1,6 +1,17 @@
 "use client";
 
-import { Drawer, Flex, IconButton, Portal } from "@chakra-ui/react";
+import {
+	Box,
+	Drawer,
+	Flex,
+	HStack,
+	IconButton,
+	Image,
+	Link,
+	Portal,
+} from "@chakra-ui/react";
+import NextImage from "next/image";
+import NextLink from "next/link";
 import { useRef, useState } from "react";
 import { FaList } from "react-icons/fa6";
 import { Pages } from "./pages";
@@ -26,6 +37,23 @@ export function HeaderDrawer() {
 					<Drawer.Content ref={contentRef}>
 						<Drawer.Body>
 							<Flex direction="column" gap="2">
+								<Flex w="full" justify="center">
+									<Link asChild fontWeight="bold" my="4">
+										<NextLink href="/">
+											<HStack>
+												<Image asChild boxSize={9} rounded="full">
+													<NextImage
+														src="/icon/kosho.png"
+														alt="校章"
+														width={600}
+														height={600}
+													/>
+												</Image>
+												<Box>埼玉県立越谷総合技術高等学校</Box>
+											</HStack>
+										</NextLink>
+									</Link>
+								</Flex>
 								<Pages drawer setOpen={setOpen} contentRef={contentRef} />
 							</Flex>
 						</Drawer.Body>
