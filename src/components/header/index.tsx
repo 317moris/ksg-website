@@ -24,8 +24,6 @@ export function Header() {
 			zIndex="docked"
 			top={0}
 			bg="bg"
-			shadow="sm"
-			roundedBottom="lg"
 		>
 			<Container maxW="8xl">
 				<Flex align="center" justify="space-between" py={2}>
