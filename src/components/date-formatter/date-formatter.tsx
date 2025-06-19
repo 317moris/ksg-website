@@ -9,7 +9,7 @@ import {
 	parseISO,
 } from "date-fns";
 
-export function DateFormatter({ date }: { date: string }) {
+export function ClientDateFormatter({ date }: { date: string }) {
 	const parsedDate = parseISO(date);
 	const now = new Date();
 
