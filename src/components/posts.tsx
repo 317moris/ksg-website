@@ -1,13 +1,5 @@
-import {
-	Card,
-	ClientOnly,
-	HStack,
-	LinkBox,
-	LinkOverlay,
-	Text,
-} from "@chakra-ui/react";
+import { Card, LinkBox, LinkOverlay } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { FaUpload } from "react-icons/fa6";
 import { getAllPosts } from "@/lib/api";
 import { DateFormatter } from "./date-formatter";
 
@@ -28,14 +20,7 @@ export default async function Posts() {
 					) : null}
 				</Card.Body>
 				<Card.Footer justifyContent="end">
-					<ClientOnly>
-						<HStack color="fg.muted" fontFamily="mono">
-							<FaUpload />
-							<Text>
-								<DateFormatter date={post.createdAt} />
-							</Text>
-						</HStack>
-					</ClientOnly>
+					<DateFormatter createdAt={post.createdAt} />
 				</Card.Footer>
 			</Card.Root>
 		</LinkBox>
