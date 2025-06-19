@@ -23,7 +23,7 @@ export default async function Page(props: Params) {
 					/>
 				</Image>
 			) : null}
-			{/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+			{/** biome-ignore lint/security/noDangerouslySetInnerHtml: <false> */}
 			<Prose dangerouslySetInnerHTML={{ __html: post.content }} />
 		</Container>
 	);
