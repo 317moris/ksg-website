@@ -7,12 +7,16 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!.next/**", "!public/**"]
+		"includes": [
+			"**",
+			"!**/.next/**",
+			"!**/public/**",
+			"!src/app/license/licenses.json"
+		]
 	},
 	"formatter": {
 		"enabled": true,
-		"indentStyle": "tab",
-		"includes": ["**", "!src/components/ui/**"]
+		"indentStyle": "tab"
 	},
 	"linter": {
 		"enabled": true,
