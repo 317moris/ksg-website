@@ -3,7 +3,7 @@
 // import { checkmarkRecipe } from "./checkmark";
 // import { codeRecipe } from "./code";
 // import { colorSwatchRecipe } from "./color-swatch";
-import { containerRecipe } from "./container-custom";
+import { containerRecipe } from "./container";
 // import { headingRecipe } from "./heading";
 // import { iconRecipe } from "./icon";
 // import { inputRecipe } from "./input";
