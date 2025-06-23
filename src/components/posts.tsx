@@ -1,11 +1,14 @@
 import { Card, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextLink from "next/link";
-import { getAllPosts } from "@/lib/api";
+import type { Post } from "@/interfaces/post";
 import { DateFormatter } from "./date-formatter";
 
-export default async function Posts() {
-	const posts = await getAllPosts();
-
+export default async function Posts({
+	posts,
+}: {
+	posts: MicroCMSListResponse<Post>;
+}) {
 	return posts.contents.map((post) => (
 		<LinkBox key={post.id}>
 			<Card.Root h="full" size="sm">

@@ -1,4 +1,5 @@
 import {
+	Button,
 	Flex,
 	Heading,
 	Highlight,
@@ -6,14 +7,18 @@ import {
 	SimpleGrid,
 	Spinner,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { Suspense } from "react";
-import { FaNewspaper } from "react-icons/fa6";
+import { FaNewspaper, FaUpRightFromSquare } from "react-icons/fa6";
 import Posts from "@/components/posts";
 import { TopImage } from "@/components/top-image";
 import { Aria } from "@/components/ui/aria";
 import { MainContainer } from "@/components/ui/main-container";
+import { getRecentPosts } from "@/lib/api";
 
-export default function Home() {
+export default async function Home() {
+	const posts = await getRecentPosts();
+
 	return (
 		<MainContainer>
 			<Flex
@@ -64,10 +69,20 @@ export default function Home() {
 						gap="2"
 						w="full"
 					>
-						<Posts />
+						<Posts posts={posts} />
 					</SimpleGrid>
 				</Suspense>
+				<Button variant="surface" asChild>
+					<NextLink href="/news">
+						全てのニュースを見る <FaUpRightFromSquare />
+					</NextLink>
+				</Button>
 			</Aria>
+			{/* <Aria title="学校情報(削除予定)"icon={<FaInfo />}>
+				<SimpleGrid columns={{ lgDown: 1, lg: 2 }} w="full" gap="3">
+					<Info />
+				</SimpleGrid>
+			</Aria> */}
 		</MainContainer>
 	);
 }

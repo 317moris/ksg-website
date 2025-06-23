@@ -17,6 +17,23 @@ export async function getAllPosts() {
 	return posts;
 }
 
+export async function getRecentPosts() {
+	const posts = await cmsClient.getList<Post>({
+		endpoint: "news",
+		queries: {
+			fields: "id,title,subtitle,createdAt",
+			limit: 8,
+		},
+		customRequestInit: {
+			next: {
+				revalidate: 60,
+			},
+		},
+	});
+
+	return posts;
+}
+
 export async function getPostBySlug(slug: string) {
 	const post = await cmsClient.getListDetail<Post>({
 		endpoint: "news",

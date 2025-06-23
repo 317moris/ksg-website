@@ -29,7 +29,7 @@ import {
 import { courses } from "@/const/course";
 import type { PageChildrenProps, PageProps } from "@/interfaces/pages";
 
-const pages: PageProps[] = [
+export const pages: PageProps[] = [
 	{
 		name: "学校情報",
 		href: "/info",
