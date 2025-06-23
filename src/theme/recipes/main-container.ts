@@ -1,4 +1,5 @@
 import { defineRecipe, type RecipeVariantProps } from "@chakra-ui/react";
+import { animation } from "@/animation";
 
 export const mainContainerRecipe = defineRecipe({
 	className: "chakra-main-container",
@@ -13,9 +14,7 @@ export const mainContainerRecipe = defineRecipe({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
-		animation: "ease-out",
-		animationName: "fade-in",
-		animationDuration: "slow",
+		...animation,
 	},
 	variants: {
 		fluid: {

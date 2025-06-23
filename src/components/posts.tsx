@@ -1,5 +1,6 @@
-import { Card, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import { Avatar, Card, Link, LinkBox, LinkOverlay } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
+import NextImage from "next/image";
 import NextLink from "next/link";
 import type { Post } from "@/interfaces/post";
 import { DateFormatter } from "./date-formatter";
@@ -12,6 +13,26 @@ export default async function Posts({
 	return posts.contents.map((post) => (
 		<LinkBox key={post.id}>
 			<Card.Root h="full" size="sm">
+				<Card.Header>
+					<Link asChild variant="underline" fontSize="sm">
+						<NextLink href={`/news/authors/${post.author.id}`}>
+							<Avatar.Root size="xs">
+								<Avatar.Fallback name={post.author.name} />
+								{post.author.icon && (
+									<Avatar.Image asChild>
+										<NextImage
+											src={post.author.icon.url}
+											alt={post.author.icon.alt ?? post.author.name}
+											width={post.author.icon.width}
+											height={post.author.icon.height}
+										/>
+									</Avatar.Image>
+								)}
+							</Avatar.Root>
+							{post.author.name}
+						</NextLink>
+					</Link>
+				</Card.Header>
 				<Card.Body>
 					<Card.Title asChild>
 						<LinkOverlay asChild>
