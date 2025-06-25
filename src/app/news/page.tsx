@@ -1,6 +1,7 @@
 import { SimpleGrid, Spinner } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { FaNewspaper } from "react-icons/fa6";
+import { SearchMenu } from "@/components/news/search-menu";
 import Posts from "@/components/posts";
 import { Aria } from "@/components/ui/aria";
 import { MainContainer } from "@/components/ui/main-container";
@@ -12,6 +13,7 @@ export default async function Page() {
 	return (
 		<MainContainer>
 			<Aria title="ニュース" icon={<FaNewspaper />}>
+				<SearchMenu />
 				<Suspense fallback={<Spinner />}>
 					<SimpleGrid
 						columns={{

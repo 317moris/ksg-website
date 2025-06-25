@@ -43,7 +43,7 @@ export function AuthorsMenu({
 					<Select.Content>
 						{collection.items.map((author) => (
 							<Select.Item item={author} key={author.value} asChild>
-								<NextLink href={`/news/authors/${author.value}`}>
+								<NextLink href={`/news/search/${author.value}`}>
 									{author.label}
 									<Select.ItemIndicator />
 								</NextLink>
