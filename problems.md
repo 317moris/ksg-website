@@ -23,9 +23,6 @@
 大規模改修工事について  
 ![image](https://github.com/user-attachments/assets/37cb7219-fd6b-4fc0-8674-b4cd952ea650)
 
-募集要項  
-![image](https://github.com/user-attachments/assets/d7c25f5e-0fe1-4ddd-8aef-b3bed52fd5b4)
-
 お問い合わせ  
 ![image](https://github.com/user-attachments/assets/10a26475-07db-41f2-b242-7787d898287e)
 
