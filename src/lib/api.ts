@@ -36,6 +36,8 @@ export async function getRecentPosts() {
 }
 
 export async function getAuthorFilteredPosts(slug: string) {
+	"use server";
+
 	const posts = await cmsClient.getList<Post>({
 		endpoint: "news",
 		queries: {
@@ -69,6 +71,8 @@ export async function getAuthors() {
 }
 
 export async function getAuthor(slug: string) {
+	"use server";
+
 	const posts = await cmsClient.getListDetail<Author>({
 		endpoint: "authors",
 		contentId: slug,

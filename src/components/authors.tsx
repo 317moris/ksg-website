@@ -3,7 +3,7 @@
 import { createListCollection, Portal, Select } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextLink from "next/link";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { use, useState } from "react";
 import type { Author } from "@/interfaces/author";
 
@@ -19,8 +19,10 @@ export function AuthorsMenu({
 		}),
 	});
 
-	const path = useParams<{ slug: string }>();
-	const [value, setValue] = useState<string[]>([path.slug]);
+	const searchParams = useSearchParams();
+	const [value, setValue] = useState<string[]>([
+		searchParams.get("author") || "",
+	]);
 
 	return (
 		<Select.Root
@@ -43,7 +45,7 @@ export function AuthorsMenu({
 					<Select.Content>
 						{collection.items.map((author) => (
 							<Select.Item item={author} key={author.value} asChild>
-								<NextLink href={`/news/search/${author.value}`}>
+								<NextLink href={`/news?author=${author.value}`}>
 									{author.label}
 									<Select.ItemIndicator />
 								</NextLink>
