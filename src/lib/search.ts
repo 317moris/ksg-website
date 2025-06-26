@@ -1,8 +1,8 @@
 "use server";
 
 import type { Author } from "@/interfaces/author";
-import { cmsClient } from "./microcms";
 import type { Post } from "@/interfaces/post";
+import { cmsClient } from "./microcms";
 
 export async function getAuthor(slug: string) {
 	const posts = await cmsClient.getListDetail<Author>({

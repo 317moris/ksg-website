@@ -1,19 +1,18 @@
 "use client";
 
+import { SimpleGrid, Spinner } from "@chakra-ui/react";
+import type { MicroCMSListResponse } from "microcms-js-sdk";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { FaNewspaper } from "react-icons/fa6";
 import { animation } from "@/animation";
 import { AuthorsMenu } from "@/components/authors";
 import { Search } from "@/components/news/search";
 import Posts from "@/components/posts";
 import { Aria } from "@/components/ui/aria";
-import { EmptyState } from "@/components/ui/empty-state";
 import { MainContainer } from "@/components/ui/main-container";
-import { Post } from "@/interfaces/post";
+import type { Post } from "@/interfaces/post";
 import { getFilteredPosts } from "@/lib/search";
-import { SimpleGrid, Spinner } from "@chakra-ui/react";
-import { MicroCMSListResponse } from "microcms-js-sdk";
-import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
-import { FaArrowPointer, FaNewspaper } from "react-icons/fa6";
 
 export default function Page() {
 	const searchParams = useSearchParams();

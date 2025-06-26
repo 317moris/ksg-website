@@ -1,4 +1,3 @@
-import type { Author } from "@/interfaces/author";
 import type { Post } from "@/interfaces/post";
 import { cmsClient } from "./microcms";
 

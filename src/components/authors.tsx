@@ -3,8 +3,7 @@
 import { createListCollection, Portal, Select } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextLink from "next/link";
-import { useSearchParams } from "next/navigation";
-import { Dispatch, SetStateAction, use, useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import type { Author } from "@/interfaces/author";
 import { getAuthors } from "@/lib/search";
 

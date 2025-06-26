@@ -1,28 +1,8 @@
 "use client";
 
-import {
-	Group,
-	IconButton,
-	Input,
-	SimpleGrid,
-	Spinner,
-} from "@chakra-ui/react";
-import type { MicroCMSListResponse } from "microcms-js-sdk";
-import { useSearchParams } from "next/navigation";
-import { Dispatch, SetStateAction, Suspense, useEffect, useState } from "react";
-import {
-	FaArrowPointer,
-	FaMagnifyingGlass,
-	FaNewspaper,
-	FaPenNib,
-	FaUserSlash,
-} from "react-icons/fa6";
-import { animation } from "@/animation";
-import Posts from "@/components/posts";
-import { Aria } from "@/components/ui/aria";
-import { EmptyState } from "@/components/ui/empty-state";
-import type { Post } from "@/interfaces/post";
-import { getAuthor } from "@/lib/search";
+import { Group, IconButton, Input } from "@chakra-ui/react";
+import type { Dispatch, SetStateAction } from "react";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 export async function Search({
 	searchWord,
