@@ -14,7 +14,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import type { Post } from "@/interfaces/post";
 import { DateFormatter } from "./date-formatter";
 
-export default async function Posts({
+export default function Posts({
 	posts,
 }: {
 	posts: MicroCMSListResponse<Post>;

@@ -19,14 +19,23 @@ export async function getAuthor(slug: string) {
 }
 
 export async function getFilteredPosts(searchWord: string, author: string) {
-	const authorFilter = author ? `author[equals]${author}` : null;
-	const searchWordFilter = searchWord ? `title[contains]${searchWord}` : null;
+	const authorFilter = author ? `author[equals]${author}` : undefined;
+	const searchWordFilter = searchWord
+		? `title[contains]${searchWord}`
+		: undefined;
+
+	let filters: string | undefined = [authorFilter, searchWordFilter]
+		.filter((f) => f)
+		.join("[and]");
+	if (filters === "[and]") filters = undefined;
+
+	console.log(filters);
 
 	const posts = await cmsClient.getList<Post>({
 		endpoint: "news",
 		queries: {
 			fields: "id,title,subtitle,createdAt,author",
-			filters: [authorFilter, searchWordFilter].join("[and]"),
+			filters,
 		},
 		customRequestInit: {
 			next: {
