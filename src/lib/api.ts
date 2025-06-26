@@ -35,57 +35,6 @@ export async function getRecentPosts() {
 	return posts;
 }
 
-export async function getAuthorFilteredPosts(slug: string) {
-	"use server";
-
-	const posts = await cmsClient.getList<Post>({
-		endpoint: "news",
-		queries: {
-			fields: "id,title,subtitle,createdAt,author",
-			filters: `author[equals]${slug}`,
-		},
-		customRequestInit: {
-			next: {
-				revalidate: 60,
-			},
-		},
-	});
-
-	return posts;
-}
-
-export async function getAuthors() {
-	const posts = await cmsClient.getList<Author>({
-		endpoint: "authors",
-		queries: {
-			fields: "id,name,icon",
-		},
-		customRequestInit: {
-			next: {
-				revalidate: 60,
-			},
-		},
-	});
-
-	return posts;
-}
-
-export async function getAuthor(slug: string) {
-	"use server";
-
-	const posts = await cmsClient.getListDetail<Author>({
-		endpoint: "authors",
-		contentId: slug,
-		customRequestInit: {
-			next: {
-				revalidate: 60,
-			},
-		},
-	});
-
-	return posts;
-}
-
 export async function getPostBySlug(slug: string) {
 	const post = await cmsClient.getListDetail<Post>({
 		endpoint: "news",

@@ -4,31 +4,41 @@ import { createListCollection, Portal, Select } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextLink from "next/link";
 import { useSearchParams } from "next/navigation";
-import { use, useState } from "react";
+import { Dispatch, SetStateAction, use, useEffect, useState } from "react";
 import type { Author } from "@/interfaces/author";
+import { getAuthors } from "@/lib/search";
 
 export function AuthorsMenu({
-	authors,
+	author,
+	setAuthor,
 }: {
-	authors: Promise<MicroCMSListResponse<Author>>;
+	author: string[];
+	setAuthor: Dispatch<SetStateAction<string[]>>;
 }) {
-	const allAuthors = use(authors);
+	const [allAuthors, setAllAuthors] = useState<MicroCMSListResponse<Author>>();
+
+	useEffect(() => {
+		(async () => {
+			const res = await getAuthors();
+			setAllAuthors(res);
+		})();
+	}, []);
+
+	if (!allAuthors) return null;
+
 	const collection = createListCollection({
 		items: allAuthors.contents.map((author) => {
 			return { label: author.name, value: author.id };
 		}),
 	});
 
-	const searchParams = useSearchParams();
-	const [value, setValue] = useState<string[]>([
-		searchParams.get("author") || "",
-	]);
-
 	return (
 		<Select.Root
 			collection={collection}
-			value={value}
-			onValueChange={(e) => setValue(e.value)}
+			value={author}
+			onValueChange={(e) => {
+				setAuthor(e.value);
+			}}
 		>
 			<Select.HiddenSelect />
 			<Select.Label>作成者 / 団体</Select.Label>
