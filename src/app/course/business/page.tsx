@@ -1,9 +1,18 @@
+import { PageHeader } from "@/components/page-header";
+import { MainContainer } from "@/components/ui/main-container";
 import { Container, Text } from "@chakra-ui/react";
+import { getProps } from "../header";
 
 export default function Page() {
+	const props = getProps("流通経済科");
+
 	return (
-		<Container maxW="8xl">
-			<Text>流通経済科</Text>
-		</Container>
+		<MainContainer>
+			<PageHeader
+				title={props.name}
+				subtitle={props.description}
+				image={props.coverImage}
+			/>
+		</MainContainer>
 	);
 }
