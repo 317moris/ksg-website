@@ -1,6 +1,5 @@
 import { PageHeader } from "@/components/page-header";
 import { MainContainer } from "@/components/ui/main-container";
-import { Container, Text } from "@chakra-ui/react";
 import { getProps } from "../header";
 
 export default function Page() {
