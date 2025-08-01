@@ -3,6 +3,7 @@ import {
 	ClientOnly,
 	Container,
 	Flex,
+	Group,
 	HStack,
 	Image,
 	Link,
@@ -27,9 +28,7 @@ export function Header() {
 		>
 			<Container maxW="8xl">
 				<Flex align="center" justify="space-between" py={2}>
-					<ClientOnly fallback={<Skeleton boxSize="10" />}>
-						<HeaderDrawer />
-					</ClientOnly>
+					<HeaderDrawer />
 					<HStack hideBelow="lg" gap={4} separator={<StackSeparator />}>
 						<Link asChild fontWeight="bold">
 							<NextLink href="/">
@@ -46,11 +45,9 @@ export function Header() {
 								</HStack>
 							</NextLink>
 						</Link>
-						<ClientOnly fallback={<Skeleton w="md" h={10} />}>
-							<HStack>
-								<Pages drawer={false} />
-							</HStack>
-						</ClientOnly>
+						<Group>
+							<Pages drawer={false} />
+						</Group>
 					</HStack>
 					<ClientOnly fallback={<Skeleton boxSize="10" />}>
 						<Settings />
