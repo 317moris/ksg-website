@@ -87,14 +87,11 @@ export function TopImage() {
 							animationName: "fade-in",
 						}}
 						w="full"
+						rounded="lg"
+						overflow="hidden"
+						borderWidth={1}
 					>
-						<Image
-							rounded="lg"
-							h="sm"
-							w="full"
-							src={image.src}
-							alt={image.alt}
-						/>
+						<Image h="sm" w="full" src={image.src} alt={image.alt} />
 					</Presence>
 				);
 			})}
