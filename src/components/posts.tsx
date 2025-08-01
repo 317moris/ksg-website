@@ -1,8 +1,9 @@
 import {
 	Avatar,
-	Box,
 	Card,
+	Center,
 	Flex,
+	Image,
 	Link,
 	LinkBox,
 	LinkOverlay,
@@ -21,11 +22,32 @@ export default function Posts({
 }) {
 	return posts.contents.map((post) => (
 		<LinkBox key={post.id}>
-			<Card.Root h="full" size="sm" flexDir="row">
+			<Card.Root
+				h="full"
+				size="sm"
+				flexDir="row"
+				bg={{ base: "bg.panel", _hover: "bg.muted" }}
+			>
+				{post.coverImage && (
+					<Image asChild aspectRatio={4 / 3} maxW="xs" w="full">
+						<NextImage
+							src={post.coverImage.url}
+							alt={post.title}
+							width={post.coverImage.width}
+							height={post.coverImage.height}
+						/>
+					</Image>
+				)}
 				<Flex w="full" h="full" justify="space-between" direction="column">
-					<Box>
+					<div>
 						<Card.Header>
-							<Link asChild variant="underline" fontSize="sm">
+							<Link
+								asChild
+								variant="underline"
+								fontSize="sm"
+								color={{ _hover: "green.fg" }}
+								w="fit"
+							>
 								<NextLink href={`/news?author=${post.author.id}`}>
 									<Avatar.Root size="xs">
 										<Avatar.Fallback name={post.author.name} />
@@ -54,14 +76,14 @@ export default function Posts({
 								<Card.Description>{post.subtitle}</Card.Description>
 							) : null}
 						</Card.Body>
-					</Box>
+					</div>
 					<Card.Footer justifyContent="end">
 						<DateFormatter createdAt={post.createdAt} />
 					</Card.Footer>
 				</Flex>
-				<Flex justify="center" align="center" h="full" mx="2">
+				<Center borderLeftWidth={1} p="2">
 					<FaAngleRight />
-				</Flex>
+				</Center>
 			</Card.Root>
 		</LinkBox>
 	));
