@@ -30,7 +30,7 @@ export default async function Page(props: Params) {
 				<DateFormatter createdAt={post.createdAt} />
 			</HStack>
 			<Separator w="full" />
-			{/** biome-ignore lint/security/noDangerouslySetInnerHtml: <false> */}
+			{/** biome-ignore lint/security/noDangerouslySetInnerHtml: <microCMSからのHTMLであるため> */}
 			<Prose w="full" dangerouslySetInnerHTML={{ __html: post.content }} />
 		</MainContainer>
 	);

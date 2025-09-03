@@ -9,8 +9,8 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**",
-			"!**/.next/",
-			"!**/public/",
+			"!.next/**/*",
+			"!public/**/*",
 			"!src/app/license/licenses.json"
 		]
 	},
@@ -26,10 +26,7 @@
 				"noUnusedImports": "warn"
 			}
 		},
-		"includes": [
-			"**",
-			"!src/components/ui/**"
-		]
+		"includes": ["**", "!src/components/ui/**"]
 	},
 	"javascript": {
 		"formatter": {
