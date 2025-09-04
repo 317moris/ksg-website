@@ -56,7 +56,7 @@ export default function Posts({
 									{post.author.name}
 								</NextLink>
 							</Link>
-							<DateFormatter createdAt={post.createdAt} />
+							<DateFormatter date={post.createdAt} />
 						</Card.Header>
 						<Card.Body>
 							<Card.Title asChild>
