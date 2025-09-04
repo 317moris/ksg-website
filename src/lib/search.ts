@@ -18,11 +18,12 @@ export async function getAuthor(slug: string) {
 	return posts;
 }
 
-export async function getFilteredPosts(searchWord: string, author: string) {
-	const authorFilter = author ? `author[equals]${author}` : undefined;
-	const searchWordFilter = searchWord
-		? `title[contains]${searchWord}`
-		: undefined;
+export async function getFilteredPosts(
+	searchWord: string | null,
+	author: string | null,
+) {
+	const authorFilter = author && `author[equals]${author}`;
+	const searchWordFilter = searchWord && `title[contains]${searchWord}`;
 
 	let filters: string | undefined = [authorFilter, searchWordFilter]
 		.filter((f) => f)

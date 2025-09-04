@@ -27,7 +27,7 @@ export function HeaderDrawer() {
 			onOpenChange={(e) => setOpen(e.open)}
 		>
 			<Drawer.Trigger asChild hideFrom="lg">
-				<IconButton variant="ghost">
+				<IconButton variant="outline">
 					<FaList />
 				</IconButton>
 			</Drawer.Trigger>

@@ -2,7 +2,6 @@
 
 import { createListCollection, Portal, Select } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
-import NextLink from "next/link";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import type { Author } from "@/interfaces/author";
 import { getAuthors } from "@/lib/search";
@@ -11,8 +10,8 @@ export function AuthorsMenu({
 	author,
 	setAuthor,
 }: {
-	author: string[];
-	setAuthor: Dispatch<SetStateAction<string[]>>;
+	author: string | null;
+	setAuthor: Dispatch<SetStateAction<string | null>>;
 }) {
 	const [allAuthors, setAllAuthors] = useState<MicroCMSListResponse<Author>>();
 
@@ -34,9 +33,9 @@ export function AuthorsMenu({
 	return (
 		<Select.Root
 			collection={collection}
-			value={author}
+			{...(author && { value: [author] })}
 			onValueChange={(e) => {
-				setAuthor(e.value);
+				setAuthor(e.value[0]);
 			}}
 		>
 			<Select.HiddenSelect />
@@ -53,11 +52,9 @@ export function AuthorsMenu({
 				<Select.Positioner>
 					<Select.Content>
 						{collection.items.map((author) => (
-							<Select.Item item={author} key={author.value} asChild>
-								<NextLink href={`/news?author=${author.value}`}>
-									{author.label}
-									<Select.ItemIndicator />
-								</NextLink>
+							<Select.Item item={author} key={author.value}>
+								{author.label}
+								<Select.ItemIndicator />
 							</Select.Item>
 						))}
 					</Select.Content>

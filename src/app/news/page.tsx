@@ -12,7 +12,7 @@ export default async function Page() {
 	return (
 		<Container py="4">
 			{posts.totalCount ? (
-				<Aria title="ニュース" icon={<FaNewspaper />} {...animation}>
+				<Aria title="全てのニュース" icon={<FaNewspaper />} {...animation}>
 					<SimpleGrid
 						columns={{
 							mdDown: 1,

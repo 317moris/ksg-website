@@ -1,6 +1,7 @@
 import {
 	Box,
 	Container,
+	Group,
 	HStack,
 	Image,
 	Link,
@@ -39,9 +40,9 @@ export function Header() {
 								<Box hideBelow="xl">埼玉県立越谷総合技術高等学校</Box>
 							</NextLink>
 						</Link>
-						<HStack>
+						<Group>
 							<Pages drawer={false} />
-						</HStack>
+						</Group>
 					</HStack>
 					<Settings />
 				</HStack>
