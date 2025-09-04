@@ -1,5 +1,6 @@
 import {
 	Card,
+	Container,
 	Flex,
 	Icon,
 	Link,
@@ -11,12 +12,11 @@ import {
 import NextLink from "next/link";
 import { FaRoad } from "react-icons/fa6";
 import { Aria } from "@/components/ui/aria";
-import { MainContainer } from "@/components/ui/main-container";
 import { courses } from "@/const/course";
 
 export default function Page() {
 	return (
-		<MainContainer>
+		<Container>
 			<Aria title="学科" icon={<FaRoad />}>
 				<SimpleGrid
 					columns={{
@@ -84,6 +84,6 @@ export default function Page() {
 					))}
 				</SimpleGrid>
 			</Aria>
-		</MainContainer>
+		</Container>
 	);
 }

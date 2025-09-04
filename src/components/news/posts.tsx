@@ -2,6 +2,7 @@ import {
 	Avatar,
 	Box,
 	Card,
+	Center,
 	Flex,
 	Link,
 	LinkBox,
@@ -12,7 +13,7 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import { FaAngleRight } from "react-icons/fa6";
 import type { Post } from "@/interfaces/post";
-import { DateFormatter } from "./date-formatter";
+import { DateFormatter } from "../date-formatter";
 
 export default function Posts({
 	posts,
@@ -21,11 +22,23 @@ export default function Posts({
 }) {
 	return posts.contents.map((post) => (
 		<LinkBox key={post.id}>
-			<Card.Root h="full" size="sm" flexDir="row">
+			<Card.Root
+				h="full"
+				size="sm"
+				flexDir="row"
+				divideX="1px"
+				bg={{ _hover: "bg.muted" }}
+				transition="backgrounds"
+			>
 				<Flex w="full" h="full" justify="space-between" direction="column">
 					<Box>
-						<Card.Header>
-							<Link asChild variant="underline" fontSize="sm">
+						<Card.Header flexDir="row" justifyContent="space-between">
+							<Link
+								asChild
+								fontSize="sm"
+								color={{ base: "fg.subtle", _hover: "fg" }}
+								transition="common"
+							>
 								<NextLink href={`/news?author=${post.author.id}`}>
 									<Avatar.Root size="xs">
 										<Avatar.Fallback name={post.author.name} />
@@ -43,6 +56,7 @@ export default function Posts({
 									{post.author.name}
 								</NextLink>
 							</Link>
+							<DateFormatter createdAt={post.createdAt} />
 						</Card.Header>
 						<Card.Body>
 							<Card.Title asChild>
@@ -55,13 +69,10 @@ export default function Posts({
 							) : null}
 						</Card.Body>
 					</Box>
-					<Card.Footer justifyContent="end">
-						<DateFormatter createdAt={post.createdAt} />
-					</Card.Footer>
 				</Flex>
-				<Flex justify="center" align="center" h="full" mx="2">
+				<Center p="1.5">
 					<FaAngleRight />
-				</Flex>
+				</Center>
 			</Card.Root>
 		</LinkBox>
 	));

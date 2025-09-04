@@ -1,20 +1,17 @@
-import { Heading, HStack, Image, Separator } from "@chakra-ui/react";
+import { Container, Heading, HStack, Image, Separator } from "@chakra-ui/react";
 import NextImage from "next/image";
 import { notFound } from "next/navigation";
 import { DateFormatter } from "@/components/date-formatter";
-import { MainContainer } from "@/components/ui/main-container";
 import { Prose } from "@/components/ui/prose";
 import type { Params } from "@/interfaces/params";
-import { getPostBySlug } from "@/lib/api";
+import { getDetail, getListIds } from "@/lib/api";
 
 export default async function Page(props: Params) {
 	const params = await props.params;
-	const post = await getPostBySlug(params.slug);
-
-	if (!post) return notFound();
+	const post = await getDetail(params.slug).catch(() => notFound());
 
 	return (
-		<MainContainer maxW="4xl" py="10" spaceY="10">
+		<Container maxW="4xl" py="10" spaceY="10">
 			{post.coverImage ? (
 				<Image asChild w="full" rounded="lg">
 					<NextImage
@@ -32,10 +29,12 @@ export default async function Page(props: Params) {
 			<Separator w="full" />
 			{/** biome-ignore lint/security/noDangerouslySetInnerHtml: <microCMSからのHTMLであるため> */}
 			<Prose w="full" dangerouslySetInnerHTML={{ __html: post.content }} />
-		</MainContainer>
+		</Container>
 	);
 }
 
-export function generateStaticParams() {
-	return [];
+export async function generateStaticParams() {
+	return (await getListIds()).map((id) => ({
+		slug: id,
+	}));
 }
