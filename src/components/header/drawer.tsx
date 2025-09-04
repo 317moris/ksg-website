@@ -38,7 +38,12 @@ export function HeaderDrawer() {
 						<Drawer.Body>
 							<Flex direction="column" gap="2">
 								<Flex w="full" justify="center">
-									<Link asChild fontWeight="bold" my="4">
+									<Link
+										asChild
+										fontWeight="bold"
+										my="4"
+										onClick={() => setOpen(false)}
+									>
 										<NextLink href="/">
 											<HStack>
 												<Image asChild boxSize={9} rounded="full">

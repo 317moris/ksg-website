@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, HStack, Menu, Portal } from "@chakra-ui/react";
+import {
+	Button,
+	type ButtonProps,
+	HStack,
+	Icon,
+	Menu,
+	Portal,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import type { Dispatch, RefObject, SetStateAction } from "react";
@@ -8,11 +15,11 @@ import {
 	Fa1,
 	Fa2,
 	Fa3,
+	FaAngleDown,
+	FaAngleRight,
 	FaBook,
 	FaBookBookmark,
 	FaCalendar,
-	FaCaretDown,
-	FaCaretRight,
 	FaComment,
 	FaGraduationCap,
 	FaHand,
@@ -123,15 +130,14 @@ export const pages: PageProps[] = [
 	},
 ];
 
-export function Pages({
-	drawer,
-	setOpen,
-	contentRef,
-}: {
-	drawer: boolean;
-	setOpen?: Dispatch<SetStateAction<boolean>>;
-	contentRef?: RefObject<HTMLDivElement | null>;
-}) {
+export function Pages(
+	props: ButtonProps & {
+		drawer: boolean;
+		setOpen?: Dispatch<SetStateAction<boolean>>;
+		contentRef?: RefObject<HTMLDivElement | null>;
+	},
+) {
+	const { drawer, setOpen, contentRef, ...buttonProps } = props;
 	const path = usePathname();
 
 	return pages.map((page) => {
@@ -146,17 +152,22 @@ export function Pages({
 			return (
 				<Button
 					key={page.name}
-					variant={isActive ? "surface" : "outline"}
+					variant="outline"
 					asChild
-					color={isActive ? "green.fg" : "fg.subtle"}
+					color={isActive ? "green.fg" : "fg.muted"}
 					justifyContent={drawer ? "space-between" : "center"}
 					{...(setOpen && { onClick: () => setOpen(false) })}
+					{...buttonProps}
 				>
 					<NextLink href={page.href}>
 						<HStack>
 							<page.icon /> {page.name}
 						</HStack>
-						{page.hasHome ? <FaCaretRight /> : null}
+						{page.hasHome ? (
+							<Icon size="sm">
+								<FaAngleRight />
+							</Icon>
+						) : null}
 					</NextLink>
 				</Button>
 			);
@@ -180,20 +191,23 @@ export function Pages({
 				<Menu.Trigger asChild>
 					<Button
 						key={page.name}
-						variant={isActive ? "surface" : "outline"}
-						color={isActive ? "green.fg" : "fg.subtle"}
+						variant="outline"
+						color={isActive ? "green.fg" : "fg.muted"}
 						justifyContent={drawer ? "space-between" : "center"}
+						{...buttonProps}
 					>
 						<HStack>
 							<page.icon />
 							{page.name}
 						</HStack>
-						<FaCaretDown />
+						<Icon size="sm">
+							<FaAngleDown />
+						</Icon>
 					</Button>
 				</Menu.Trigger>
 				<Portal container={contentRef}>
 					<Menu.Positioner>
-						<Menu.Content>
+						<Menu.Content divideY="1px" divideColor="border.muted">
 							{children.map((child) => {
 								let isActiveChild = false;
 								const childPath = `${page.href}/${child.href}`;

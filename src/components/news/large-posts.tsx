@@ -1,15 +1,13 @@
 import {
-	Avatar,
-	Box,
 	Card,
 	Center,
 	Heading,
 	HStack,
 	Image,
-	Link,
 	LinkBox,
 	LinkOverlay,
 	StackSeparator,
+	Text,
 } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextImage from "next/image";
@@ -27,7 +25,6 @@ export default function LargePosts({
 		<LinkBox key={post.id}>
 			<Card.Root
 				h="full"
-				size="lg"
 				bg={{ _hover: "bg.muted" }}
 				transition="backgrounds"
 				overflow="hidden"
@@ -44,22 +41,29 @@ export default function LargePosts({
 						/>
 					</Image>
 				) : (
-					<Center pos="relative" h="full" p="8" bg="bg">
+					<Center
+						pos="relative"
+						h="full"
+						p="8"
+						bg="bg"
+						aspectRatio="ultrawide"
+						overflow="clip"
+					>
 						<Heading fontWeight="bolder" color="fg.subtle">
 							Empty
 						</Heading>
-						<Heading
+						<Text
 							fontWeight="black"
 							fontStyle="italic"
-							size="7xl"
 							pos="absolute"
 							color="bg"
-							bottom={-1}
+							bottom={0}
 							right={0}
-							css={{ "text-stroke": "1px {colors.fg}" }}
+							paintOrder="stroke"
+							stroke="fg.muted"
 						>
 							KSG
-						</Heading>
+						</Text>
 					</Center>
 				)}
 				<HStack
@@ -68,44 +72,17 @@ export default function LargePosts({
 					separator={<StackSeparator />}
 					gap="0"
 				>
-					<Box w="full">
-						<Card.Header flexDir="row" justifyContent="space-between">
-							<Link
-								asChild
-								fontSize="sm"
-								color={{ base: "fg.subtle", _hover: "fg" }}
-								transition="common"
-							>
-								<NextLink href={`/news?author=${post.author.id}`}>
-									<Avatar.Root size="xs">
-										<Avatar.Fallback name={post.author.name} />
-										{post.author.icon && (
-											<Avatar.Image asChild>
-												<NextImage
-													src={post.author.icon.url}
-													alt={post.author.icon.alt ?? post.author.name}
-													width={post.author.icon.width}
-													height={post.author.icon.height}
-												/>
-											</Avatar.Image>
-										)}
-									</Avatar.Root>
-									{post.author.name}
-								</NextLink>
-							</Link>
-							<DateFormatter createdAt={post.createdAt} />
-						</Card.Header>
-						<Card.Body>
-							<Card.Title asChild>
-								<LinkOverlay asChild>
-									<NextLink href={`/news/${post.id}`}>{post.title}</NextLink>
-								</LinkOverlay>
-							</Card.Title>
-							{post.subtitle ? (
-								<Card.Description>{post.subtitle}</Card.Description>
-							) : null}
-						</Card.Body>
-					</Box>
+					<Card.Body>
+						<DateFormatter date={post.createdAt} />
+						<Card.Title asChild>
+							<LinkOverlay asChild>
+								<NextLink href={`/news/${post.id}`}>{post.title}</NextLink>
+							</LinkOverlay>
+						</Card.Title>
+						{post.subtitle ? (
+							<Card.Description>{post.subtitle}</Card.Description>
+						) : null}
+					</Card.Body>
 					<Center p="1.5">
 						<FaAngleRight />
 					</Center>

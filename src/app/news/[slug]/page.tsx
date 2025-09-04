@@ -24,7 +24,7 @@ export default async function Page(props: Params) {
 			) : null}
 			<HStack w="full" align="end" justify="space-between">
 				<Heading size="4xl">{post.title}</Heading>
-				<DateFormatter createdAt={post.createdAt} />
+				<DateFormatter date={post.createdAt} />
 			</HStack>
 			<Separator w="full" />
 			{/** biome-ignore lint/security/noDangerouslySetInnerHtml: <microCMSからのHTMLであるため> */}

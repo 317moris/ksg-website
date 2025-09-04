@@ -1,56 +1,40 @@
 "use client";
 
-import {
-	ButtonGroup,
-	IconButton,
-	Image,
-	Pagination,
-	Presence,
-	VStack,
-} from "@chakra-ui/react";
+import { Bleed, Center, Heading, Presence } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 const images = [
 	{
-		alt: "体育館",
-		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/126/big",
+		alt: "就職指導\n就職活動",
+		src: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/1/12606/big",
 	},
 	{
-		alt: "新幹線の模型",
-		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/125/big",
+		alt: "面接練習",
+		src: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/1/12559/big",
 	},
 	{
-		alt: "服デの発表",
-		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/124/big",
+		alt: "中間考査",
+		src: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/1/12419/big",
 	},
 	{
-		alt: "文化祭の準備？",
-		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/123/big",
+		alt: "食物調理科\nパン作り",
+		src: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/1/12531/big",
 	},
 	{
-		alt: "鳥人間シミュレーター",
-		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/121/big",
+		alt: "卒業生による\n進路説明会",
+		src: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/1/12449/big",
+	},
+	{
+		alt: "服飾デザイン科\n外部講師による授業",
+		src: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/1/12448/big",
+	},
+	{
+		alt: "1年生\n遠足",
+		src: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/1/12424/big",
 	},
 	{
 		alt: "校舎",
 		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/120/big",
-	},
-	{
-		alt: "食物調理科の実践授業",
-		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/119/big",
-	},
-	{
-		alt: "体育祭",
-		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/118/big",
-	},
-	{
-		alt: "あいさつ運動",
-		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/117/big",
-	},
-	{
-		alt: "入学式",
-		src: "https://ksg-h.spec.ed.jp/photo_albums/photo_album_photos/photo/426/5fdba2b918b8c04513cca51cc196c9f0/116/big",
 	},
 ];
 
@@ -73,48 +57,75 @@ export function TopImage() {
 	}, [changedImage]);
 
 	return (
-		<VStack w="full">
+		<Center zIndex={0} pos="absolute" overflow="hidden" w="vw" h="40rem">
 			{images.map((image, i) => {
 				const showing = i === imageIndex;
 
 				return (
 					<Presence
+						pos="absolute"
 						key={image.src}
 						present={showing}
 						_open={{
-							animation: "ease-in",
+							animation: "ease-out",
 							animationDuration: "slowest",
 							animationName: "fade-in",
 						}}
+						_closed={{
+							animation: "ease-out",
+							animationDuration: "slowest",
+							animationName: "fade-out",
+						}}
+						bgImage={`url(${image.src})`}
+						bgPos="center"
+						bgSize="cover"
 						w="full"
-						rounded="lg"
-						overflow="hidden"
-						borderWidth={1}
+						h="full"
+					/>
+				);
+			})}
+			<Bleed
+				pos="absolute"
+				w="full"
+				h="full"
+				bgGradient="to-b"
+				gradientFrom="bg/50"
+				gradientTo="bg"
+			/>
+			{images.map((image, i) => {
+				const showing = i === imageIndex;
+
+				return (
+					<Presence
+						pos="absolute"
+						top={0}
+						right={6}
+						key={image.src}
+						present={showing}
+						_open={{
+							animation: "ease-out",
+							animationDuration: "slowest",
+							animationName: "fade-in",
+						}}
+						_closed={{
+							animation: "ease-out",
+							animationDuration: "slowest",
+							animationName: "fade-out",
+						}}
 					>
-						<Image h="sm" w="full" src={image.src} alt={image.alt} />
+						<Heading
+							textAlign="end"
+							size="7xl"
+							color="green.fg/10"
+							fontStyle="italic"
+							fontWeight="black"
+							whiteSpace="pre-wrap"
+						>
+							{image.alt}
+						</Heading>
 					</Presence>
 				);
 			})}
-			<Pagination.Root
-				count={images.length}
-				pageSize={1}
-				page={imageIndex + 1}
-				onPageChange={(e) => setImageIndex(e.page - 1)}
-			>
-				<ButtonGroup variant="ghost" size="sm">
-					<Pagination.PrevTrigger asChild>
-						<IconButton onClick={() => setChangedImage(true)}>
-							<FaAngleLeft />
-						</IconButton>
-					</Pagination.PrevTrigger>
-					<Pagination.PageText />
-					<Pagination.NextTrigger asChild>
-						<IconButton onClick={() => setChangedImage(true)}>
-							<FaAngleRight />
-						</IconButton>
-					</Pagination.NextTrigger>
-				</ButtonGroup>
-			</Pagination.Root>
-		</VStack>
+		</Center>
 	);
 }

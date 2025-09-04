@@ -6,6 +6,7 @@ import {
 	Link,
 	LinkBox,
 	LinkOverlay,
+	Separator,
 	SimpleGrid,
 	Text,
 } from "@chakra-ui/react";
@@ -16,7 +17,7 @@ import { courses } from "@/const/course";
 
 export default function Page() {
 	return (
-		<Container>
+		<Container py="8">
 			<Aria title="学科" icon={<FaRoad />}>
 				<SimpleGrid
 					columns={{
@@ -29,12 +30,16 @@ export default function Page() {
 					{courses.map((course) => (
 						<LinkBox key={course.name}>
 							<Card.Root
-								bg={`${course.color}.subtle`}
+								bg={{
+									base: `${course.color}.subtle`,
+									_hover: `${course.color}.muted`,
+								}}
 								borderColor={`${course.color}.emphasized`}
 								overflow="hidden"
 								h="full"
 								className={course.font.font.variable}
 								fontFamily={`var(${course.font.variable}), sans-serif`}
+								transition="backgrounds"
 							>
 								<Flex
 									h="xs"
@@ -54,6 +59,7 @@ export default function Page() {
 										<course.icon />
 									</Icon>
 								</Flex>
+								<Separator borderColor={`${course.color}.emphasized`} />
 								<Card.Header alignItems="center">
 									<LinkOverlay asChild>
 										<Link

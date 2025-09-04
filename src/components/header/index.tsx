@@ -1,7 +1,6 @@
 import {
 	Box,
 	Container,
-	Group,
 	HStack,
 	Image,
 	Link,
@@ -10,7 +9,7 @@ import {
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { HeaderDrawer } from "./drawer";
-import { Pages } from "./pages";
+import { PagesGroup } from "./pages-group";
 import { Settings } from "./settings";
 
 export function Header() {
@@ -40,9 +39,7 @@ export function Header() {
 								<Box hideBelow="xl">埼玉県立越谷総合技術高等学校</Box>
 							</NextLink>
 						</Link>
-						<Group>
-							<Pages drawer={false} />
-						</Group>
+						<PagesGroup />
 					</HStack>
 					<Settings />
 				</HStack>
