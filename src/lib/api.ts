@@ -5,7 +5,7 @@ export async function getAllPosts() {
 	const posts = await cmsClient.getList<Post>({
 		endpoint: "news",
 		queries: {
-			fields: "id,title,subtitle,createdAt,author",
+			fields: "id,title,subtitle,createdAt,author,coverImage",
 		},
 		customRequestInit: {
 			next: {

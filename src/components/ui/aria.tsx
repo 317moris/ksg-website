@@ -12,7 +12,7 @@ export function Aria(props: {
 		<VStack w="full" gap="4" {...restProps}>
 			<HStack w="full">
 				<Separator variant="dashed" borderColor="border.emphasized" flex="1" />
-				<HStack flexShrink="0" mx="2">
+				<HStack mx="2">
 					<Icon boxSize="6">{icon}</Icon>
 					<Heading size="2xl">{title}</Heading>
 				</HStack>

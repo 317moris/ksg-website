@@ -5,11 +5,9 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 export function Search({
-	searchWord,
 	setSearchWord,
 }: {
-	searchWord: string;
-	setSearchWord: Dispatch<SetStateAction<string>>;
+	setSearchWord: Dispatch<SetStateAction<string | null>>;
 }) {
 	const [currentSearchWord, setCurrentSearchWord] = useState("");
 	const [searchTimeout, setSearchTimeoutId] = useState<NodeJS.Timeout>();
@@ -23,7 +21,7 @@ export function Search({
 
 					clearTimeout(searchTimeout);
 					const searchTimeoutId = setTimeout(() => {
-						// setSearchWord(currentSearchWord);
+						setSearchWord(e.target.value || null);
 					}, 500);
 
 					setSearchTimeoutId(searchTimeoutId);
