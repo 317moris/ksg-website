@@ -1,10 +1,9 @@
 import {
 	Avatar,
+	Box,
 	Card,
 	Center,
-	Center,
 	Flex,
-	Image,
 	Link,
 	LinkBox,
 	LinkOverlay,
@@ -73,7 +72,6 @@ export default function Posts({
 				</Flex>
 				<Center p="1.5">
 					<FaAngleRight />
-				</Center>
 				</Center>
 			</Card.Root>
 		</LinkBox>
