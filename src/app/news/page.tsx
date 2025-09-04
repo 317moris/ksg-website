@@ -1,29 +1,34 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { Container, SimpleGrid } from "@chakra-ui/react";
 import { FaNewspaper } from "react-icons/fa6";
-import Posts from "@/components/posts";
+import { animation } from "@/animation";
+import Posts from "@/components/news/posts";
 import { Aria } from "@/components/ui/aria";
-import { MainContainer } from "@/components/ui/main-container";
-import { getAllPosts } from "@/lib/api";
+import { EmptyState } from "@/components/ui/empty-state";
+import { getList } from "@/lib/api";
 
 export default async function Page() {
-	const posts = await getAllPosts();
+	const posts = await getList();
 
 	return (
-		<MainContainer>
-			<Aria title="全てのニュース" icon={<FaNewspaper />}>
-				<SimpleGrid
-					columns={{
-						mdDown: 1,
-						md: 2,
-						lg: 3,
-						xl: 4,
-					}}
-					gap="2"
-					w="full"
-				>
-					<Posts posts={posts} />
-				</SimpleGrid>
-			</Aria>
-		</MainContainer>
+		<Container py="4">
+			{posts.totalCount ? (
+				<Aria title="全てのニュース" icon={<FaNewspaper />} {...animation}>
+					<SimpleGrid
+						columns={{
+							mdDown: 1,
+							md: 2,
+							lg: 3,
+							xl: 4,
+						}}
+						gap="2"
+						w="full"
+					>
+						<Posts posts={posts} />
+					</SimpleGrid>
+				</Aria>
+			) : (
+				<EmptyState title="何も無い" />
+			)}
+		</Container>
 	);
 }

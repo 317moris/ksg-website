@@ -8,11 +8,11 @@ import {
 	Fa1,
 	Fa2,
 	Fa3,
-	FaAngleDown,
 	FaBook,
 	FaBookBookmark,
 	FaCalendar,
 	FaCaretDown,
+	FaCaretRight,
 	FaComment,
 	FaGraduationCap,
 	FaHand,
@@ -156,12 +156,12 @@ export function Pages({
 						<HStack>
 							<page.icon /> {page.name}
 						</HStack>
-						{page.hasHome ? <FaAngleDown /> : null}
+						{page.hasHome ? <FaCaretRight /> : null}
 					</NextLink>
 				</Button>
 			);
 
-		if (!page.children) return;
+		if (!page.children) return <>{}</>;
 
 		let children: PageChildrenProps[];
 		if (page.hasHome) {

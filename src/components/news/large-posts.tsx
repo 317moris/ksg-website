@@ -1,21 +1,24 @@
 import {
 	Avatar,
+	Box,
 	Card,
 	Center,
-	Flex,
+	Heading,
+	HStack,
 	Image,
 	Link,
 	LinkBox,
 	LinkOverlay,
+	StackSeparator,
 } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { FaAngleRight } from "react-icons/fa6";
 import type { Post } from "@/interfaces/post";
-import { DateFormatter } from "./date-formatter";
+import { DateFormatter } from "../date-formatter";
 
-export default function Posts({
+export default function LargePosts({
 	posts,
 }: {
 	posts: MicroCMSListResponse<Post>;
@@ -24,29 +27,54 @@ export default function Posts({
 		<LinkBox key={post.id}>
 			<Card.Root
 				h="full"
-				size="sm"
-				flexDir="row"
-				bg={{ base: "bg.panel", _hover: "bg.muted" }}
+				size="lg"
+				bg={{ _hover: "bg.muted" }}
+				transition="backgrounds"
+				overflow="hidden"
+				justifyContent="end"
+				divideY="1px"
 			>
-				{post.coverImage && (
-					<Image asChild aspectRatio={4 / 3} maxW="xs" w="full">
+				{post.coverImage ? (
+					<Image asChild aspectRatio="ultrawide">
 						<NextImage
 							src={post.coverImage.url}
-							alt={post.title}
+							alt={post.coverImage.alt ?? post.title}
 							width={post.coverImage.width}
 							height={post.coverImage.height}
 						/>
 					</Image>
+				) : (
+					<Center pos="relative" h="full" p="8" bg="bg">
+						<Heading fontWeight="bolder" color="fg.subtle">
+							Empty
+						</Heading>
+						<Heading
+							fontWeight="black"
+							fontStyle="italic"
+							size="7xl"
+							pos="absolute"
+							color="bg"
+							bottom={-1}
+							right={0}
+							css={{ "text-stroke": "1px {colors.fg}" }}
+						>
+							KSG
+						</Heading>
+					</Center>
 				)}
-				<Flex w="full" h="full" justify="space-between" direction="column">
-					<div>
-						<Card.Header>
+				<HStack
+					justify="space-between"
+					direction="column"
+					separator={<StackSeparator />}
+					gap="0"
+				>
+					<Box w="full">
+						<Card.Header flexDir="row" justifyContent="space-between">
 							<Link
 								asChild
-								variant="underline"
 								fontSize="sm"
-								color={{ _hover: "green.fg" }}
-								w="fit"
+								color={{ base: "fg.subtle", _hover: "fg" }}
+								transition="common"
 							>
 								<NextLink href={`/news?author=${post.author.id}`}>
 									<Avatar.Root size="xs">
@@ -65,6 +93,7 @@ export default function Posts({
 									{post.author.name}
 								</NextLink>
 							</Link>
+							<DateFormatter createdAt={post.createdAt} />
 						</Card.Header>
 						<Card.Body>
 							<Card.Title asChild>
@@ -76,14 +105,11 @@ export default function Posts({
 								<Card.Description>{post.subtitle}</Card.Description>
 							) : null}
 						</Card.Body>
-					</div>
-					<Card.Footer justifyContent="end">
-						<DateFormatter createdAt={post.createdAt} />
-					</Card.Footer>
-				</Flex>
-				<Center borderLeftWidth={1} p="2">
-					<FaAngleRight />
-				</Center>
+					</Box>
+					<Center p="1.5">
+						<FaAngleRight />
+					</Center>
+				</HStack>
 			</Card.Root>
 		</LinkBox>
 	));

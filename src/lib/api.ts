@@ -1,11 +1,11 @@
 import type { Post } from "@/interfaces/post";
 import { cmsClient } from "./microcms";
 
-export async function getAllPosts() {
+export async function getList() {
 	const posts = await cmsClient.getList<Post>({
 		endpoint: "news",
 		queries: {
-			fields: "id,title,subtitle,createdAt,author,coverImage",
+			fields: "id,title,subtitle,createdAt,author,coverImage,publishedAt",
 		},
 		customRequestInit: {
 			next: {
@@ -21,7 +21,7 @@ export async function getRecentPosts() {
 	const posts = await cmsClient.getList<Post>({
 		endpoint: "news",
 		queries: {
-			fields: "id,title,subtitle,createdAt,author",
+			fields: "id,title,coverImage,subtitle,createdAt,author,publishedAt",
 			limit: 8,
 		},
 		customRequestInit: {
@@ -34,7 +34,7 @@ export async function getRecentPosts() {
 	return posts;
 }
 
-export async function getPostBySlug(slug: string) {
+export async function getDetail(slug: string) {
 	const post = await cmsClient.getListDetail<Post>({
 		endpoint: "news",
 		contentId: slug,
@@ -46,4 +46,10 @@ export async function getPostBySlug(slug: string) {
 	});
 
 	return post;
+}
+
+export async function getListIds() {
+	return await cmsClient.getAllContentIds({
+		endpoint: "news",
+	});
 }
