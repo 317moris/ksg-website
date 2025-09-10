@@ -7,7 +7,7 @@ export default function Layout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<Container maxW="8xl" as="main" centerContent>
+		<Container centerContent spaceY="4" py="8">
 			<Selecter />
 			{children}
 		</Container>
