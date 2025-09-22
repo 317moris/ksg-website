@@ -61,7 +61,7 @@ export function TopImage() {
 			zIndex={0}
 			pos="absolute"
 			overflow="hidden"
-			w="vw"
+			w="full"
 			h="40rem"
 			userSelect="none"
 		>
