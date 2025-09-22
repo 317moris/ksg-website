@@ -7,9 +7,10 @@ import {
 	Icon,
 	Menu,
 	Portal,
+	Tabs,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { Dispatch, RefObject, SetStateAction } from "react";
 import {
 	Fa1,
@@ -246,4 +247,43 @@ export function Pages(
 			</Menu.Root>
 		);
 	});
+}
+
+export function LinkTabs() {
+	const router = useRouter();
+	const path = usePathname();
+	const current = pages.find((page) => {
+		let isActive = false;
+		if (
+			page.href === path ||
+			(page.href !== "/" && path.split("/")[1] === page.href.slice(1))
+		)
+			isActive = true;
+		return isActive;
+	});
+
+	return (
+		<Tabs.Root
+			navigate={({ value }) => router.push(value)}
+			defaultValue={current ? `/${current?.href.split("/")[1]}` : "/"}
+			value={current ? `/${current?.href.split("/")[1]}` : "/"}
+		>
+			<Tabs.List>
+				{pages.map((page) => {
+					return (
+						<Tabs.Trigger key={page.href} value={page.href} asChild>
+							<NextLink href={page.href}>
+								<page.icon /> {page.name}
+								{page.hasHome ? (
+									<Icon size="sm">
+										<FaAngleRight />
+									</Icon>
+								) : null}
+							</NextLink>
+						</Tabs.Trigger>
+					);
+				})}
+			</Tabs.List>
+		</Tabs.Root>
+	);
 }

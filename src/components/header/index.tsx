@@ -9,7 +9,7 @@ import {
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { HeaderDrawer } from "./drawer";
-import { PagesGroup } from "./pages-group";
+import { LinkTabs } from "./pages";
 import { Settings } from "./settings";
 
 export function Header() {
@@ -39,7 +39,7 @@ export function Header() {
 								<Box hideBelow="xl">埼玉県立越谷総合技術高等学校</Box>
 							</NextLink>
 						</Link>
-						<PagesGroup />
+						<LinkTabs />
 					</HStack>
 					<Settings />
 				</HStack>
