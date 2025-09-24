@@ -13,7 +13,7 @@ export type PageProps = {
 	href: string;
 	hasHome?: boolean;
 	icon: IconType;
-	children?: PageChildrenProps[];
+	children?: PageChildrenProps[] | CourseProps[];
 };
 
 export type CourseProps = {

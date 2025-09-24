@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { HeaderDrawer } from "./drawer";
 import { LinkTabs } from "./pages";
 import { Settings } from "./settings";
 
@@ -21,11 +20,13 @@ export function Header() {
 			zIndex="docked"
 			top={0}
 			bg="bg"
+			hideBelow="sm"
+			textWrap="nowrap"
+			overflowX="hidden"
 		>
-			<Container>
-				<HStack justify="space-between" py={2}>
-					<HeaderDrawer />
-					<HStack hideBelow="lg" gap={4} separator={<StackSeparator />}>
+			<Container overflowX="hidden">
+				<HStack py={2} overflowX="hidden" justify="space-between">
+					<HStack gap={4} separator={<StackSeparator />} overflowX="hidden">
 						<Link asChild fontWeight="bold">
 							<NextLink href="/">
 								<Image asChild boxSize={9} rounded="full">
@@ -36,10 +37,12 @@ export function Header() {
 										height={600}
 									/>
 								</Image>
-								<Box hideBelow="xl">埼玉県立越谷総合技術高等学校</Box>
+								埼玉県立越谷総合技術高等学校
 							</NextLink>
 						</Link>
-						<LinkTabs />
+						<Box overflowX="hidden">
+							<LinkTabs />
+						</Box>
 					</HStack>
 					<Settings />
 				</HStack>

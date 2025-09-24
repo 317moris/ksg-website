@@ -4,7 +4,6 @@ import {
 	Button,
 	type ButtonProps,
 	HStack,
-	Icon,
 	Menu,
 	Portal,
 	Tabs,
@@ -35,7 +34,11 @@ import {
 	FaVolleyball,
 } from "react-icons/fa6";
 import { courses } from "@/const/course";
-import type { PageChildrenProps, PageProps } from "@/interfaces/pages";
+import type {
+	CourseProps,
+	PageChildrenProps,
+	PageProps,
+} from "@/interfaces/pages";
 
 export const pages: PageProps[] = [
 	{
@@ -129,7 +132,16 @@ export const pages: PageProps[] = [
 		href: "/club",
 		icon: FaVolleyball,
 	},
-];
+].map((page) => {
+	let children: PageChildrenProps[] | CourseProps[] | undefined = page.children;
+
+	if (page.hasHome) {
+		children = [{ name: "トップ", href: "", icon: FaHouse }, ...page.children];
+	}
+
+	page.children = children;
+	return page;
+});
 
 export function Pages(
 	props: ButtonProps & {
@@ -164,25 +176,10 @@ export function Pages(
 						<HStack>
 							<page.icon /> {page.name}
 						</HStack>
-						{page.hasHome ? (
-							<Icon size="sm">
-								<FaAngleRight />
-							</Icon>
-						) : null}
+						{page.hasHome ? <FaAngleRight /> : null}
 					</NextLink>
 				</Button>
 			);
-
-		if (!page.children) return <>{}</>;
-
-		let children: PageChildrenProps[];
-		if (page.hasHome) {
-			children = [{ name: "トップ", href: "", icon: FaHouse }].concat(
-				page.children,
-			);
-		} else {
-			children = page.children;
-		}
 
 		return (
 			<Menu.Root
@@ -201,15 +198,13 @@ export function Pages(
 							<page.icon />
 							{page.name}
 						</HStack>
-						<Icon size="sm">
-							<FaAngleDown />
-						</Icon>
+						<FaAngleDown />
 					</Button>
 				</Menu.Trigger>
 				<Portal container={contentRef}>
 					<Menu.Positioner>
 						<Menu.Content divideY="1px" divideColor="border.muted">
-							{children.map((child) => {
+							{page.children.map((child) => {
 								let isActiveChild = false;
 								const childPath = `${page.href}/${child.href}`;
 
@@ -267,20 +262,68 @@ export function LinkTabs() {
 			navigate={({ value }) => router.push(value)}
 			defaultValue={current ? `/${current?.href.split("/")[1]}` : "/"}
 			value={current ? `/${current?.href.split("/")[1]}` : "/"}
+			overflowX="hidden"
 		>
-			<Tabs.List>
+			<Tabs.List overflowX="auto">
 				{pages.map((page) => {
+					if (!page.children || (page.hasHome && current?.href !== page.href))
+						return (
+							<Tabs.Trigger key={page.href} value={page.href} asChild>
+								<NextLink href={page.href}>
+									<page.icon />
+									{page.name}
+									{page.hasHome ? <FaAngleRight /> : null}
+								</NextLink>
+							</Tabs.Trigger>
+						);
+
 					return (
-						<Tabs.Trigger key={page.href} value={page.href} asChild>
-							<NextLink href={page.href}>
-								<page.icon /> {page.name}
-								{page.hasHome ? (
-									<Icon size="sm">
-										<FaAngleRight />
-									</Icon>
-								) : null}
-							</NextLink>
-						</Tabs.Trigger>
+						<Menu.Root key={page.name}>
+							<Menu.Trigger asChild>
+								<Tabs.Trigger value={page.href}>
+									<page.icon />
+									{page.name}
+									<FaAngleDown />
+								</Tabs.Trigger>
+							</Menu.Trigger>
+							<Portal>
+								<Menu.Positioner>
+									<Menu.Content divideY="1px" divideColor="border.muted">
+										{page.children.map((child) => {
+											let isActiveChild = false;
+											const childPath = `${page.href}/${child.href}`;
+
+											if (
+												childPath === path ||
+												(childPath !== "/" && path.split("/")[2] === childPath)
+											)
+												isActiveChild = true;
+
+											return (
+												<Menu.Item
+													key={child.name}
+													color={
+														isActiveChild
+															? child.color
+																? `${child.color}.fg`
+																: "green.fg"
+															: "fg.muted"
+													}
+													borderWidth={isActiveChild ? 1 : 0}
+													asChild
+													value={childPath}
+												>
+													<NextLink href={`${page.href}/${child.href}`}>
+														<child.icon />
+														{child.name}
+													</NextLink>
+												</Menu.Item>
+											);
+										})}
+									</Menu.Content>
+								</Menu.Positioner>
+							</Portal>
+						</Menu.Root>
 					);
 				})}
 			</Tabs.List>
