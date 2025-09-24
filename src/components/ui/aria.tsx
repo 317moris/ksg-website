@@ -1,12 +1,5 @@
-import {
-	Box,
-	BoxProps,
-	Heading,
-	HStack,
-	Icon,
-	Separator,
-} from "@chakra-ui/react";
-import type { JSX, RefAttributes } from "react";
+import { Box, BoxProps, HStack, Separator, Text } from "@chakra-ui/react";
+import type { JSX } from "react";
 
 export function Aria(
 	props: BoxProps & {
@@ -15,19 +8,23 @@ export function Aria(
 		children: JSX.Element | JSX.Element[];
 	},
 ) {
+	const { title, icon, children, ...boxProps } = props;
+
 	return (
-		<Box spaceY="4" {...props} title={undefined}>
+		<Box spaceY="4" {...boxProps}>
 			<HStack overflow="hidden">
-				<Separator variant="dashed" borderColor="border.emphasized" flex="1" />
-				<HStack mx="2">
-					<Icon boxSize="6">{props.icon}</Icon>
-					<Heading size="2xl" overflowWrap="anywhere">
-						{props.title}
-					</Heading>
+				<HStack
+					gap="3"
+					mx="2"
+					fontSize={["2xl", "3xl", "4xl"]}
+					fontWeight="bolder"
+				>
+					{icon}
+					<Text>{title}</Text>
 				</HStack>
 				<Separator variant="dashed" borderColor="border.emphasized" flex="1" />
 			</HStack>
-			{props.children}
+			{children}
 		</Box>
 	);
 }
