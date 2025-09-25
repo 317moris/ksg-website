@@ -4,12 +4,12 @@ import {
 	Button,
 	type ButtonProps,
 	HStack,
-	Icon,
 	Menu,
 	Portal,
+	Tabs,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { Dispatch, RefObject, SetStateAction } from "react";
 import {
 	Fa1,
@@ -26,7 +26,6 @@ import {
 	FaHandPointUp,
 	FaHouse,
 	FaInfo,
-	FaLocationPin,
 	FaPenFancy,
 	FaRoad,
 	FaSeedling,
@@ -34,7 +33,11 @@ import {
 	FaVolleyball,
 } from "react-icons/fa6";
 import { courses } from "@/const/course";
-import type { PageChildrenProps, PageProps } from "@/interfaces/pages";
+import type {
+	CourseProps,
+	PageChildrenProps,
+	PageProps,
+} from "@/interfaces/pages";
 
 export const pages: PageProps[] = [
 	{
@@ -56,11 +59,6 @@ export const pages: PageProps[] = [
 				name: "沿革",
 				href: "school-history",
 				icon: FaTimeline,
-			},
-			{
-				name: "アクセス",
-				href: "location",
-				icon: FaLocationPin,
 			},
 			{
 				name: "生徒の成長物語",
@@ -128,7 +126,16 @@ export const pages: PageProps[] = [
 		href: "/club",
 		icon: FaVolleyball,
 	},
-];
+].map((page) => {
+	let children: PageChildrenProps[] | CourseProps[] | undefined = page.children;
+
+	if (page.hasHome) {
+		children = [{ name: "トップ", href: "", icon: FaHouse }, ...page.children];
+	}
+
+	page.children = children;
+	return page;
+});
 
 export function Pages(
 	props: ButtonProps & {
@@ -152,9 +159,11 @@ export function Pages(
 			return (
 				<Button
 					key={page.name}
-					variant="outline"
+					variant={isActive ? "solid" : "outline"}
+					borderColor={isActive ? "border.emphasized" : "border"}
 					asChild
-					color={isActive ? "green.fg" : "fg.muted"}
+					colorPalette={isActive ? "green" : undefined}
+					color={isActive ? undefined : "fg.muted"}
 					justifyContent={drawer ? "space-between" : "center"}
 					{...(setOpen && { onClick: () => setOpen(false) })}
 					{...buttonProps}
@@ -163,25 +172,10 @@ export function Pages(
 						<HStack>
 							<page.icon /> {page.name}
 						</HStack>
-						{page.hasHome ? (
-							<Icon size="sm">
-								<FaAngleRight />
-							</Icon>
-						) : null}
+						{page.hasHome ? <FaAngleRight /> : null}
 					</NextLink>
 				</Button>
 			);
-
-		if (!page.children) return <>{}</>;
-
-		let children: PageChildrenProps[];
-		if (page.hasHome) {
-			children = [{ name: "トップ", href: "", icon: FaHouse }].concat(
-				page.children,
-			);
-		} else {
-			children = page.children;
-		}
 
 		return (
 			<Menu.Root
@@ -191,8 +185,9 @@ export function Pages(
 				<Menu.Trigger asChild>
 					<Button
 						key={page.name}
-						variant="outline"
-						color={isActive ? "green.fg" : "fg.muted"}
+						variant={isActive ? "solid" : "outline"}
+						colorPalette={isActive ? "green" : undefined}
+						color={isActive ? undefined : "fg.muted"}
 						justifyContent={drawer ? "space-between" : "center"}
 						{...buttonProps}
 					>
@@ -200,15 +195,13 @@ export function Pages(
 							<page.icon />
 							{page.name}
 						</HStack>
-						<Icon size="sm">
-							<FaAngleDown />
-						</Icon>
+						<FaAngleDown />
 					</Button>
 				</Menu.Trigger>
 				<Portal container={contentRef}>
 					<Menu.Positioner>
 						<Menu.Content divideY="1px" divideColor="border.muted">
-							{children.map((child) => {
+							{page.children.map((child) => {
 								let isActiveChild = false;
 								const childPath = `${page.href}/${child.href}`;
 
@@ -246,4 +239,90 @@ export function Pages(
 			</Menu.Root>
 		);
 	});
+}
+
+export function LinkTabs() {
+	const router = useRouter();
+	const path = usePathname();
+	const current = pages.find((page) => {
+		let isActive = false;
+		if (
+			page.href === path ||
+			(page.href !== "/" && path.split("/")[1] === page.href.slice(1))
+		)
+			isActive = true;
+		return isActive;
+	});
+
+	return (
+		<Tabs.Root
+			navigate={({ value }) => router.push(value)}
+			defaultValue={current ? `/${current?.href.split("/")[1]}` : "/"}
+			value={current ? `/${current?.href.split("/")[1]}` : "/"}
+		>
+			<Tabs.List>
+				{pages.map((page) => {
+					if (!page.children || (page.hasHome && current?.href !== page.href))
+						return (
+							<Tabs.Trigger key={page.href} value={page.href} asChild>
+								<NextLink href={page.href}>
+									<page.icon />
+									{page.name}
+									{page.hasHome ? <FaAngleRight /> : null}
+								</NextLink>
+							</Tabs.Trigger>
+						);
+
+					return (
+						<Menu.Root key={page.name}>
+							<Menu.Trigger asChild>
+								<Tabs.Trigger value={page.href}>
+									<page.icon />
+									{page.name}
+									<FaAngleDown />
+								</Tabs.Trigger>
+							</Menu.Trigger>
+							<Portal>
+								<Menu.Positioner>
+									<Menu.Content divideY="1px" divideColor="border.muted">
+										{page.children.map((child) => {
+											let isActiveChild = false;
+											const childPath = `${page.href}/${child.href}`;
+
+											if (
+												childPath === path ||
+												(childPath !== "/" && path.split("/")[2] === childPath)
+											)
+												isActiveChild = true;
+
+											return (
+												<Menu.Item
+													key={child.name}
+													color={
+														isActiveChild
+															? child.color
+																? `${child.color}.fg`
+																: "green.fg"
+															: "fg.muted"
+													}
+													borderWidth={isActiveChild ? 1 : 0}
+													asChild
+													value={childPath}
+												>
+													<NextLink href={`${page.href}/${child.href}`}>
+														<child.icon />
+														{child.name}
+													</NextLink>
+												</Menu.Item>
+											);
+										})}
+									</Menu.Content>
+								</Menu.Positioner>
+							</Portal>
+						</Menu.Root>
+					);
+				})}
+			</Tabs.List>
+		</Tabs.Root>
+	);
 }

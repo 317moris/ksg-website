@@ -7,10 +7,13 @@ import {
 	Highlight,
 	Image,
 	SimpleGrid,
+	Text,
 	VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { FaNewspaper } from "react-icons/fa6";
+import { FaHashtag, FaLocationPin, FaNewspaper, FaRoad } from "react-icons/fa6";
+import { Courses } from "@/components/courses";
+import { Links } from "@/components/links";
 import LargePosts from "@/components/news/large-posts";
 import { TopImage } from "@/components/top-image";
 import { Aria } from "@/components/ui/aria";
@@ -20,10 +23,10 @@ export default async function Home() {
 	const posts = await getRecentPosts();
 
 	return (
-		<Box pos="relative">
+		<>
 			<TopImage />
-			<Container pb="8" spaceY="4" centerContent>
-				<Center my="28" filter="drop-shadow(0px 0px 16px {colors.black/40})">
+			<Container pb="16" spaceY="8">
+				<Center my="32" filter="drop-shadow(0px 0px 16px {colors.bg/40})">
 					<Image
 						src="/icon/kosho.svg"
 						mr={{ smDown: "-4", sm: "-8" }}
@@ -65,12 +68,48 @@ export default async function Home() {
 						</Button>
 					</VStack>
 				</Aria>
+				<Aria title="公式SNS" icon={<FaHashtag />}>
+					<SimpleGrid columns={[1, 2, 3, 4]} gap="2">
+						<Links />
+					</SimpleGrid>
+				</Aria>
+				<Aria title="学科" icon={<FaRoad />}>
+					<SimpleGrid
+						columns={{
+							lgDown: 1,
+							lg: 2,
+						}}
+						w="full"
+						gap="4"
+					>
+						<Courses />
+					</SimpleGrid>
+				</Aria>
+				<Aria title="アクセス" icon={<FaLocationPin />}>
+					<VStack>
+						<Text>
+							埼玉県立越谷総合技術高等学校
+							<br />
+							〒343-0856 埼玉県越谷市谷中町3-100-1
+							<br />
+							<br />
+							東武スカイツリーライン越谷駅西口よりタローズバスで約１０分（本校前下車）
+						</Text>
+					</VStack>
+					<Box asChild w="full" h="md" overflow="hidden" rounded="lg">
+						<iframe
+							title="Googleマップ"
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d933.6883520590671!2d139.76892891571194!3d35.884160947954214!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601895d935e5258d%3A0x64572972e210cc28!2z5Z-8546J55yM56uL6LaK6LC357eP5ZCI5oqA6KGT6auY562J5a2m5qCh!5e0!3m2!1sja!2sjp!4v1758768811091!5m2!1sja!2sjp"
+							loading="lazy"
+						/>
+					</Box>
+				</Aria>
 				{/* <Aria title="学校情報(削除予定)"icon={<FaInfo />}>
 				<SimpleGrid columns={{ lgDown: 1, lg: 2 }} w="full" gap="3">
 					<Info />
 				</SimpleGrid>
 			</Aria> */}
 			</Container>
-		</Box>
+		</>
 	);
 }

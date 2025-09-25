@@ -5,7 +5,7 @@ import { Pages } from "./pages";
 
 export function PagesGroup() {
 	return (
-		<Group attached>
+		<Group>
 			<Pages drawer={false} />
 		</Group>
 	);

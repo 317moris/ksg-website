@@ -57,7 +57,14 @@ export function TopImage() {
 	}, [changedImage]);
 
 	return (
-		<Center zIndex={0} pos="absolute" overflow="hidden" w="vw" h="40rem">
+		<Center
+			zIndex={0}
+			pos="absolute"
+			overflow="hidden"
+			w="full"
+			h="40rem"
+			userSelect="none"
+		>
 			{images.map((image, i) => {
 				const showing = i === imageIndex;
 
