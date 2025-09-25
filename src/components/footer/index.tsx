@@ -11,7 +11,7 @@ export function Footer() {
 			zIndex="docked"
 			bottom={0}
 			bg="bg"
-			hideFrom="sm"
+			hideFrom="md"
 		>
 			<Container>
 				<HStack justify="space-between" py={2}>

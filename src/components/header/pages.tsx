@@ -26,7 +26,6 @@ import {
 	FaHandPointUp,
 	FaHouse,
 	FaInfo,
-	FaLocationPin,
 	FaPenFancy,
 	FaRoad,
 	FaSeedling,
@@ -60,11 +59,6 @@ export const pages: PageProps[] = [
 				name: "沿革",
 				href: "school-history",
 				icon: FaTimeline,
-			},
-			{
-				name: "アクセス",
-				href: "location",
-				icon: FaLocationPin,
 			},
 			{
 				name: "生徒の成長物語",
@@ -165,9 +159,11 @@ export function Pages(
 			return (
 				<Button
 					key={page.name}
-					variant="outline"
+					variant={isActive ? "solid" : "outline"}
+					borderColor={isActive ? "border.emphasized" : "border"}
 					asChild
-					color={isActive ? "green.fg" : "fg.muted"}
+					colorPalette={isActive ? "green" : undefined}
+					color={isActive ? undefined : "fg.muted"}
 					justifyContent={drawer ? "space-between" : "center"}
 					{...(setOpen && { onClick: () => setOpen(false) })}
 					{...buttonProps}
@@ -189,8 +185,9 @@ export function Pages(
 				<Menu.Trigger asChild>
 					<Button
 						key={page.name}
-						variant="outline"
-						color={isActive ? "green.fg" : "fg.muted"}
+						variant={isActive ? "solid" : "outline"}
+						colorPalette={isActive ? "green" : undefined}
+						color={isActive ? undefined : "fg.muted"}
 						justifyContent={drawer ? "space-between" : "center"}
 						{...buttonProps}
 					>
@@ -262,9 +259,8 @@ export function LinkTabs() {
 			navigate={({ value }) => router.push(value)}
 			defaultValue={current ? `/${current?.href.split("/")[1]}` : "/"}
 			value={current ? `/${current?.href.split("/")[1]}` : "/"}
-			overflowX="hidden"
 		>
-			<Tabs.List overflowX="auto">
+			<Tabs.List>
 				{pages.map((page) => {
 					if (!page.children || (page.hasHome && current?.href !== page.href))
 						return (

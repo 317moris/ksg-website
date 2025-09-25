@@ -13,6 +13,12 @@ export function Aria(
 	return (
 		<Box spaceY="4" {...boxProps}>
 			<HStack overflow="hidden">
+				<Separator
+					variant="dashed"
+					borderColor="border.emphasized"
+					flex="1"
+					hideBelow="md"
+				/>
 				<HStack
 					gap="3"
 					mx="2"

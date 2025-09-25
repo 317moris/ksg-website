@@ -1,7 +1,6 @@
 "use client";
 
 import {
-	Box,
 	Drawer,
 	Flex,
 	HStack,
@@ -9,6 +8,7 @@ import {
 	Image,
 	Link,
 	Portal,
+	SimpleGrid,
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
@@ -22,7 +22,7 @@ export function HeaderDrawer() {
 
 	return (
 		<Drawer.Root
-			placement="start"
+			placement="bottom"
 			open={open}
 			onOpenChange={(e) => setOpen(e.open)}
 		>
@@ -36,31 +36,31 @@ export function HeaderDrawer() {
 				<Drawer.Positioner>
 					<Drawer.Content ref={contentRef}>
 						<Drawer.Body>
-							<Flex direction="column" gap="2">
-								<Flex w="full" justify="center">
-									<Link
-										asChild
-										fontWeight="bold"
-										my="4"
-										onClick={() => setOpen(false)}
-									>
-										<NextLink href="/">
-											<HStack>
-												<Image asChild boxSize={9} rounded="full">
-													<NextImage
-														src="/icon/kosho.png"
-														alt="校章"
-														width={600}
-														height={600}
-													/>
-												</Image>
-												<Box>埼玉県立越谷総合技術高等学校</Box>
-											</HStack>
-										</NextLink>
-									</Link>
-								</Flex>
-								<Pages drawer setOpen={setOpen} contentRef={contentRef} />
+							<Flex w="full" justify="center">
+								<Link
+									asChild
+									fontWeight="bold"
+									my="4"
+									onClick={() => setOpen(false)}
+								>
+									<NextLink href="/">
+										<HStack>
+											<Image asChild boxSize={9} rounded="full">
+												<NextImage
+													src="/icon/kosho.png"
+													alt="校章"
+													width={600}
+													height={600}
+												/>
+											</Image>
+											埼玉県立越谷総合技術高等学校
+										</HStack>
+									</NextLink>
+								</Link>
 							</Flex>
+							<SimpleGrid columns={2} minChildWidth="40" gap={2}>
+								<Pages drawer setOpen={setOpen} contentRef={contentRef} />
+							</SimpleGrid>
 						</Drawer.Body>
 					</Drawer.Content>
 				</Drawer.Positioner>

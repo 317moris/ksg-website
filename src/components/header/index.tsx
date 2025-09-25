@@ -20,13 +20,11 @@ export function Header() {
 			zIndex="docked"
 			top={0}
 			bg="bg"
-			hideBelow="sm"
-			textWrap="nowrap"
-			overflowX="hidden"
+			hideBelow="md"
 		>
-			<Container overflowX="hidden">
-				<HStack py={2} overflowX="hidden" justify="space-between">
-					<HStack gap={4} separator={<StackSeparator />} overflowX="hidden">
+			<Container>
+				<HStack py={2} justify="space-between">
+					<HStack gap={4} separator={<StackSeparator />}>
 						<Link asChild fontWeight="bold">
 							<NextLink href="/">
 								<Image asChild boxSize={9} rounded="full">
@@ -37,12 +35,10 @@ export function Header() {
 										height={600}
 									/>
 								</Image>
-								埼玉県立越谷総合技術高等学校
+								<Box hideBelow="lg">埼玉県立越谷総合技術高等学校</Box>
 							</NextLink>
 						</Link>
-						<Box overflowX="hidden">
-							<LinkTabs />
-						</Box>
+						<LinkTabs />
 					</HStack>
 					<Settings />
 				</HStack>
