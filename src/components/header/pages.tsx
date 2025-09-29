@@ -26,6 +26,7 @@ import {
 	FaHandPointUp,
 	FaHouse,
 	FaInfo,
+	FaMapPin,
 	FaPenFancy,
 	FaRoad,
 	FaSeedling,
@@ -59,6 +60,11 @@ export const pages: PageProps[] = [
 				name: "沿革",
 				href: "school-history",
 				icon: FaTimeline,
+			},
+			{
+				name: "アクセス",
+				href: "/#access",
+				icon: FaMapPin,
 			},
 			{
 				name: "生徒の成長物語",
@@ -226,7 +232,9 @@ export function Pages(
 										value={childPath}
 										{...(setOpen && { onClick: () => setOpen(false) })}
 									>
-										<NextLink href={`${page.href}/${child.href}`}>
+										<NextLink
+											href={child.href.startsWith("/") ? child.href : childPath}
+										>
 											<child.icon />
 											{child.name}
 										</NextLink>
@@ -309,7 +317,13 @@ export function LinkTabs() {
 													asChild
 													value={childPath}
 												>
-													<NextLink href={`${page.href}/${child.href}`}>
+													<NextLink
+														href={
+															child.href.startsWith("/")
+																? child.href
+																: childPath
+														}
+													>
 														<child.icon />
 														{child.name}
 													</NextLink>

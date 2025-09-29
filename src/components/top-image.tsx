@@ -1,6 +1,6 @@
 "use client";
 
-import { Bleed, Center, Heading, Presence } from "@chakra-ui/react";
+import { Bleed, Center, Heading, Image, Presence } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 const images = [
@@ -62,7 +62,7 @@ export function TopImage() {
 			pos="absolute"
 			overflow="hidden"
 			w="full"
-			h="40rem"
+			h="50rem"
 			userSelect="none"
 		>
 			{images.map((image, i) => {
@@ -83,12 +83,11 @@ export function TopImage() {
 							animationDuration: "slowest",
 							animationName: "fade-out",
 						}}
-						bgImage={`url(${image.src})`}
-						bgPos="center"
-						bgSize="cover"
 						w="full"
 						h="full"
-					/>
+					>
+						<Image src={image.src} w="full" h="full" loading="eager" />
+					</Presence>
 				);
 			})}
 			<Bleed

@@ -7,6 +7,7 @@ import {
 	Link,
 	LinkBox,
 	LinkOverlay,
+	Tag,
 } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextImage from "next/image";
@@ -68,6 +69,22 @@ export default function Posts({
 								<Card.Description>{post.subtitle}</Card.Description>
 							) : null}
 						</Card.Body>
+						{post.tag ? (
+							<Card.Footer>
+								{post.tag?.map((tag) => (
+									<Tag.Root key={tag.id}>
+										{tag.icon ? (
+											<Tag.StartElement>
+												<Avatar.Root size="full">
+													<Avatar.Image src={tag.icon.url} />
+												</Avatar.Root>
+											</Tag.StartElement>
+										) : null}
+										<Tag.Label>{tag.name}</Tag.Label>
+									</Tag.Root>
+								))}
+							</Card.Footer>
+						) : null}
 					</Box>
 				</Flex>
 				<Center p="1.5">

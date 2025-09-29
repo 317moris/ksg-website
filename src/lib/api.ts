@@ -1,17 +1,20 @@
+import type { CustomRequestInit } from "microcms-js-sdk";
 import type { Post } from "@/interfaces/post";
 import { cmsClient } from "./microcms";
+
+const customRequestInit: CustomRequestInit = {
+	next: {
+		revalidate: 60,
+	},
+};
 
 export async function getList() {
 	const posts = await cmsClient.getList<Post>({
 		endpoint: "news",
 		queries: {
-			fields: "id,title,subtitle,createdAt,author,coverImage,publishedAt",
+			fields: "id,title,subtitle,createdAt,author,coverImage,tag,publishedAt",
 		},
-		customRequestInit: {
-			next: {
-				revalidate: 60,
-			},
-		},
+		customRequestInit,
 	});
 
 	return posts;
@@ -21,14 +24,10 @@ export async function getRecentPosts() {
 	const posts = await cmsClient.getList<Post>({
 		endpoint: "news",
 		queries: {
-			fields: "id,title,coverImage,subtitle,createdAt,author,publishedAt",
+			fields: "id,title,coverImage,subtitle,createdAt,author,tag,publishedAt",
 			limit: 8,
 		},
-		customRequestInit: {
-			next: {
-				revalidate: 60,
-			},
-		},
+		customRequestInit,
 	});
 
 	return posts;
@@ -38,11 +37,7 @@ export async function getDetail(slug: string) {
 	const post = await cmsClient.getListDetail<Post>({
 		endpoint: "news",
 		contentId: slug,
-		customRequestInit: {
-			next: {
-				revalidate: 60,
-			},
-		},
+		customRequestInit,
 	});
 
 	return post;
