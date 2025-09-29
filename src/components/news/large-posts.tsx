@@ -1,4 +1,5 @@
 import {
+	Avatar,
 	Card,
 	Center,
 	Heading,
@@ -7,6 +8,7 @@ import {
 	LinkBox,
 	LinkOverlay,
 	StackSeparator,
+	Tag,
 	Text,
 } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
@@ -73,7 +75,21 @@ export default function LargePosts({
 					gap="0"
 				>
 					<Card.Body>
-						<DateFormatter date={post.createdAt} />
+						<HStack align="start">
+							<DateFormatter date={post.createdAt} />
+							{post.tag?.map((tag) => (
+								<Tag.Root key={tag.id}>
+									{tag.icon ? (
+										<Tag.StartElement>
+											<Avatar.Root size="full">
+												<Avatar.Image src={tag.icon.url} />
+											</Avatar.Root>
+										</Tag.StartElement>
+									) : null}
+									<Tag.Label>{tag.name}</Tag.Label>
+								</Tag.Root>
+							))}
+						</HStack>
 						<Card.Title asChild>
 							<LinkOverlay asChild>
 								<NextLink href={`/news/${post.id}`}>{post.title}</NextLink>

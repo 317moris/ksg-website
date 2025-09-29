@@ -1,14 +1,16 @@
-import { Box, BoxProps, HStack, Separator, Text } from "@chakra-ui/react";
+import { Box, BoxProps, HStack, Link, Separator, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
 import type { JSX } from "react";
 
 export function Aria(
 	props: BoxProps & {
 		title: string;
 		icon: JSX.Element;
+		url?: string;
 		children: JSX.Element | JSX.Element[];
 	},
 ) {
-	const { title, icon, children, ...boxProps } = props;
+	const { title, icon, url, children, ...boxProps } = props;
 
 	return (
 		<Box spaceY="4" {...boxProps}>
@@ -26,7 +28,13 @@ export function Aria(
 					fontWeight="bolder"
 				>
 					{icon}
-					<Text>{title}</Text>
+					{url ? (
+						<Link scrollMarginTop="12px" asChild>
+							<NextLink href={url}>{title}</NextLink>
+						</Link>
+					) : (
+						<Text>{title}</Text>
+					)}
 				</HStack>
 				<Separator variant="dashed" borderColor="border.emphasized" flex="1" />
 			</HStack>

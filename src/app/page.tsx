@@ -5,13 +5,20 @@ import {
 	Container,
 	Heading,
 	Highlight,
+	IconButton,
 	Image,
 	SimpleGrid,
 	Text,
 	VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { FaHashtag, FaLocationPin, FaNewspaper, FaRoad } from "react-icons/fa6";
+import {
+	FaAnglesDown,
+	FaHashtag,
+	FaLocationPin,
+	FaNewspaper,
+	FaRoad,
+} from "react-icons/fa6";
 import { Courses } from "@/components/courses";
 import { Links } from "@/components/links";
 import LargePosts from "@/components/news/large-posts";
@@ -26,33 +33,46 @@ export default async function Home() {
 		<>
 			<TopImage />
 			<Container pb="16" spaceY="8">
-				<Center my="32" filter="drop-shadow(0px 0px 16px {colors.bg/40})">
-					<Image
-						src="/icon/kosho.svg"
-						mr={{ smDown: "-4", sm: "-8" }}
-						w={{ smDown: "56", sm: "xs", mdToLg: "xs", xl: "sm" }}
-						filter={{ _dark: "invert(100%)" }}
-					/>
-					<Heading
-						ml={{ smDown: "-4", sm: "-8" }}
-						whiteSpace="pre-wrap"
-						size={{ smDown: "4xl", sm: "6xl" }}
-						fontSize={{ smDown: "2xl", sm: "4xl" }}
-						fontWeight="bolder"
-					>
-						<Highlight
-							query={["越", "総", "技"]}
-							styles={{
-								color: "green.fg",
-								fontSize: { smDown: "4xl", sm: "6xl" },
-								fontWeight: "black",
-							}}
+				<Center
+					flexDir="column"
+					py="48"
+					minH="50rem"
+					filter="drop-shadow(0px 0px 16px {colors.bg/40})"
+					gap="8"
+				>
+					<Center>
+						<Image
+							src="/icon/kosho.svg"
+							mr={{ smDown: "-4", sm: "-8" }}
+							w={{ smDown: "56", sm: "xs", mdToLg: "xs", xl: "sm" }}
+							filter={{ _dark: "invert(100%)" }}
+						/>
+						<Heading
+							ml={{ smDown: "-4", sm: "-8" }}
+							whiteSpace="pre-wrap"
+							size={{ smDown: "4xl", sm: "6xl" }}
+							fontSize={{ smDown: "2xl", sm: "4xl" }}
+							fontWeight="bolder"
 						>
-							{"越谷\n     総合\n          技術"}
-						</Highlight>
-					</Heading>
+							<Highlight
+								query={["越", "総", "技"]}
+								styles={{
+									color: "green.fg",
+									fontSize: { smDown: "4xl", sm: "6xl" },
+									fontWeight: "black",
+								}}
+							>
+								{"越谷\n     総合\n          技術"}
+							</Highlight>
+						</Heading>
+					</Center>
+					<IconButton size="2xl" variant="ghost" color="fg.subtle" asChild>
+						<NextLink href="#news">
+							<FaAnglesDown />
+						</NextLink>
+					</IconButton>
 				</Center>
-				<Aria title="ニュース" icon={<FaNewspaper />}>
+				<Aria title="ニュース" icon={<FaNewspaper />} url="#news" top={0}>
 					<VStack gap="4">
 						<SimpleGrid
 							columns={{
@@ -85,7 +105,7 @@ export default async function Home() {
 						<Courses />
 					</SimpleGrid>
 				</Aria>
-				<Aria title="アクセス" icon={<FaLocationPin />}>
+				<Aria title="アクセス" icon={<FaLocationPin />} url="#access">
 					<VStack>
 						<Text>
 							埼玉県立越谷総合技術高等学校
