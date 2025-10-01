@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
+import { AccountButton } from "./account";
 import { LinkTabs } from "./pages";
 import { Settings } from "./settings";
 
@@ -40,7 +41,10 @@ export function Header() {
 						</Link>
 						<LinkTabs />
 					</HStack>
-					<Settings />
+					<HStack>
+						<AccountButton />
+						<Settings />
+					</HStack>
 				</HStack>
 			</Container>
 		</Box>
