@@ -1,25 +1,37 @@
 import { Card, HStack, Icon, Link, LinkOverlay } from "@chakra-ui/react";
+import type { IconType } from "react-icons";
 import { FaInstagram, FaUpRightFromSquare, FaXTwitter } from "react-icons/fa6";
 
-const links = [
+const links: {
+	icon: IconType;
+	name: string;
+	description: string;
+	href: string;
+}[] = [
 	{
 		icon: FaInstagram,
 		name: "Instagram",
-		description: "KSG公式 インスタ",
+		description: "KSG公式",
 		href: "https://www.instagram.com/ksg_hs_official",
 	},
 	{
 		icon: FaXTwitter,
 		name: "X",
-		description: "流通経済科 X",
+		description: "流通経済科",
 		href: "https://x.com/KSG_RKs",
+	},
+	{
+		icon: FaInstagram,
+		name: "Instagram",
+		description: "吹奏楽部",
+		href: "https://www.instagram.com/ksg_musicclub",
 	},
 ];
 
 export function Links() {
 	return links.map((link) => (
 		<Card.Root
-			key={link.name}
+			key={link.href}
 			size="sm"
 			flexDir="row"
 			bg={{ _hover: "bg.muted" }}
