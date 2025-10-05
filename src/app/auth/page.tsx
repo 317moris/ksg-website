@@ -13,7 +13,9 @@ export default function Page() {
 				onClick={() => {
 					router.push("/");
 				}}
-			></Button>
+			>
+				ログイン
+			</Button>
 		</Container>
 	);
 }
