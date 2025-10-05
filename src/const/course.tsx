@@ -28,17 +28,17 @@ const notoSansJP = Noto_Sans_JP({
 const kleeOne = Klee_One({
 	subsets: ["latin"],
 	variable: "--font-klee-one",
-	weight: ["400", "600"],
+	weight: ["600"],
 });
 const ibmPlexSansJP = IBM_Plex_Sans_JP({
 	subsets: ["latin"],
 	variable: "--font-ibm-plex-sans-jp",
-	weight: ["400", "600"],
+	weight: ["600"],
 });
 const kaiseiDecol = Kaisei_Decol({
 	subsets: ["latin"],
 	variable: "--font-kaisei-decol",
-	weight: ["400", "700"],
+	weight: ["700"],
 });
 const zenKurenaido = Zen_Kurenaido({
 	subsets: ["latin"],
