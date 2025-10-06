@@ -8,7 +8,9 @@ export default function middleware(request: NextRequest) {
 	const login = request.cookies.get("login");
 
 	if (request.nextUrl.pathname.startsWith("/auth")) {
-		if (login) return NextResponse.redirect("/dashboard");
+		const req = request.nextUrl.clone();
+		req.pathname = "/dashboard";
+		if (login) return NextResponse.redirect(req);
 		return NextResponse.next();
 	}
 
