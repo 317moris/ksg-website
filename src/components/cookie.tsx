@@ -1,61 +1,68 @@
 "use client";
 
 import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import { animation } from "@/animation";
+import { CookieSettings, type CookieSettingType } from "@/interfaces/cookie";
 
-type CookieSettingType = "allowed" | "denied" | "none";
+export function refreshSetting(
+	localStorage: Storage,
+	setState: Dispatch<SetStateAction<CookieSettingType | null>>,
+) {
+	let local: CookieSettingType;
+	const cookieSetting = localStorage.getItem("cookie");
+	if (
+		cookieSetting === CookieSettings.Allowed ||
+		cookieSetting === CookieSettings.Denied
+	) {
+		local = cookieSetting;
+	} else {
+		local = CookieSettings.None;
+	}
+
+	setState(local);
+}
 
 export function PopupCookie() {
-	const [allowed, setAllowed] = useState<CookieSettingType>("none");
-	const [mount, setMount] = useState(false);
-
-	const router = useRouter();
+	const [allowed, setAllowed] = useState<CookieSettingType | null>(null);
 
 	useEffect(() => {
-		let local: CookieSettingType;
-		switch (localStorage.getItem("cookie")) {
-			case "allowed":
-				local = "allowed";
-				break;
-			case "denied":
-				local = "denied";
-				break;
-			default:
-				local = "none";
-				break;
-		}
-
-		setAllowed(local);
-		setMount(true);
+		refreshSetting(localStorage, setAllowed);
 	}, []);
 
 	function onAllowed() {
-		localStorage.setItem("cookie", "allowed");
+		localStorage.setItem("cookie", CookieSettings.Allowed);
 
-		router.refresh();
+		refreshSetting(localStorage, setAllowed);
 	}
 
 	function onDenied() {
-		localStorage.setItem("cookie", "denied");
+		localStorage.setItem("cookie", CookieSettings.Denied);
 
-		router.refresh();
+		refreshSetting(localStorage, setAllowed);
 	}
 
-	if (mount && allowed === "none")
+	if (allowed === CookieSettings.None)
 		return (
 			<Box
 				pos="fixed"
-				bottom={0}
+				left="0"
+				right="0"
+				bottom="4"
+				mx="auto"
 				zIndex="docked"
-				bg="bg"
-				rounded="md"
-				p="4"
-				borderWidth={1}
-				maxW="8xl"
+				w="fit"
+				{...animation}
 			>
-				<HStack justify="space-between">
-					<VStack justify="start">
+				<VStack
+					borderWidth={1}
+					mx="4"
+					bg="bg.panel"
+					p="4"
+					maxW="8xl"
+					rounded="md"
+				>
+					<VStack align="start">
 						<Text fontSize="lg">
 							このサイトではログイン機構のデモのためにCookieを使用します。同意しますか？
 						</Text>
@@ -63,11 +70,11 @@ export function PopupCookie() {
 							同意しなかった場合、ログイン機構は利用できません。
 						</Text>
 					</VStack>
-					<HStack>
+					<HStack w="full" justify="end">
 						<Button onClick={onAllowed}>同意する</Button>
 						<Button onClick={onDenied}>同意しない</Button>
 					</HStack>
-				</HStack>
+				</VStack>
 			</Box>
 		);
 
