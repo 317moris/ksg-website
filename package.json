@@ -9,7 +9,7 @@
 		"check": "biome check --write --unsafe . && tsc"
 	},
 	"dependencies": {
-		"@chakra-ui/react": "^3.27.0",
+		"@chakra-ui/react": "^3.27.1",
 		"@emotion/react": "^11.14.0",
 		"date-fns": "^4.1.0",
 		"es-toolkit": "^1.39.10",
@@ -25,8 +25,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.2.5",
 		"@types/node": "^24.7.0",
-		"@types/react": "^19.2.0",
-		"@types/react-dom": "^19.2.0",
+		"@types/react": "^19.2.2",
+		"@types/react-dom": "^19.2.1",
 		"typescript": "^5.9.3"
 	}
 }
