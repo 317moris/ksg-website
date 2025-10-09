@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, IconButton } from "@chakra-ui/react";
 import { cookies } from "next/headers";
 import { FaRightToBracket } from "react-icons/fa6";
 import { AccountMenu } from "./account-menu";
@@ -10,11 +10,18 @@ export async function AccountButton() {
 	return isLogin ? (
 		<AccountMenu />
 	) : (
-		<Button asChild>
-			<a href="/auth">
-				ログイン
-				<FaRightToBracket />
-			</a>
-		</Button>
+		<>
+			<Button hideBelow="md" asChild>
+				<a href="/auth">
+					ログイン
+					<FaRightToBracket />
+				</a>
+			</Button>
+			<IconButton hideFrom="md" asChild>
+				<a href="/auth">
+					<FaRightToBracket />
+				</a>
+			</IconButton>
+		</>
 	);
 }

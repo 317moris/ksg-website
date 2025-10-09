@@ -8,9 +8,9 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { AccountButton } from "./account";
-import { LinkTabs } from "./pages";
-import { Settings } from "./settings";
+import { AccountButton } from "../account";
+import { PagesinHeader } from "../pages";
+import { Settings } from "../settings";
 
 export function Header() {
 	return (
@@ -21,14 +21,20 @@ export function Header() {
 			zIndex="docked"
 			top={0}
 			bg="bg"
-			hideBelow="md"
+			hideBelow="sm"
 		>
 			<Container>
-				<HStack py={2} justify="space-between">
-					<HStack gap={4} separator={<StackSeparator />}>
+				<HStack py={2} justify="space-between" whiteSpace="nowrap">
+					<HStack gap={4} separator={<StackSeparator />} overflow="hidden">
 						<Link asChild fontWeight="bold">
 							<NextLink href="/">
-								<Image asChild boxSize={9} rounded="full">
+								<Image
+									asChild
+									aspectRatio="square"
+									boxSize="9"
+									minW="9"
+									rounded="full"
+								>
 									<NextImage
 										src="/icon/kosho.png"
 										alt="校章"
@@ -39,7 +45,9 @@ export function Header() {
 								<Box hideBelow="lg">埼玉県立越谷総合技術高等学校</Box>
 							</NextLink>
 						</Link>
-						<LinkTabs />
+						<Box overflow="auto" whiteSpace="nowrap" scrollbarWidth="thin">
+							<PagesinHeader />
+						</Box>
 					</HStack>
 					<HStack>
 						<AccountButton />

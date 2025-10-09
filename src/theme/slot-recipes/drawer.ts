@@ -18,6 +18,7 @@ export const drawerSlotRecipe = defineSlotRecipe({
 	base: {
 		backdrop: {
 			bg: "blackAlpha.500",
+			backdropFilter: "blur(8px)",
 			pos: "fixed",
 			insetInlineStart: 0,
 			top: 0,

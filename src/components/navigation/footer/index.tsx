@@ -1,6 +1,6 @@
 import { Box, Container, HStack } from "@chakra-ui/react";
-import { HeaderDrawer } from "../header/drawer";
-import { Settings } from "../header/settings";
+import { Settings } from "../settings";
+import { PagesDrawer } from "./drawer";
 
 export function Footer() {
 	return (
@@ -11,11 +11,11 @@ export function Footer() {
 			zIndex="docked"
 			bottom={0}
 			bg="bg"
-			hideFrom="md"
+			hideFrom="sm"
 		>
 			<Container>
 				<HStack justify="space-between" py={2}>
-					<HeaderDrawer />
+					<PagesDrawer />
 					<Settings />
 				</HStack>
 			</Container>

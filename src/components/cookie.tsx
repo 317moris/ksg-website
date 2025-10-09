@@ -1,6 +1,8 @@
 "use client";
 
 import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { animation } from "@/animation";
 import { CookieSettings, type CookieSettingType } from "@/interfaces/cookie";
@@ -8,6 +10,7 @@ import { CookieSettings, type CookieSettingType } from "@/interfaces/cookie";
 export function refreshSetting(
 	localStorage: Storage,
 	setState: Dispatch<SetStateAction<CookieSettingType | null>>,
+	router?: AppRouterInstance,
 ) {
 	let local: CookieSettingType;
 	const cookieSetting = localStorage.getItem("cookie");
@@ -21,9 +24,11 @@ export function refreshSetting(
 	}
 
 	setState(local);
+	if (router) router.refresh();
 }
 
 export function PopupCookie() {
+	const router = useRouter();
 	const [allowed, setAllowed] = useState<CookieSettingType | null>(null);
 
 	useEffect(() => {
@@ -33,13 +38,13 @@ export function PopupCookie() {
 	function onAllowed() {
 		localStorage.setItem("cookie", CookieSettings.Allowed);
 
-		refreshSetting(localStorage, setAllowed);
+		refreshSetting(localStorage, setAllowed, router);
 	}
 
 	function onDenied() {
 		localStorage.setItem("cookie", CookieSettings.Denied);
 
-		refreshSetting(localStorage, setAllowed);
+		refreshSetting(localStorage, setAllowed, router);
 	}
 
 	if (allowed === CookieSettings.None)
