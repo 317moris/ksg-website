@@ -35,8 +35,8 @@ export default async function Home() {
 			<Container pb="16" spaceY="8">
 				<Center
 					flexDir="column"
-					py="48"
-					minH="50rem"
+					// py="48"
+					minH="90vh"
 					filter="drop-shadow(0px 0px 16px {colors.bg/40})"
 					gap="8"
 				>

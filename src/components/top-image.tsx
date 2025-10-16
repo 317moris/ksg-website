@@ -63,7 +63,7 @@ export function TopImage() {
 			pos="absolute"
 			overflow="hidden"
 			w="full"
-			h="50rem"
+			h="90vh"
 			userSelect="none"
 		>
 			{images.map((image, i) => {
