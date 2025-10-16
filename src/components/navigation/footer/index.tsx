@@ -1,6 +1,7 @@
-import { Box, Container, HStack } from "@chakra-ui/react";
+import { Box, ButtonGroup, Container, HStack } from "@chakra-ui/react";
 import { Settings } from "../settings";
 import { PagesDrawer } from "./drawer";
+import { AccountButton } from "../account";
 
 export function Footer() {
 	return (
@@ -16,7 +17,10 @@ export function Footer() {
 			<Container>
 				<HStack justify="space-between" py={2}>
 					<PagesDrawer />
-					<Settings />
+					<ButtonGroup>
+						<AccountButton />
+						<Settings />
+					</ButtonGroup>
 				</HStack>
 			</Container>
 		</Box>
