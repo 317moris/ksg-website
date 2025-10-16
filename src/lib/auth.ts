@@ -4,6 +4,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { RedirectType, redirect } from "next/navigation";
 
 export async function auth() {
 	const expiresAt = new Date(Date.now() + 1 * 365 * 24 * 60 * 60 * 1000);
@@ -13,6 +14,8 @@ export async function auth() {
 		expires: expiresAt,
 		httpOnly: true,
 	});
+
+	redirect("/dashboard", RedirectType.replace);
 }
 
 export async function logout() {
