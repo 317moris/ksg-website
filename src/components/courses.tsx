@@ -1,13 +1,15 @@
 import {
+	Bleed,
 	Card,
-	Flex,
+	Center,
 	Icon,
+	Image,
 	Link,
 	LinkBox,
 	LinkOverlay,
-	Separator,
 	Text,
 } from "@chakra-ui/react";
+import NextImage from "next/image";
 import NextLink from "next/link";
 import { courses } from "@/const/course";
 
@@ -22,19 +24,34 @@ export function Courses() {
 				borderColor={`${course.color}.emphasized`}
 				overflow="hidden"
 				h="full"
-				className={course.font.font.variable}
-				fontFamily={`var(${course.font.variable}), sans-serif`}
 				transition="backgrounds"
 			>
-				<Flex
+				<Center
+					pos="relative"
 					h="xs"
-					align="center"
-					justify="center"
 					w="full"
-					bg={`linear-gradient(rgba(0, 0, 0, 0), {colors.${course.color}.subtle}), url(${course.coverImage})`}
-					bgSize="cover"
-					bgPos="center"
+					// bg={`linear-gradient(rgba(0, 0, 0, 0), {colors.${course.color}.subtle}), url(${course.coverImage})`}
 				>
+					<Image asChild>
+						<NextImage
+							src={course.coverImage}
+							alt={course.name}
+							fill
+							unoptimized
+						/>
+					</Image>
+					<Bleed
+						pos="absolute"
+						w="full"
+						h="full"
+						gradientFrom="bg/40"
+						gradientTo={`${course.color}.subtle`}
+						_hover={{
+							gradientTo: "transparent",
+							gradientFrom: "transparent",
+						}}
+						bgGradient="to-b"
+					/>
 					<Icon
 						color={`${course.color}.200`}
 						fontWeight="bold"
@@ -43,9 +60,13 @@ export function Courses() {
 					>
 						<course.icon />
 					</Icon>
-				</Flex>
-				<Separator borderColor={`${course.color}.emphasized`} />
-				<Card.Header alignItems="center">
+				</Center>
+				{/* <Separator borderColor={`${course.color}.emphasized`} /> */}
+				<Card.Header
+					alignItems="center"
+					className={course.font.font.variable}
+					fontFamily={`var(${course.font.variable}), sans-serif`}
+				>
 					<LinkOverlay asChild>
 						<Link
 							colorPalette={course.color}

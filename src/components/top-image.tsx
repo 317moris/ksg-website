@@ -1,6 +1,7 @@
 "use client";
 
 import { Bleed, Center, Heading, Image, Presence } from "@chakra-ui/react";
+import NextImage from "next/image";
 import { useEffect, useState } from "react";
 
 const images = [
@@ -86,7 +87,9 @@ export function TopImage() {
 						w="full"
 						h="full"
 					>
-						<Image src={image.src} w="full" h="full" loading="eager" />
+						<Image asChild>
+							<NextImage src={image.src} alt={image.alt} fill unoptimized />
+						</Image>
 					</Presence>
 				);
 			})}

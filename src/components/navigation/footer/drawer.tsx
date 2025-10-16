@@ -12,37 +12,27 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { useRef, useState } from "react";
-import { FaList } from "react-icons/fa6";
-import { Pages } from "./pages";
+import { useRef } from "react";
+import { FaBars } from "react-icons/fa6";
+import { PagesinHeader } from "../pages";
 
-export function HeaderDrawer() {
-	const [open, setOpen] = useState(false);
+export function PagesDrawer() {
 	const contentRef = useRef<HTMLDivElement | null>(null);
 
 	return (
-		<Drawer.Root
-			placement="bottom"
-			open={open}
-			onOpenChange={(e) => setOpen(e.open)}
-		>
-			<Drawer.Trigger asChild hideFrom="lg">
+		<Drawer.Root placement="bottom">
+			<Drawer.Trigger asChild>
 				<IconButton variant="outline">
-					<FaList />
+					<FaBars />
 				</IconButton>
 			</Drawer.Trigger>
 			<Portal>
-				<Drawer.Backdrop />
-				<Drawer.Positioner>
+				<Drawer.Backdrop hideFrom="sm" />
+				<Drawer.Positioner hideFrom="sm">
 					<Drawer.Content ref={contentRef}>
 						<Drawer.Body>
 							<Flex w="full" justify="center">
-								<Link
-									asChild
-									fontWeight="bold"
-									my="4"
-									onClick={() => setOpen(false)}
-								>
+								<Link asChild fontWeight="bold" my="4">
 									<NextLink href="/">
 										<HStack>
 											<Image asChild boxSize={9} rounded="full">
@@ -59,7 +49,7 @@ export function HeaderDrawer() {
 								</Link>
 							</Flex>
 							<SimpleGrid columns={2} minChildWidth="40" gap={2}>
-								<Pages drawer setOpen={setOpen} contentRef={contentRef} />
+								<PagesinHeader contentRef={contentRef} />
 							</SimpleGrid>
 						</Drawer.Body>
 					</Drawer.Content>
