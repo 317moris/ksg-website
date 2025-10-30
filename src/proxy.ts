@@ -4,7 +4,7 @@ export const config = {
 	matcher: ["/auth", "/dashboard"],
 };
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
 	const login = request.cookies.get("login");
 
 	if (request.nextUrl.pathname.startsWith("/auth")) {

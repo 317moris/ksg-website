@@ -1,7 +1,7 @@
 import { Box, ButtonGroup, Container, HStack } from "@chakra-ui/react";
+import { AccountButton } from "../account";
 import { Settings } from "../settings";
 import { PagesDrawer } from "./drawer";
-import { AccountButton } from "../account";
 
 export function Footer() {
 	return (
