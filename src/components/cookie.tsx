@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Presence, Text, VStack } from "@chakra-ui/react";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { animation } from "@/animation";
 import { CookieSettings, type CookieSettingType } from "@/interfaces/cookie";
@@ -44,17 +44,24 @@ export function PopupCookie() {
 		refreshSetting(localStorage, setAllowed, true);
 	}
 
-	if (allowed === CookieSettings.None)
-		return (
-			<Box
-				pos="fixed"
-				left="0"
-				right="0"
-				bottom="4"
-				mx="auto"
-				zIndex="docked"
-				w="fit"
-				{...animation}
+	return (
+		<Box
+			pos="fixed"
+			left="0"
+			right="0"
+			bottom="4"
+			mx="auto"
+			zIndex="docked"
+			w="fit"
+			{...animation}
+		>
+			<Presence
+				present={allowed === CookieSettings.None}
+				_closed={{
+					animation: "ease-in",
+					animationName: "fade-out, slide-to-bottom",
+					animationDuration: "slower",
+				}}
 			>
 				<VStack
 					borderWidth={1}
@@ -63,6 +70,7 @@ export function PopupCookie() {
 					p="4"
 					maxW="8xl"
 					rounded="md"
+					shadow="lg"
 				>
 					<VStack align="start">
 						<Text fontSize="lg">
@@ -77,8 +85,7 @@ export function PopupCookie() {
 						<Button onClick={onDenied}>同意しない</Button>
 					</HStack>
 				</VStack>
-			</Box>
-		);
-
-	return null;
+			</Presence>
+		</Box>
+	);
 }

@@ -1,13 +1,5 @@
-import {
-	Box,
-	Container,
-	HStack,
-	Image,
-	Link,
-	StackSeparator,
-} from "@chakra-ui/react";
-import NextImage from "next/image";
-import NextLink from "next/link";
+import { Box, Container, HStack, StackSeparator } from "@chakra-ui/react";
+import { HomeLink } from "@/components/homelink";
 import { AccountButton } from "../account";
 import { PagesinHeader } from "../pages";
 import { Settings } from "../settings";
@@ -26,25 +18,7 @@ export function Header() {
 			<Container>
 				<HStack py={2} justify="space-between" whiteSpace="nowrap">
 					<HStack gap={4} separator={<StackSeparator />} overflow="hidden">
-						<Link asChild fontWeight="bold">
-							<NextLink href="/">
-								<Image
-									asChild
-									aspectRatio="square"
-									boxSize="9"
-									minW="9"
-									rounded="full"
-								>
-									<NextImage
-										src="/icon/kosho.png"
-										alt="校章"
-										width={600}
-										height={600}
-									/>
-								</Image>
-								<Box hideBelow="lg">埼玉県立越谷総合技術高等学校</Box>
-							</NextLink>
-						</Link>
+						<HomeLink />
 						<Box overflow="auto" whiteSpace="nowrap" scrollbarWidth="thin">
 							<PagesinHeader />
 						</Box>

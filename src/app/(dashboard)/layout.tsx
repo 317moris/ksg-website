@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import { Box, Container, Text } from "@chakra-ui/react";
 import { Inter, JetBrains_Mono, Noto_Sans_JP } from "next/font/google";
 import { Provider } from "@/components/ui/provider";
+import { Header } from "./_components/navigation/header";
 
 const inter = Inter({
 	variable: "--font-inter",
@@ -17,11 +18,6 @@ const jetBrainsMono = JetBrains_Mono({
 	subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-	title: "ログイン - KSG",
-	icons: "/icon/kosho_rounded.png",
-};
-
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -37,7 +33,22 @@ export default function RootLayout({
 				<meta name="darkreader-lock" />
 			</head>
 			<body>
-				<Provider>{children}</Provider>
+				<Provider>
+					<Box
+						bg="bg.inverted"
+						borderBottomWidth="1px"
+						borderColor="border.inverted"
+						py="2"
+					>
+						<Container centerContent>
+							<Text color="fg.inverted">
+								このページの内容は架空であり、実際とは異なります。
+							</Text>
+						</Container>
+					</Box>
+					<Header />
+					{children}
+				</Provider>
 			</body>
 		</html>
 	);
