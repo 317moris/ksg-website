@@ -124,9 +124,9 @@ export function addHometoPages(pages: PageProps[]) {
 		let children: PageChildrenProps[] | undefined = page.children;
 
 		if (page.hasHome) {
-			// biome-ignore lint/style/noNonNullAssertion: <使わせろ>
 			children = [
 				{ name: "トップ", href: "", icon: FaHouse },
+				// biome-ignore lint/style/noNonNullAssertion: <使わせろ>
 				...page.children!,
 			];
 		}

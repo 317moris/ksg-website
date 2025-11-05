@@ -26,12 +26,15 @@ export function PagesinHeader({
 			<Button
 				key={page.href}
 				variant="plain"
-				color={{ base: "fg.muted", _hover: "fg" }}
-				bg={{ _hover: "bg.muted" }}
-				borderColor={{ base: "border", _hover: "border.emphasized" }}
+				color={{ base: "fg.muted", _hover: "fg", _open: "fg" }}
+				borderBottomColor={{
+					_hover: "border.emphasized",
+					_open: "border.emphasized",
+				}}
+				px="0"
 				roundedBottom="none"
 				borderWidth={0}
-				borderBottomWidth="2px"
+				borderYWidth="2px"
 				{...(contentRef && {
 					rounded: "md",
 					borderWidth: "1px",
@@ -39,22 +42,26 @@ export function PagesinHeader({
 					justifyContent: "space-between",
 				})}
 				{...(active && {
-					color: { base: "green.fg", _hover: "fg" },
-					borderColor: {
+					color: { base: "green.fg", _hover: "fg", _open: "fg" },
+					borderBottomColor: {
 						base: "green.emphasized",
 						_hover: "green.focusRing",
+						_open: "green.focusRing",
 					},
-					bg: { base: "green.subtle", _hover: "green.muted" },
 				})}
 				asChild={!hasMenu}
 			>
 				{hasMenu ? (
 					<>
-						<HStack gap="2">
-							{page.icon && <page.icon />}
+						<HStack gap="2" fontSize="sm">
+							{page.icon && (
+								<Icon size="sm">
+									<page.icon />
+								</Icon>
+							)}
 							{page.name}
 						</HStack>
-						<Icon size="xs">
+						<Icon size="sm">
 							{contentRef ? <FaAngleUp /> : <FaAngleDown />}
 						</Icon>
 					</>
@@ -65,7 +72,7 @@ export function PagesinHeader({
 							{page.name}
 						</HStack>
 						{page.hasHome && (
-							<Icon size="xs">
+							<Icon size="sm">
 								<FaAngleRight />
 							</Icon>
 						)}

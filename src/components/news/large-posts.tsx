@@ -7,9 +7,8 @@ import {
 	Image,
 	LinkBox,
 	LinkOverlay,
-	StackSeparator,
 	Tag,
-	Text,
+	VStack,
 } from "@chakra-ui/react";
 import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextImage from "next/image";
@@ -54,7 +53,7 @@ export default function LargePosts({
 						<Heading fontWeight="bolder" color="fg.subtle">
 							Empty
 						</Heading>
-						<Text
+						{/* <Text
 							fontWeight="black"
 							fontStyle="italic"
 							pos="absolute"
@@ -65,41 +64,42 @@ export default function LargePosts({
 							stroke="fg.muted"
 						>
 							KSG
-						</Text>
+						</Text> */}
 					</Center>
 				)}
-				<HStack
-					justify="space-between"
-					direction="column"
-					separator={<StackSeparator />}
-					gap="0"
-				>
-					<Card.Body>
-						<HStack align="start">
-							<DateFormatter date={post.createdAt} />
-							{post.tag?.map((tag) => (
-								<Tag.Root key={tag.id}>
-									{tag.icon ? (
-										<Tag.StartElement>
-											<Avatar.Root size="full">
-												<Avatar.Image src={tag.icon.url} />
-											</Avatar.Root>
-										</Tag.StartElement>
-									) : null}
-									<Tag.Label>{tag.name}</Tag.Label>
-								</Tag.Root>
-							))}
-						</HStack>
-						<Card.Title asChild>
-							<LinkOverlay asChild>
-								<NextLink href={`/news/${post.id}`}>{post.title}</NextLink>
-							</LinkOverlay>
-						</Card.Title>
-						{post.subtitle ? (
-							<Card.Description>{post.subtitle}</Card.Description>
+				<HStack justify="space-between" direction="column" gap="0">
+					<Card.Body justifyContent="space-between" gap="2" pr="0.5">
+						<VStack align="start">
+							<HStack w="full" align="start" justify="space-between">
+								<Card.Title asChild>
+									<LinkOverlay asChild>
+										<NextLink href={`/news/${post.id}`}>{post.title}</NextLink>
+									</LinkOverlay>
+								</Card.Title>
+								<DateFormatter date={post.createdAt} />
+							</HStack>
+							{post.subtitle ? (
+								<Card.Description>{post.subtitle}</Card.Description>
+							) : null}
+						</VStack>
+						{post.tag?.length ? (
+							<HStack align="start">
+								{post.tag.map((tag) => (
+									<Tag.Root key={tag.id}>
+										{tag.icon ? (
+											<Tag.StartElement>
+												<Avatar.Root size="full">
+													<Avatar.Image src={tag.icon.url} />
+												</Avatar.Root>
+											</Tag.StartElement>
+										) : null}
+										<Tag.Label>{tag.name}</Tag.Label>
+									</Tag.Root>
+								))}
+							</HStack>
 						) : null}
 					</Card.Body>
-					<Center p="1.5">
+					<Center p="2" color="fg.subtle">
 						<FaAngleRight />
 					</Center>
 				</HStack>

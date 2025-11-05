@@ -20,9 +20,9 @@ export function Header() {
 				<HStack py={2} justify="space-between" whiteSpace="nowrap">
 					<HStack gap={4} separator={<StackSeparator />} overflow="hidden">
 						<HomeLink />
-						<Box overflow="auto" whiteSpace="nowrap" scrollbarWidth="thin">
+						<HStack gap="6" overflowX="auto" scrollbarWidth="thin">
 							<PagesinHeader pages={pages} />
-						</Box>
+						</HStack>
 					</HStack>
 					<HStack>
 						<AccountButton />
