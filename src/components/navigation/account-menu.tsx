@@ -12,7 +12,7 @@ export function AccountMenu() {
 	return (
 		<Menu.Root positioning={{ placement: "bottom-end" }}>
 			<Menu.Trigger asChild>
-				<IconButton variant="outline" color="fg.muted">
+				<IconButton variant="outline">
 					<FaUser />
 				</IconButton>
 			</Menu.Trigger>
@@ -24,8 +24,11 @@ export function AccountMenu() {
 							<Menu.Item value="dashboard" asChild>
 								<NextLink href="/dashboard">ダッシュボード</NextLink>
 							</Menu.Item>
+							<Menu.Separator />
 							<Menu.Item
 								value="logout"
+								color="fg.error"
+								_hover={{ bg: "bg.error", color: "fg.error" }}
 								onClick={async () => {
 									await logout();
 									router.refresh();
