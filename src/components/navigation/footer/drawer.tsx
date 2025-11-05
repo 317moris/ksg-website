@@ -14,9 +14,10 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import { useRef } from "react";
 import { FaBars } from "react-icons/fa6";
+import type { PageProps } from "@/interfaces/pages";
 import { PagesinHeader } from "../pages";
 
-export function PagesDrawer() {
+export function PagesDrawer({ pages }: { pages: PageProps[] }) {
 	const contentRef = useRef<HTMLDivElement | null>(null);
 
 	return (
@@ -49,7 +50,7 @@ export function PagesDrawer() {
 								</Link>
 							</Flex>
 							<SimpleGrid columns={2} minChildWidth="40" gap={2}>
-								<PagesinHeader contentRef={contentRef} />
+								<PagesinHeader pages={pages} contentRef={contentRef} />
 							</SimpleGrid>
 						</Drawer.Body>
 					</Drawer.Content>

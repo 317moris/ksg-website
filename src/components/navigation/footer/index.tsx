@@ -1,5 +1,6 @@
 import { Box, ButtonGroup, Container, HStack } from "@chakra-ui/react";
 import { AccountButton } from "../account";
+import { pages } from "../pages-data";
 import { Settings } from "../settings";
 import { PagesDrawer } from "./drawer";
 
@@ -16,7 +17,7 @@ export function Footer() {
 		>
 			<Container>
 				<HStack justify="space-between" py={2}>
-					<PagesDrawer />
+					<PagesDrawer pages={pages} />
 					<ButtonGroup>
 						<AccountButton />
 						<Settings />

@@ -4,142 +4,14 @@ import { Button, Drawer, HStack, Icon, Menu, Portal } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import type { RefObject } from "react";
-import {
-	Fa1,
-	Fa2,
-	Fa3,
-	FaAngleDown,
-	FaAngleRight,
-	FaAngleUp,
-	FaBook,
-	FaBookBookmark,
-	FaCalendar,
-	FaComment,
-	FaGraduationCap,
-	FaHand,
-	FaHandPointUp,
-	FaHouse,
-	FaInfo,
-	FaMapPin,
-	FaPenFancy,
-	FaRoad,
-	FaSeedling,
-	FaTimeline,
-	FaVolleyball,
-} from "react-icons/fa6";
-import { courses } from "@/const/course";
-import type {
-	CourseProps,
-	PageChildrenProps,
-	PageProps,
-} from "@/interfaces/pages";
-
-export const pages: PageProps[] = [
-	{
-		name: "学校情報",
-		href: "/info",
-		icon: FaInfo,
-		children: [
-			{
-				name: "校長より",
-				href: "principal-message",
-				icon: FaComment,
-			},
-			{
-				name: "教育目標",
-				href: "educational-goals",
-				icon: FaBook,
-			},
-			{
-				name: "沿革",
-				href: "school-history",
-				icon: FaTimeline,
-			},
-			{
-				name: "アクセス",
-				href: "/#access",
-				icon: FaMapPin,
-			},
-			{
-				name: "生徒の成長物語",
-				href: "student-stories",
-				icon: FaSeedling,
-			},
-			{
-				name: "学校自己評価シート",
-				href: "self-evaluation",
-				icon: FaPenFancy,
-			},
-			{
-				name: "生徒心得",
-				href: "student-guidelines",
-				icon: FaHandPointUp,
-			},
-			{
-				name: "いじめ防止の取り組み",
-				href: "anti-bullying-efforts",
-				icon: FaHand,
-			},
-			{
-				name: "教科書選定基本方針",
-				href: "textbook-selection-policy",
-				icon: FaBookBookmark,
-			},
-		],
-	},
-	{
-		name: "行事予定",
-		href: "/event",
-		icon: FaCalendar,
-	},
-	{
-		name: "学科",
-		href: "/course",
-		hasHome: true,
-		icon: FaRoad,
-		children: courses,
-	},
-	{
-		name: "学年",
-		href: "/grade",
-		icon: FaGraduationCap,
-		children: [
-			{
-				name: "1年生",
-				href: "first",
-				icon: Fa1,
-			},
-			{
-				name: "2年生",
-				href: "second",
-				icon: Fa2,
-			},
-			{
-				name: "3年生",
-				href: "third",
-				icon: Fa3,
-			},
-		],
-	},
-	{
-		name: "部活動",
-		href: "/club",
-		icon: FaVolleyball,
-	},
-].map((page) => {
-	let children: PageChildrenProps[] | CourseProps[] | undefined = page.children;
-
-	if (page.hasHome) {
-		children = [{ name: "トップ", href: "", icon: FaHouse }, ...page.children];
-	}
-
-	page.children = children;
-	return page;
-});
+import { FaAngleDown, FaAngleRight, FaAngleUp } from "react-icons/fa6";
+import type { PageProps } from "@/interfaces/pages";
 
 export function PagesinHeader({
+	pages,
 	contentRef,
 }: {
+	pages: PageProps[];
 	contentRef?: RefObject<HTMLDivElement | null>;
 }) {
 	const path = usePathname();
