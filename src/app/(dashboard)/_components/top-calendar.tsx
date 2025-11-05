@@ -41,6 +41,7 @@ const plans: PlanType[] = [
 export function TopCalendar() {
 	const [open, setOpen] = useState(0);
 	const id = useId();
+
 	const today = new Date();
 	const dates = new Array(28)
 		.fill(0)
@@ -52,10 +53,11 @@ export function TopCalendar() {
 			today.getMonth(),
 			today.getDate() + i,
 		);
+		const buttonId = `${id}-calendar-${date.getMonth() + 1}-${date.getDate()}`;
 
 		return (
 			<Button
-				id={`${id}-calendar-${date.getDate()}`}
+				id={buttonId}
 				key={date.toISOString()}
 				whiteSpace="nowrap"
 				flexDir="column"
@@ -69,7 +71,7 @@ export function TopCalendar() {
 				transition="all"
 				asChild
 			>
-				<NextLink href={`/dashboard#${id}-calendar-${date.getDate()}`}>
+				<NextLink href={`/dashboard#${buttonId}`} replace>
 					<VStack align="start" w="full">
 						<Heading
 							size="5xl"
