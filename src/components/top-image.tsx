@@ -26,7 +26,7 @@ const images = [
 		src: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/1/12449/big",
 	},
 	{
-		alt: "服飾デザイン科\n外部講師による授業",
+		alt: "外部講師\nによる授業",
 		src: "https://ksg-h.spec.ed.jp/wysiwyg/image/download/1/12448/big",
 	},
 	{
@@ -103,6 +103,7 @@ export function TopImage() {
 			/>
 			{images.map((image, i) => {
 				const showing = i === imageIndex;
+				const texts = image.alt.split("\n");
 
 				return (
 					<Presence
@@ -122,16 +123,19 @@ export function TopImage() {
 							animationName: "fade-out",
 						}}
 					>
-						<Heading
-							textAlign="end"
-							size="7xl"
-							color="green.fg/10"
-							fontStyle="italic"
-							fontWeight="black"
-							whiteSpace="pre-wrap"
-						>
-							{image.alt}
-						</Heading>
+						{texts.map((text) => (
+							<Heading
+								key={text}
+								textAlign="end"
+								size="7xl"
+								color="green.fg/7"
+								fontStyle="italic"
+								fontWeight="black"
+								whiteSpace="nowrap"
+							>
+								{text}
+							</Heading>
+						))}
 					</Presence>
 				);
 			})}
