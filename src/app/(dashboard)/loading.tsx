@@ -1,3 +1,3 @@
-import Loading from "../(main)/loading";
+import Loading from "../loading";
 
 export default Loading;

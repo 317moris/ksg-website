@@ -1,9 +1,14 @@
-import { Container, EmptyState, VStack } from "@chakra-ui/react";
-import { FaXmark } from "react-icons/fa6";
+"use client";
+
+import { Button, Container, EmptyState, VStack } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { FaArrowLeft, FaXmark } from "react-icons/fa6";
 
 export default function NotFound() {
+	const router = useRouter();
+
 	return (
-		<Container as="main" maxW="8xl">
+		<Container as="main">
 			<EmptyState.Root>
 				<EmptyState.Content gap={20}>
 					<EmptyState.Indicator>
@@ -19,6 +24,10 @@ export default function NotFound() {
 							404
 						</EmptyState.Title>
 					</VStack>
+					<Button onClick={router.back}>
+						<FaArrowLeft />
+						戻る
+					</Button>
 				</EmptyState.Content>
 			</EmptyState.Root>
 		</Container>
