@@ -1,6 +1,14 @@
 "use client";
 
-import { Button, Heading, Tag, Text, VStack } from "@chakra-ui/react";
+import {
+	Bleed,
+	Button,
+	ButtonGroup,
+	Heading,
+	Tag,
+	Text,
+	VStack,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useId, useState } from "react";
 
@@ -38,16 +46,24 @@ const plans: PlanType[] = [
 	},
 ];
 
-export function TopCalendar() {
+export function TopCalendar({
+	sm,
+	hideEmpty,
+}: {
+	sm?: boolean;
+	hideEmpty?: boolean;
+}) {
 	const [open, setOpen] = useState(0);
 	const id = useId();
 
 	const today = new Date();
 	const dates = new Array(28)
 		.fill(0)
-		.map((_, i) => plans.find((plan) => plan.later === i) || null);
+		.map((_, i) => plans.find((plan) => plan.later === i));
 
 	return dates.map((plan, i) => {
+		if (hideEmpty && !plan) return null;
+
 		const date = new Date(
 			today.getFullYear(),
 			today.getMonth(),
@@ -55,56 +71,82 @@ export function TopCalendar() {
 		);
 		const buttonId = `${id}-calendar-${date.getMonth() + 1}-${date.getDate()}`;
 
-		return (
+		const buttons = (
 			<Button
 				id={buttonId}
-				key={date.toISOString()}
-				whiteSpace="nowrap"
+				key={!sm ? date.toISOString() : undefined}
+				whiteSpace={open === i ? undefined : "nowrap"}
 				flexDir="column"
-				h="fit"
+				h="full"
 				variant="surface"
 				alignItems="start"
-				p="4"
-				minW={open === i ? "20%" : "28"}
+				justifyContent="start"
+				px="4"
+				w="full"
+				minW="28"
+				maxW={open === i ? "md" : "28"}
 				onClick={() => setOpen(i)}
 				overflow="hidden"
+				colorPalette={open === i ? "green" : undefined}
 				transition="all"
+				transitionDuration="moderate"
 				asChild
 			>
 				<NextLink href={`/dashboard#${buttonId}`} replace>
-					<VStack align="start" w="full">
-						<Heading
-							size="5xl"
-							visibility={
-								date.getDate() === 1 || i === 0 ? "visible" : "hidden"
-							}
-						>
-							{date.getMonth() + 1}
-						</Heading>
-						<Heading fontFamily="mono" size="4xl">
-							{date.getDate()}
-						</Heading>
+					<VStack align="start" my="4" gap="4">
+						<VStack align="start" gap="0.5" w="full">
+							<Heading
+								size="5xl"
+								visibility={
+									date.getDate() === 1 || i === 0 ? "visible" : "hidden"
+								}
+							>
+								{date.getMonth() + 1}
+							</Heading>
+							<Heading fontFamily="mono" size="4xl">
+								{date.getDate()}
+							</Heading>
+						</VStack>
+						{plan ? (
+							<>
+								<Heading>{plan?.name}</Heading>
+								<Tag.Root>
+									<Tag.Label>{plan?.priority}</Tag.Label>{" "}
+								</Tag.Root>
+							</>
+						) : (
+							<Text
+								color="fg.subtle"
+								fontFamily="mono"
+								fontStyle="italic"
+								fontSize="sm"
+								fontWeight="bold"
+							>
+								Empty
+							</Text>
+						)}
 					</VStack>
-					{plan ? (
-						<>
-							<Heading>{plan?.name}</Heading>
-							<Tag.Root>
-								<Tag.Label>{plan?.priority}</Tag.Label>{" "}
-							</Tag.Root>
-						</>
-					) : (
-						<Text
-							color="fg.subtle"
-							fontFamily="mono"
-							fontStyle="italic"
-							fontSize="sm"
-							fontWeight="bold"
-						>
-							Empty
-						</Text>
-					)}
+					<Bleed
+						hidden={open === i}
+						pos="absolute"
+						gradientFrom="transparent"
+						gradientTo="blackAlpha.50"
+						bgGradient="to-r"
+						right="0"
+						h="full"
+						w="1/12"
+					/>
 				</NextLink>
 			</Button>
 		);
+
+		if (!sm)
+			return (
+				<ButtonGroup key={date.toISOString()} attached rounded="lg">
+					{buttons}
+				</ButtonGroup>
+			);
+
+		return buttons;
 	});
 }
