@@ -1,7 +1,7 @@
 import { Box, Container, HStack, StackSeparator } from "@chakra-ui/react";
 import { HomeLink } from "@/components/homelink";
 import { AccountButton } from "../account";
-import { PagesinHeader } from "../pages";
+import { PagesinNavigation } from "../pages";
 import { pages } from "../pages-data";
 import { Settings } from "../settings";
 
@@ -21,7 +21,7 @@ export function Header() {
 					<HStack gap={4} separator={<StackSeparator />} overflow="hidden">
 						<HomeLink />
 						<HStack gap="6" overflowX="auto" scrollbarWidth="thin">
-							<PagesinHeader pages={pages} />
+							<PagesinNavigation pages={pages} />
 						</HStack>
 					</HStack>
 					<HStack>

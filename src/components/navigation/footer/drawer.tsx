@@ -15,7 +15,7 @@ import NextLink from "next/link";
 import { useRef } from "react";
 import { FaBars } from "react-icons/fa6";
 import type { PageProps } from "@/interfaces/pages";
-import { PagesinHeader } from "../pages";
+import { PagesinNavigation } from "../pages";
 
 export function PagesDrawer({ pages }: { pages: PageProps[] }) {
 	const contentRef = useRef<HTMLDivElement | null>(null);
@@ -33,24 +33,26 @@ export function PagesDrawer({ pages }: { pages: PageProps[] }) {
 					<Drawer.Content ref={contentRef}>
 						<Drawer.Body>
 							<Flex w="full" justify="center">
-								<Link asChild fontWeight="bold" my="4">
-									<NextLink href="/">
-										<HStack>
-											<Image asChild boxSize={9} rounded="full">
-												<NextImage
-													src="/icon/kosho.png"
-													alt="校章"
-													width={600}
-													height={600}
-												/>
-											</Image>
-											埼玉県立越谷総合技術高等学校
-										</HStack>
-									</NextLink>
-								</Link>
+								<Drawer.ActionTrigger asChild>
+									<Link asChild fontWeight="bold" my="4">
+										<NextLink href="/">
+											<HStack>
+												<Image asChild boxSize={9} rounded="full">
+													<NextImage
+														src="/icon/kosho.png"
+														alt="校章"
+														width={600}
+														height={600}
+													/>
+												</Image>
+												埼玉県立越谷総合技術高等学校
+											</HStack>
+										</NextLink>
+									</Link>
+								</Drawer.ActionTrigger>
 							</Flex>
 							<SimpleGrid columns={2} minChildWidth="40" gap={2}>
-								<PagesinHeader pages={pages} contentRef={contentRef} />
+								<PagesinNavigation pages={pages} contentRef={contentRef} />
 							</SimpleGrid>
 						</Drawer.Body>
 					</Drawer.Content>

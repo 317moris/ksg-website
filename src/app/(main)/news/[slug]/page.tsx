@@ -1,5 +1,15 @@
-import { Container, Heading, HStack, Image, Separator } from "@chakra-ui/react";
+import {
+	Avatar,
+	Box,
+	Container,
+	Heading,
+	HStack,
+	Image,
+	Link,
+	Separator,
+} from "@chakra-ui/react";
 import NextImage from "next/image";
+import NextLink from "next/link";
 import { notFound } from "next/navigation";
 import { DateFormatter } from "@/components/date-formatter";
 import { Prose } from "@/components/ui/prose";
@@ -22,9 +32,30 @@ export default async function Page(props: Params) {
 					/>
 				</Image>
 			) : null}
-			<HStack w="full" align="end" justify="space-between">
-				<Heading size="4xl">{post.title}</Heading>
-				<DateFormatter date={post.createdAt} />
+			<Heading size="4xl">{post.title}</Heading>
+			<HStack align="end" justify="space-between">
+				<Link asChild>
+					<NextLink href={`/news/author/${post.author.id}`}>
+						<Avatar.Root mr="1">
+							<Avatar.Fallback name={post.author.name} />
+							{post.author.icon && (
+								<Avatar.Image asChild>
+									<NextImage
+										src={post.author.icon.url}
+										alt={post.author.icon.alt ?? post.author.name}
+										width={post.author.icon.width}
+										height={post.author.icon.height}
+									/>
+								</Avatar.Image>
+							)}
+						</Avatar.Root>
+
+						{post.author.name}
+					</NextLink>
+				</Link>
+				<Box whiteSpace="nowrap">
+					<DateFormatter date={post.createdAt} />
+				</Box>
 			</HStack>
 			<Separator w="full" />
 			{/** biome-ignore lint/security/noDangerouslySetInnerHtml: <microCMSからのHTMLであるため> */}
