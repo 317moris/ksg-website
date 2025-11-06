@@ -7,7 +7,7 @@ import type { RefObject } from "react";
 import { FaAngleDown, FaAngleRight, FaAngleUp } from "react-icons/fa6";
 import type { PageProps } from "@/interfaces/pages";
 
-export function PagesinHeader({
+export function PagesinNavigation({
 	pages,
 	contentRef,
 }: {
@@ -24,30 +24,45 @@ export function PagesinHeader({
 
 		const button = (
 			<Button
-				key={page.href}
+				key={!hasMenu && contentRef ? undefined : page.href}
 				variant="plain"
 				color={{ base: "fg.muted", _hover: "fg", _open: "fg" }}
-				borderBottomColor={{
-					_hover: "border.emphasized",
-					_open: "border.emphasized",
-				}}
-				px="0"
-				roundedBottom="none"
-				borderWidth={0}
-				borderYWidth="2px"
+				{...(!contentRef && {
+					px: "0",
+					borderBottomColor: {
+						_hover: "border.emphasized",
+						_open: "border.emphasized",
+					},
+					roundedBottom: "none",
+					borderWidth: "0",
+					borderYWidth: "2px",
+				})}
 				{...(contentRef && {
-					rounded: "md",
+					bg: { _hover: "bg.muted", _open: "bg.muted" },
+					borderColor: {
+						base: "border",
+						_hover: "border.emphasized",
+						_open: "border.emphasized",
+					},
 					borderWidth: "1px",
-					borderBottomWidth: "1px",
 					justifyContent: "space-between",
 				})}
 				{...(active && {
 					color: { base: "green.fg", _hover: "fg", _open: "fg" },
-					borderBottomColor: {
-						base: "green.emphasized",
-						_hover: "green.focusRing",
-						_open: "green.focusRing",
-					},
+					...(!contentRef && {
+						borderBottomColor: {
+							base: "green.emphasized",
+							_hover: "green.focusRing",
+							_open: "green.focusRing",
+						},
+					}),
+					...(contentRef && {
+						bg: {
+							base: "green.subtle/70",
+							_hover: "green.subtle",
+							_open: "green.subtle",
+						},
+					}),
 				})}
 				asChild={!hasMenu}
 			>
@@ -94,10 +109,10 @@ export function PagesinHeader({
 						<Menu.Positioner>
 							<Menu.Content divideY="1px" divideColor="border.muted">
 								{page.children?.map((child) => {
-									const activeChild = path
-										.split("/")[2]
-										?.startsWith(child.href);
 									const childPath = `${page.href}/${child.href}`;
+									const activeChild = child.href
+										? path.startsWith(childPath)
+										: path === page.href;
 
 									const item = (
 										<Menu.Item
@@ -140,6 +155,12 @@ export function PagesinHeader({
 			);
 		}
 
+		if (contentRef)
+			return (
+				<Drawer.ActionTrigger asChild key={page.href}>
+					{button}
+				</Drawer.ActionTrigger>
+			);
 		return button;
 	});
 }
