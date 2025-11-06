@@ -40,8 +40,10 @@ export default function RootLayout({
 					</HStack>
 				</Container>
 			</Flex>
-			<Header />
-			<Box minH="vh">{children}</Box>
+			<Box minH="vh">
+				<Header />
+				{children}
+			</Box>
 			<Footer />
 		</>
 	);
