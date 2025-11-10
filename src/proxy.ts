@@ -16,5 +16,6 @@ export default function proxy(request: NextRequest) {
 
 	if (login) return NextResponse.next();
 
-	return NextResponse.redirect("/auth");
+	request.nextUrl.pathname = "/auth";
+	return NextResponse.redirect(request.nextUrl);
 }
