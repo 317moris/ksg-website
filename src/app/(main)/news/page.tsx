@@ -1,9 +1,8 @@
-import { Container, SimpleGrid } from "@chakra-ui/react";
+import { Container, EmptyState, SimpleGrid } from "@chakra-ui/react";
 import { FaNewspaper } from "react-icons/fa6";
 import { animation } from "@/animation";
 import Posts from "@/components/news/posts";
 import { Aria } from "@/components/ui/aria";
-import { EmptyState } from "@/components/ui/empty-state";
 import { getList } from "@/lib/api";
 
 export default async function Page() {
@@ -27,7 +26,11 @@ export default async function Page() {
 					</SimpleGrid>
 				</Aria>
 			) : (
-				<EmptyState title="何も無い" />
+				<EmptyState.Root>
+					<EmptyState.Content>
+						<EmptyState.Title>何も無い</EmptyState.Title>
+					</EmptyState.Content>
+				</EmptyState.Root>
 			)}
 		</Container>
 	);

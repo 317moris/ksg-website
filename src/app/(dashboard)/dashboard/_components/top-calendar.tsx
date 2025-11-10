@@ -2,9 +2,12 @@
 
 import {
 	Bleed,
+	Box,
 	Button,
-	ButtonGroup,
 	Heading,
+	LinkOverlay,
+	Presence,
+	Span,
 	Tag,
 	Text,
 	VStack,
@@ -35,24 +38,18 @@ const plans: PlanType[] = [
 		priority: "個人",
 	},
 	{
-		later: 5,
+		later: 25,
 		name: "帰宅部県大会",
 		priority: "部活",
 	},
 	{
-		later: 6,
+		later: 27,
 		name: "クラス写真撮影",
 		priority: "クラス",
 	},
 ];
 
-export function TopCalendar({
-	sm,
-	hideEmpty,
-}: {
-	sm?: boolean;
-	hideEmpty?: boolean;
-}) {
+export function TopCalendar({ hideEmpty }: { hideEmpty?: boolean }) {
 	const [open, setOpen] = useState(0);
 	const id = useId();
 
@@ -61,9 +58,10 @@ export function TopCalendar({
 		.fill(0)
 		.map((_, i) => plans.find((plan) => plan.later === i));
 
+	let prevMonth = today.getMonth() - 1;
+
 	return dates.map((plan, i) => {
 		if (hideEmpty && !plan) return null;
-
 		const date = new Date(
 			today.getFullYear(),
 			today.getMonth(),
@@ -71,14 +69,21 @@ export function TopCalendar({
 		);
 		const buttonId = `${id}-calendar-${date.getMonth() + 1}-${date.getDate()}`;
 
+		let showMonth = false;
+		if (date.getMonth() !== prevMonth) {
+			showMonth = true;
+			prevMonth = date.getMonth();
+		}
+
 		const buttons = (
 			<Button
 				id={buttonId}
-				key={!sm ? date.toISOString() : undefined}
+				rounded="none"
+				key={date.toISOString()}
 				whiteSpace={open === i ? undefined : "nowrap"}
 				flexDir="column"
 				h="full"
-				variant="surface"
+				variant="subtle"
 				alignItems="start"
 				justifyContent="start"
 				px="4"
@@ -90,26 +95,32 @@ export function TopCalendar({
 				colorPalette={open === i ? "green" : undefined}
 				transition="all"
 				transitionDuration="moderate"
-				asChild
 			>
-				<NextLink href={`/dashboard#${buttonId}`} replace>
-					<VStack align="start" my="4" gap="4">
-						<VStack align="start" gap="0.5" w="full">
-							<Heading
-								size="5xl"
-								visibility={
-									date.getDate() === 1 || i === 0 ? "visible" : "hidden"
-								}
-							>
-								{date.getMonth() + 1}
-							</Heading>
-							<Heading fontFamily="mono" size="4xl">
-								{date.getDate()}
-							</Heading>
+				<VStack h="full" justify="space-between" pt="8" gap="4" w="full">
+					<VStack align="start" gap="4" w="full">
+						<VStack align="start" gap="4" w="full">
+							<Text visibility={showMonth ? "visible" : "hidden"} as="h2">
+								<Span fontSize="3xl" fontFamily="mono">
+									{date.getMonth() + 1}
+								</Span>
+								月
+							</Text>
+							<LinkOverlay asChild>
+								<NextLink href={`/dashboard#${buttonId}`} replace>
+									<Text
+										as="h3"
+										fontFamily="mono"
+										fontWeight="semibold"
+										fontSize="4xl"
+									>
+										{date.getDate()}
+									</Text>
+								</NextLink>
+							</LinkOverlay>
 						</VStack>
 						{plan ? (
 							<>
-								<Heading>{plan?.name}</Heading>
+								<Heading as="h4">{plan?.name}</Heading>
 								<Tag.Root>
 									<Tag.Label>{plan?.priority}</Tag.Label>{" "}
 								</Tag.Root>
@@ -126,26 +137,45 @@ export function TopCalendar({
 							</Text>
 						)}
 					</VStack>
-					<Bleed
-						hidden={open === i}
-						pos="absolute"
-						gradientFrom="transparent"
-						gradientTo="blackAlpha.50"
-						bgGradient="to-r"
-						right="0"
-						h="full"
-						w="1/12"
-					/>
-				</NextLink>
+					<Box w="full" pos="sticky" bottom="0">
+						<Box
+							py="4"
+							gradientFrom="transparent"
+							gradientTo="currentBg"
+							bgGradient="to-b"
+						>
+							<Presence
+								present={open === i}
+								_open={{
+									animationName: "fade-in",
+									animationDuration: "moderate",
+								}}
+								_closed={{
+									animationName: "fade-out",
+									animationDuration: "moderate",
+								}}
+							>
+								<Button w="full" asChild>
+									<NextLink href={`/calendar/${date.toISOString()}`}>
+										詳細
+									</NextLink>
+								</Button>
+							</Presence>
+						</Box>
+					</Box>
+				</VStack>
+				<Bleed
+					hidden={open === i}
+					pos="absolute"
+					gradientFrom="transparent"
+					gradientTo="blackAlpha.50"
+					bgGradient="to-r"
+					right="0"
+					h="full"
+					w="1/12"
+				/>
 			</Button>
 		);
-
-		if (!sm)
-			return (
-				<ButtonGroup key={date.toISOString()} attached rounded="lg">
-					{buttons}
-				</ButtonGroup>
-			);
 
 		return buttons;
 	});

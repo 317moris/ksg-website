@@ -7,7 +7,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<>
+		<Box minH="vh">
 			<Box
 				bg="bg.inverted"
 				borderBottomWidth="1px"
@@ -22,6 +22,6 @@ export default function RootLayout({
 			</Box>
 			<Header />
 			{children}
-		</>
+		</Box>
 	);
 }

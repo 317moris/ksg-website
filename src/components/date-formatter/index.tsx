@@ -1,6 +1,5 @@
-import { ClientOnly, HStack } from "@chakra-ui/react";
+import { ClientOnly, HStack, Skeleton } from "@chakra-ui/react";
 import { FaUpload } from "react-icons/fa6";
-import { Skeleton } from "../ui/skeleton";
 import { ClientDateFormatter } from "./date-formatter";
 
 export function DateFormatter({ date }: { date: string }) {
