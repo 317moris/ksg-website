@@ -8,11 +8,13 @@ import {
 	Text,
 	VStack,
 } from "@chakra-ui/react";
-import { differenceInDays, format } from "date-fns";
+import { differenceInDays } from "date-fns";
 import { useState } from "react";
+import { Aria } from "@/components/ui/aria";
+import Loading from "../loading";
 
 export default function Page() {
-	const [today, setToday] = useState(new Date());
+	const [today, _setToday] = useState(new Date());
 
 	const dateNums = differenceInDays(
 		new Date(today.getFullYear() + 1, 0, 1),
@@ -20,47 +22,48 @@ export default function Page() {
 	);
 	const _dates = new Array(dateNums)
 		.fill(0)
-		.map((_, i) => new Date(today.getFullYear(), 0, i + 1));
-	const dates: (Date | null)[] = [
-		...new Array(new Date(today.getFullYear(), 0, 1).getDay()).fill(null),
-		..._dates,
-	];
+		.map((_, i) => ({ date: new Date(today.getFullYear(), 0, i + 1), key: i }));
 
-	let prevMonth = -1;
+	const dates: {
+		month: number;
+		dates: { date: Date | null; key: number | string }[];
+	}[] = [];
+	for (const date of _dates) {
+		if (dates[dates.length - 1]?.month !== date.date.getMonth()) {
+			dates.push({
+				month: date.date.getMonth(),
+				dates: new Array(date.date.getDay())
+					.fill(0)
+					.map((_, i) => ({ date: null, key: `empty-${date.key}-${i}` })),
+			});
+		}
+
+		dates[dates.length - 1]?.dates.push(date);
+	}
+
 	return (
-		<ClientOnly>
+		<ClientOnly fallback={<Loading />}>
 			<Container>
-				<SimpleGrid columns={7}>
-					{dates.map((date, i) => {
-						if (!date)
-							return (
-								<Button key={`empty-dates-${i}`} variant="outline" h="full" />
-							);
-
-						let showMonth = false;
-
-						if (date.getMonth() !== prevMonth) {
-							showMonth = true;
-							prevMonth = date.getMonth();
-						}
-
-						return (
-							<Button
-								key={date.toISOString()}
-								variant="outline"
-								flexDir="column"
-								h="fit"
-								py="2"
-							>
-								<VStack fontFamily="mono">
-									<Text visibility={showMonth ? "visible" : "hidden"}>
-										{date.getMonth() + 1}
-									</Text>
-									<Text>{date.getDate()}</Text>
-								</VStack>
-							</Button>
-						);
-					})}
+				<SimpleGrid columns={2} gap="2">
+					{dates.map((_date, _i) => (
+						<Aria key={`month-${_date.month}`} title={`${_date.month + 1}月`}>
+							<SimpleGrid columns={7}>
+								{_date.dates.map((date) => (
+									<Button
+										key={`${_date.month}-${date.key}`}
+										h="full"
+										variant="outline"
+										flexDir="column"
+										py="2"
+									>
+										<VStack fontFamily="mono">
+											<Text>{date.date?.getDate() ?? ""}</Text>
+										</VStack>
+									</Button>
+								))}
+							</SimpleGrid>
+						</Aria>
+					))}
 				</SimpleGrid>
 			</Container>
 		</ClientOnly>

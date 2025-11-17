@@ -1,6 +1,14 @@
 "use client";
 
-import { Bleed, Center, Heading, Image, Presence } from "@chakra-ui/react";
+import {
+	Bleed,
+	Center,
+	ClientOnly,
+	Heading,
+	Image,
+	Presence,
+	Skeleton,
+} from "@chakra-ui/react";
 import NextImage from "next/image";
 import { useEffect, useState } from "react";
 
@@ -43,6 +51,8 @@ export function TopImage() {
 	const [imageIndex, setImageIndex] = useState(0);
 	const [changedImage, setChangedImage] = useState(false);
 
+	const [viewportScroll, setViewportScroll] = useState(0);
+
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (changedImage) {
@@ -57,42 +67,94 @@ export function TopImage() {
 		};
 	}, [changedImage]);
 
+	useEffect(() => {
+		function handleScroll() {
+			setViewportScroll(window.scrollY / window.innerHeight);
+		}
+
+		window.addEventListener("scroll", handleScroll);
+
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
+
 	return (
 		<Center
-			zIndex={0}
-			pos="absolute"
+			pos="fixed"
+			zIndex="-1"
+			top="0"
 			overflow="hidden"
 			w="full"
-			h="90vh"
+			h={{ "2xlDown": "vh", "2xl": "60rem" }}
 			userSelect="none"
+			opacity={1 - viewportScroll}
 		>
-			{images.map((image, i) => {
-				const showing = i === imageIndex;
+			<ClientOnly fallback={<Skeleton w="full" h="full" />}>
+				{images.map((image, i) => {
+					const showing = i === imageIndex;
 
-				return (
-					<Presence
-						pos="absolute"
-						key={image.src}
-						present={showing}
-						_open={{
-							animation: "ease-out",
-							animationDuration: "slowest",
-							animationName: "fade-in",
-						}}
-						_closed={{
-							animation: "ease-out",
-							animationDuration: "slowest",
-							animationName: "fade-out",
-						}}
-						w="full"
-						h="full"
-					>
-						<Image asChild>
-							<NextImage src={image.src} alt={image.alt} fill unoptimized />
-						</Image>
-					</Presence>
-				);
-			})}
+					return (
+						<Presence
+							pos="absolute"
+							key={image.src}
+							present={showing && viewportScroll < 1}
+							_open={{
+								animation: "ease-out",
+								animationDuration: "slowest",
+								animationName: "fade-in",
+							}}
+							_closed={{
+								animation: "ease-out",
+								animationDuration: "slowest",
+								animationName: "fade-out",
+							}}
+							w="full"
+							h="full"
+						>
+							<Image asChild>
+								<NextImage src={image.src} alt={image.alt} fill unoptimized />
+							</Image>
+						</Presence>
+					);
+				})}
+				{images.map((image, i) => {
+					const showing = i === imageIndex;
+					const texts = image.alt.split("\n");
+
+					return (
+						<Presence
+							pos="absolute"
+							top={0}
+							right={6}
+							key={image.src}
+							present={showing}
+							_open={{
+								animation: "ease-out",
+								animationDuration: "slowest",
+								animationName: "fade-in",
+							}}
+							_closed={{
+								animation: "ease-out",
+								animationDuration: "slowest",
+								animationName: "fade-out",
+							}}
+						>
+							{texts.map((text) => (
+								<Heading
+									key={text}
+									textAlign="end"
+									size="7xl"
+									color="green.fg/7"
+									fontStyle="italic"
+									fontWeight="black"
+									whiteSpace="nowrap"
+								>
+									{text}
+								</Heading>
+							))}
+						</Presence>
+					);
+				})}
+			</ClientOnly>
 			<Bleed
 				pos="absolute"
 				w="full"
@@ -101,44 +163,6 @@ export function TopImage() {
 				gradientFrom="bg/50"
 				gradientTo="bg"
 			/>
-			{images.map((image, i) => {
-				const showing = i === imageIndex;
-				const texts = image.alt.split("\n");
-
-				return (
-					<Presence
-						pos="absolute"
-						top={0}
-						right={6}
-						key={image.src}
-						present={showing}
-						_open={{
-							animation: "ease-out",
-							animationDuration: "slowest",
-							animationName: "fade-in",
-						}}
-						_closed={{
-							animation: "ease-out",
-							animationDuration: "slowest",
-							animationName: "fade-out",
-						}}
-					>
-						{texts.map((text) => (
-							<Heading
-								key={text}
-								textAlign="end"
-								size="7xl"
-								color="green.fg/7"
-								fontStyle="italic"
-								fontWeight="black"
-								whiteSpace="nowrap"
-							>
-								{text}
-							</Heading>
-						))}
-					</Presence>
-				);
-			})}
 		</Center>
 	);
 }
