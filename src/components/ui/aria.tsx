@@ -23,15 +23,10 @@ export function Aria(
 			{...boxProps}
 		>
 			<HStack overflow="hidden">
-				<HStack
-					gap="3"
-					mx="2"
-					fontSize={["2xl", "3xl", "4xl"]}
-					fontWeight="bolder"
-				>
+				<HStack gap="3" fontSize={["xl", "2xl", "3xl"]} fontWeight="bolder">
 					{icon}
 					{url ? (
-						<Link scrollMarginTop="12px" asChild>
+						<Link asChild>
 							<NextLink href={url}>{title}</NextLink>
 						</Link>
 					) : (
