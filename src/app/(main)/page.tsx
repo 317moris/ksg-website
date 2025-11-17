@@ -43,6 +43,7 @@ export default async function Home() {
 					<Center>
 						<Image
 							src="/icon/kosho.svg"
+							fetchPriority="high"
 							mr={{ smDown: "-4", sm: "-8" }}
 							w={{ smDown: "56", sm: "xs", mdToLg: "xs", xl: "sm" }}
 							filter={{ _dark: "invert(100%)" }}
@@ -75,6 +76,7 @@ export default async function Home() {
 				<Aria title="ニュース" icon={<FaNewspaper />} url="#news" top={0}>
 					<VStack gap="4">
 						<SimpleGrid
+							w="full"
 							columns={{
 								mdDown: 1,
 								md: 2,
@@ -89,7 +91,7 @@ export default async function Home() {
 					</VStack>
 				</Aria>
 				<Aria title="公式SNS" icon={<FaHashtag />}>
-					<SimpleGrid columns={[1, 2, 3, 4]} gap="2">
+					<SimpleGrid columns={{ mdDown: 1, md: 2 }} gap="2">
 						<Links />
 					</SimpleGrid>
 				</Aria>

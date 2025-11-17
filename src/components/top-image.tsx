@@ -4,7 +4,6 @@ import {
 	Bleed,
 	Center,
 	ClientOnly,
-	Heading,
 	Image,
 	Presence,
 	Skeleton,
@@ -72,6 +71,7 @@ export function TopImage() {
 			setViewportScroll(window.scrollY / window.innerHeight);
 		}
 
+		handleScroll();
 		window.addEventListener("scroll", handleScroll);
 
 		return () => window.removeEventListener("scroll", handleScroll);
@@ -111,12 +111,12 @@ export function TopImage() {
 							h="full"
 						>
 							<Image asChild>
-								<NextImage src={image.src} alt={image.alt} fill unoptimized />
+								<NextImage src={image.src} alt={image.alt} fill />
 							</Image>
 						</Presence>
 					);
 				})}
-				{images.map((image, i) => {
+				{/* {images.map((image, i) => {
 					const showing = i === imageIndex;
 					const texts = image.alt.split("\n");
 
@@ -153,7 +153,7 @@ export function TopImage() {
 							))}
 						</Presence>
 					);
-				})}
+				})} */}
 			</ClientOnly>
 			<Bleed
 				pos="absolute"

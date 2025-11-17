@@ -13,7 +13,8 @@ export function Header() {
 			pos="sticky"
 			zIndex="docked"
 			top={0}
-			bg="bg"
+			bg="bg/84"
+			backdropFilter="blur(20px)"
 			hideBelow="sm"
 		>
 			<Container>
