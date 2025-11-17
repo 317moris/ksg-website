@@ -13,7 +13,7 @@ import {
 	VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useId, useState } from "react";
+import { type RefObject, useId, useState } from "react";
 
 type PlanType = {
 	later: number;
@@ -49,19 +49,26 @@ const plans: PlanType[] = [
 	},
 ];
 
-export function TopCalendar({ hideEmpty }: { hideEmpty?: boolean }) {
+export function TopCalendar({
+	ref,
+	hideEmpty,
+}: {
+	ref: RefObject<HTMLDivElement | null>;
+	hideEmpty?: boolean;
+}) {
 	const [open, setOpen] = useState(0);
 	const id = useId();
 
 	const today = new Date();
-	const dates = new Array(28)
-		.fill(0)
-		.map((_, i) => plans.find((plan) => plan.later === i));
+	const dates = new Array(28).fill(0).map((_, i) => ({
+		plans: plans.find((plan) => plan.later === i),
+		key: i,
+	}));
 
 	let prevMonth = today.getMonth() - 1;
 
 	return dates.map((plan, i) => {
-		if (hideEmpty && !plan) return null;
+		if (hideEmpty && !plan.plans) return null;
 		const date = new Date(
 			today.getFullYear(),
 			today.getMonth(),
@@ -77,9 +84,8 @@ export function TopCalendar({ hideEmpty }: { hideEmpty?: boolean }) {
 
 		const buttons = (
 			<Button
-				id={buttonId}
 				rounded="none"
-				key={date.toISOString()}
+				key={plan.key}
 				whiteSpace={open === i ? undefined : "nowrap"}
 				flexDir="column"
 				h="full"
@@ -90,7 +96,14 @@ export function TopCalendar({ hideEmpty }: { hideEmpty?: boolean }) {
 				w="full"
 				minW="28"
 				maxW={open === i ? "md" : "28"}
-				onClick={() => setOpen(i)}
+				onClick={() => {
+					setOpen(i);
+					const buttonNode = ref.current?.querySelectorAll("button")[i];
+					buttonNode?.scrollIntoView({
+						behavior: "smooth",
+						inline: "nearest",
+					});
+				}}
 				overflow="hidden"
 				colorPalette={open === i ? "green" : undefined}
 				transition="all"
@@ -118,11 +131,11 @@ export function TopCalendar({ hideEmpty }: { hideEmpty?: boolean }) {
 								</NextLink>
 							</LinkOverlay>
 						</VStack>
-						{plan ? (
+						{plan.plans ? (
 							<>
-								<Heading as="h4">{plan?.name}</Heading>
+								<Heading as="h4">{plan.plans.name}</Heading>
 								<Tag.Root>
-									<Tag.Label>{plan?.priority}</Tag.Label>{" "}
+									<Tag.Label>{plan.plans.priority}</Tag.Label>{" "}
 								</Tag.Root>
 							</>
 						) : (

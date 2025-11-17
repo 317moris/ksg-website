@@ -1,6 +1,7 @@
 import { Button, Container, SimpleGrid } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { FaAward } from "react-icons/fa6";
+import { FaAward, FaCalendar } from "react-icons/fa6";
+import { Aria } from "@/components/ui/aria";
 import { TopCalendarWrap } from "./_components/top-calendar-wrap";
 import { rootPath } from "./_path";
 
@@ -15,7 +16,9 @@ const pages = [
 export default function Page() {
 	return (
 		<Container py="8" spaceY="4">
-			<TopCalendarWrap />
+			<Aria title="予定表" icon={<FaCalendar />}>
+				<TopCalendarWrap />
+			</Aria>
 			<SimpleGrid columns={[2, 2, 3, 4]} gap="2">
 				{pages.map((page) => (
 					<Button key={page.href} asChild variant="surface" size="2xl">

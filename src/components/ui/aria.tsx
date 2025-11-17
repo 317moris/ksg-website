@@ -5,7 +5,7 @@ import type { JSX } from "react";
 export function Aria(
 	props: BoxProps & {
 		title: string;
-		icon: JSX.Element;
+		icon?: JSX.Element;
 		url?: string;
 		children: JSX.Element | JSX.Element[];
 	},
@@ -13,14 +13,16 @@ export function Aria(
 	const { title, icon, url, children, ...boxProps } = props;
 
 	return (
-		<Box spaceY="4" {...boxProps}>
+		<Box
+			spaceY="4"
+			p="4"
+			bg="bg"
+			rounded="2xl"
+			borderWidth="1px"
+			borderColor="green.fg/18"
+			{...boxProps}
+		>
 			<HStack overflow="hidden">
-				<Separator
-					variant="dashed"
-					borderColor="border.emphasized"
-					flex="1"
-					hideBelow="md"
-				/>
 				<HStack
 					gap="3"
 					mx="2"
