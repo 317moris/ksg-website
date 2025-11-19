@@ -1,4 +1,5 @@
 import { Box, Container, Text } from "@chakra-ui/react";
+import { Footer } from "./_components/navigation/footer";
 import { Header } from "./_components/navigation/header";
 
 export default function RootLayout({
@@ -7,21 +8,24 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<Box minH="vh">
-			<Box
-				bg="bg.inverted"
-				borderBottomWidth="1px"
-				borderColor="border.inverted"
-				py="2"
-			>
-				<Container centerContent>
-					<Text color="fg.inverted">
-						このページの内容は架空であり、実際とは異なります。
-					</Text>
-				</Container>
+		<>
+			<Box minH="vh">
+				<Box
+					bg="bg.inverted"
+					borderBottomWidth="1px"
+					borderColor="border.inverted"
+					py="2"
+				>
+					<Container centerContent>
+						<Text color="fg.inverted">
+							このページの内容は架空であり、実際とは異なります。
+						</Text>
+					</Container>
+				</Box>
+				<Header />
+				{children}
 			</Box>
-			<Header />
-			{children}
-		</Box>
+			<Footer />
+		</>
 	);
 }
