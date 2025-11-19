@@ -4,7 +4,9 @@ import {
 	Button,
 	ClientOnly,
 	Container,
+	FormatNumber,
 	SimpleGrid,
+	Table,
 	Text,
 	VStack,
 } from "@chakra-ui/react";
@@ -12,25 +14,28 @@ import { differenceInDays } from "date-fns";
 import { useState } from "react";
 import { Aria } from "@/components/ui/aria";
 import Loading from "../loading";
+import _plans from "./_data/plans.json";
 
 export default function Page() {
 	const [today, _setToday] = useState(new Date());
 
 	const dateNums = differenceInDays(
-		new Date(today.getFullYear() + 1, 0, 1),
-		new Date(today.getFullYear(), 0, 1),
+		new Date(today.getFullYear() + 1, 6, 1),
+		new Date(today.getFullYear(), 3, 1),
 	);
 	const _dates = new Array(dateNums)
 		.fill(0)
-		.map((_, i) => ({ date: new Date(today.getFullYear(), 0, i + 1), key: i }));
+		.map((_, i) => ({ date: new Date(today.getFullYear(), 3, i + 1), key: i }));
 
 	const dates: {
+		year: number;
 		month: number;
 		dates: { date: Date | null; key: number | string }[];
 	}[] = [];
 	for (const date of _dates) {
 		if (dates[dates.length - 1]?.month !== date.date.getMonth()) {
 			dates.push({
+				year: date.date.getFullYear(),
 				month: date.date.getMonth(),
 				dates: new Array(date.date.getDay())
 					.fill(0)
@@ -41,26 +46,107 @@ export default function Page() {
 		dates[dates.length - 1]?.dates.push(date);
 	}
 
+	const plans: {
+		date: Date;
+		endDate?: Date;
+		name: string;
+		isHoliday?: boolean;
+	}[] = [];
+	for (const plan of _plans) {
+		const { date, endDate, ...rest } = plan;
+
+		plans.push({
+			date: new Date(date),
+			endDate: endDate ? new Date(endDate) : undefined,
+			...rest,
+		});
+	}
+
 	return (
 		<ClientOnly fallback={<Loading />}>
 			<Container>
-				<SimpleGrid columns={2} gap="2">
+				<SimpleGrid columns={1} gap="2">
 					{dates.map((_date, _i) => (
-						<Aria key={`month-${_date.month}`} title={`${_date.month + 1}月`}>
-							<SimpleGrid columns={7}>
-								{_date.dates.map((date) => (
-									<Button
-										key={`${_date.month}-${date.key}`}
-										h="full"
-										variant="outline"
-										flexDir="column"
-										py="2"
-									>
-										<VStack fontFamily="mono">
-											<Text>{date.date?.getDate() ?? ""}</Text>
-										</VStack>
-									</Button>
-								))}
+						<Aria
+							key={`month-${_date.year}-${_date.month}`}
+							title={`${_date.month + 1}月`}
+							spaceY="0.5"
+						>
+							<Table.Root
+								hideBelow="sm"
+								size="sm"
+								zIndex="1"
+								pos="sticky"
+								top={["0", "14"]}
+							>
+								<Table.Header>
+									<Table.Row>
+										{["日", "月", "火", "水", "木", "金", "土"].map((day) => (
+											<Table.ColumnHeader key={day}>{day}</Table.ColumnHeader>
+										))}
+									</Table.Row>
+								</Table.Header>
+							</Table.Root>
+							<SimpleGrid gap="0.5" columns={[1, 7]}>
+								{_date.dates.map((date) => {
+									// null: 先月,
+									// []: 予定なし
+									// length > 0: 予定あり
+									const datePlans =
+										date.date !== null
+											? plans.filter(
+													(plan) =>
+														// biome-ignore lint/style/noNonNullAssertion: <?????>
+														differenceInDays(date.date!, plan.date) === 0,
+												)
+											: null;
+									const holidays = datePlans?.filter((plan) => plan.isHoliday);
+
+									return (
+										<Button
+											key={`${_date.month}-${date.key}`}
+											h="full"
+											variant="surface"
+											flexDir="column"
+											justifyContent="start"
+											py="2"
+											overflow="hidden"
+											hideBelow={!datePlans ? "sm" : undefined}
+											{...(datePlans !== null
+												? {
+														...(datePlans.length !== 0 && {
+															colorPalette: "green",
+															...(holidays?.length !== 0 && {
+																borderColor: "red.emphasized",
+															}),
+															...(datePlans.length === holidays?.length && {
+																colorPalette: "red",
+																borderColor: "border",
+															}),
+														}),
+													}
+												: {
+														disabled: true,
+													})}
+										>
+											{date.date && (
+												<VStack w="full" align="start" fontFamily="mono">
+													<FormatNumber
+														value={date.date.getDate()}
+														minimumIntegerDigits={2}
+													/>
+													{datePlans?.map((plan) => (
+														<Text
+															key={`${plan.date.toISOString()}-${plan.name}`}
+														>
+															{plan.name}
+														</Text>
+													))}
+												</VStack>
+											)}
+										</Button>
+									);
+								})}
 							</SimpleGrid>
 						</Aria>
 					))}
