@@ -1,4 +1,4 @@
-import { Container, EmptyState, Spinner } from "@chakra-ui/react";
+import { Container, EmptyState, Spinner, VStack } from "@chakra-ui/react";
 
 export default function Loading() {
 	return (
@@ -8,14 +8,16 @@ export default function Loading() {
 					<EmptyState.Indicator>
 						<Spinner />
 					</EmptyState.Indicator>
-					<EmptyState.Title
-						fontFamily="mono"
-						fontWeight="black"
-						fontSize="xl"
-						color="fg.muted"
-					>
-						Loading...
-					</EmptyState.Title>
+					<VStack>
+						<EmptyState.Title
+							fontFamily="mono"
+							fontWeight="black"
+							fontSize="xl"
+							color="fg.muted"
+						>
+							Loading...
+						</EmptyState.Title>
+					</VStack>
 				</EmptyState.Content>
 			</EmptyState.Root>
 		</Container>
