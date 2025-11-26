@@ -5,12 +5,15 @@ import type {
 } from "microcms-js-sdk";
 import type { TagType } from "./tag";
 
-export type Post = {
+export type RecentPost = {
 	coverImage?: MicroCMSImage;
 	title: string;
 	subtitle?: string;
 	author: { name: string; icon?: MicroCMSImage } & MicroCMSContentId &
 		MicroCMSDate;
 	tag?: TagType[];
+};
+
+export type Post = RecentPost & {
 	content: string;
 };
