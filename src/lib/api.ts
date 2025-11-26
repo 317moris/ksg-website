@@ -34,6 +34,26 @@ export async function getRecentPosts() {
 	return posts;
 }
 
+export async function getPreviousPost(publishDate: string) {
+	return await getOnePost(publishDate, "previous");
+}
+
+export async function getNextPost(publishDate: string) {
+	return await getOnePost(publishDate, "next");
+}
+
+async function getOnePost(publishDate: string, mode: "next" | "previous") {
+	return await cmsClient.getList<RecentPost>({
+		endpoint: "news",
+		queries: {
+			fields: "id,title,coverImage,subtitle,createdAt,author,tag,publishedAt",
+			limit: 1,
+			filters: `publishedAt[${mode === "next" ? "greater_than" : "less_than"}]${publishDate}`,
+			orders: `${mode === "next" ? "" : "-"}publishedAt`,
+		},
+	});
+}
+
 export async function getDetail(slug: string) {
 	const post = await cmsClient.getListDetail<Post>({
 		endpoint: "news",

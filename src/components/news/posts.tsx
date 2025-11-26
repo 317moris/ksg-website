@@ -4,6 +4,7 @@ import {
 	Card,
 	Center,
 	Flex,
+	Icon,
 	Link,
 	LinkBox,
 	LinkOverlay,
@@ -27,7 +28,6 @@ export default function Posts({
 				h="full"
 				size="sm"
 				flexDir="row"
-				divideX="1px"
 				bg={{ _hover: "bg.muted" }}
 				transition="backgrounds"
 			>
@@ -87,8 +87,10 @@ export default function Posts({
 						) : null}
 					</Box>
 				</Flex>
-				<Center p="1.5">
-					<FaAngleRight />
+				<Center py="1.5" pr="4">
+					<Icon color="bg.emphasized">
+						<FaAngleRight />
+					</Icon>
 				</Center>
 			</Card.Root>
 		</LinkBox>
