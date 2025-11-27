@@ -126,11 +126,6 @@ export default async function Home() {
 						/>
 					</Box>
 				</Aria>
-				{/* <Aria title="学校情報(削除予定)"icon={<FaInfo />}>
-				<SimpleGrid columns={{ lgDown: 1, lg: 2 }} w="full" gap="3">
-					<Info />
-				</SimpleGrid>
-			</Aria> */}
 			</Container>
 		</>
 	);

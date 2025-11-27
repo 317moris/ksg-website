@@ -30,8 +30,14 @@ export default async function Page(props: Params) {
 	]);
 
 	return (
-		<Container centerContent py="10" spaceY="10">
-			<Center rounded="lg" overflow="hidden" pos="relative" w="full">
+		<Container centerContent pt="10" pb="20" spaceY="10">
+			<Center
+				rounded="lg"
+				overflow="hidden"
+				borderWidth="1px"
+				pos="relative"
+				w="full"
+			>
 				{post.coverImage ? (
 					<>
 						<Image asChild>

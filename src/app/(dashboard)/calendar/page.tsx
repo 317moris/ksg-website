@@ -1,5 +1,7 @@
 "use client";
 
+// 要リファクタリング
+
 import {
 	Button,
 	ClientOnly,
@@ -26,6 +28,7 @@ export default function Page() {
 		_today.getDate(),
 	);
 
+	// 今年4月1日以降来年6月1日未満の日数を求め、日数分の長さの配列を生成
 	const dateNums = differenceInDays(
 		new Date(today.getFullYear() + 1, 5, 1),
 		new Date(today.getFullYear(), 3, 1),
@@ -34,6 +37,7 @@ export default function Page() {
 		.fill(0)
 		.map((_, i) => ({ date: new Date(today.getFullYear(), 3, i + 1), key: i }));
 
+	// 月ごとに分割, 前月末の曜日分の空の日を追加
 	const dates: {
 		year: number;
 		month: number;
@@ -53,6 +57,7 @@ export default function Page() {
 		dates[dates.length - 1]?.dates.push(date);
 	}
 
+	// stringの日付をDateに変えるfor of
 	const plans: {
 		date: Date;
 		endDate?: Date;
@@ -63,8 +68,8 @@ export default function Page() {
 		const { date, endDate, ...rest } = plan;
 
 		plans.push({
-			date: new Date(format(date, "yyyy-MM-dd")),
-			endDate: endDate ? new Date(format(endDate, "yyyy-MM-dd")) : undefined,
+			date: new Date(date),
+			endDate: endDate ? new Date(endDate) : undefined,
 			...rest,
 		});
 	}
@@ -74,6 +79,7 @@ export default function Page() {
 			{() => (
 				<Container as="main" py="4">
 					<SimpleGrid columns={1} gap="2">
+						{/* 月ごとのAria */}
 						{dates.map((_date, _i) => (
 							<Aria
 								key={`month-${_date.year}-${_date.month}`}
@@ -98,7 +104,7 @@ export default function Page() {
 								<SimpleGrid gap="0.5" columns={[1, 7]}>
 									{_date.dates.map((date) => {
 										// null: 先月,
-										// []: 予定なし
+										// length === 0: 予定なし
 										// length > 0: 予定あり
 										const datePlans =
 											date.date !== null
@@ -115,7 +121,6 @@ export default function Page() {
 										const buttonInner = (
 											<VStack w="full" align="start" fontFamily="mono">
 												<Text fontSize="lg">
-													{date.date?.toISOString()}
 													<FormatNumber
 														value={date.date?.getDate() ?? 0}
 														minimumIntegerDigits={2}
@@ -127,7 +132,6 @@ export default function Page() {
 															key={`${plan.date.toISOString()}-${plan.name}`}
 															color={plan.isHoliday ? "red.fg" : "current"}
 														>
-															{plan.date.toISOString()}
 															{plan.name}
 														</List.Item>
 													))}
