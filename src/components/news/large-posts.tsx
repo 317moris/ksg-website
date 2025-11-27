@@ -18,7 +18,7 @@ import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { FaAngleRight } from "react-icons/fa6";
-import type { Post, RecentPost } from "@/interfaces/post";
+import type { RecentPost } from "@/interfaces/post";
 import { DateFormatter } from "../date-formatter";
 
 export default function LargePosts({

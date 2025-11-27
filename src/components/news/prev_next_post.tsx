@@ -1,15 +1,14 @@
-import { RecentPost } from "@/interfaces/post";
 import {
 	Bleed,
 	Button,
 	HStack,
 	Span,
-	StackProps,
-	Text,
+	type StackProps,
 	VStack,
 } from "@chakra-ui/react";
-import { MicroCMSListResponse } from "microcms-js-sdk";
+import type { MicroCMSListResponse } from "microcms-js-sdk";
 import NextLink from "next/link";
+import type { RecentPost } from "@/interfaces/post";
 
 export default function PrevNextPost({
 	previousPost,

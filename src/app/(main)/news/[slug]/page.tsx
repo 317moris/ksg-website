@@ -14,10 +14,10 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
 import { DateFormatter } from "@/components/date-formatter";
+import PrevNextPost from "@/components/news/prev_next_post";
 import { Prose } from "@/components/ui/prose";
 import type { Params } from "@/interfaces/params";
 import { getDetail, getListIds, getNextPost, getPreviousPost } from "@/lib/api";
-import PrevNextPost from "@/components/news/prev_next_post";
 
 export default async function Page(props: Params) {
 	const params = await props.params;
