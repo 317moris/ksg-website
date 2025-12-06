@@ -1,6 +1,8 @@
 import {
 	Avatar,
+	Bleed,
 	Box,
+	Center,
 	Container,
 	Heading,
 	HStack,
@@ -12,28 +14,49 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
 import { DateFormatter } from "@/components/date-formatter";
+import PrevNextPost from "@/components/news/prev_next_post";
 import { Prose } from "@/components/ui/prose";
 import type { Params } from "@/interfaces/params";
-import { getDetail, getListIds } from "@/lib/api";
+import { getDetail, getListIds, getNextPost, getPreviousPost } from "@/lib/api";
 
 export default async function Page(props: Params) {
 	const params = await props.params;
 	const post = await getDetail(params.slug).catch(() => notFound());
+	if (!post.publishedAt) return;
+
+	const [previousPost, nextPost] = await Promise.all([
+		getPreviousPost(post.publishedAt),
+		getNextPost(post.publishedAt),
+	]);
 
 	return (
-		<Container maxW="4xl" py="10" spaceY="10">
-			{post.coverImage ? (
-				<Image asChild w="full" rounded="lg">
-					<NextImage
-						src={post.coverImage.url}
-						alt={post.title}
-						width={post.coverImage.width}
-						height={post.coverImage.height}
-					/>
-				</Image>
-			) : null}
-			<Heading size="4xl">{post.title}</Heading>
-			<HStack align="end" justify="space-between">
+		<Container centerContent pt="10" pb="20" spaceY="10">
+			<Center
+				rounded="lg"
+				overflow="hidden"
+				borderWidth="1px"
+				pos="relative"
+				w="full"
+			>
+				{post.coverImage ? (
+					<>
+						<Image asChild>
+							<NextImage src={post.coverImage.url} alt={post.title} fill />
+						</Image>
+						<Bleed
+							pos="absolute"
+							w="full"
+							h="full"
+							backdropFilter="blur(16px)"
+							bg="bg/80"
+						/>
+					</>
+				) : null}
+				<Heading pos="relative" size="4xl" p="16">
+					{post.title}
+				</Heading>
+			</Center>
+			<HStack w="full" maxW="3xl" align="end" justify="space-between">
 				<Link asChild>
 					<NextLink href={`/news/author/${post.author.id}`}>
 						<Avatar.Root mr="1">
@@ -54,12 +77,18 @@ export default async function Page(props: Params) {
 					</NextLink>
 				</Link>
 				<Box whiteSpace="nowrap">
-					<DateFormatter date={post.createdAt} />
+					<DateFormatter date={post.publishedAt} />
 				</Box>
 			</HStack>
+			<Separator maxW="3xl" w="full" />
+			<Prose
+				w="full"
+				maxW="3xl"
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: <microCMSからのHTMLであるため>
+				dangerouslySetInnerHTML={{ __html: post.content }}
+			/>
 			<Separator w="full" />
-			{/** biome-ignore lint/security/noDangerouslySetInnerHtml: <microCMSからのHTMLであるため> */}
-			<Prose w="full" dangerouslySetInnerHTML={{ __html: post.content }} />
+			<PrevNextPost w="full" previousPost={previousPost} nextPost={nextPost} />
 		</Container>
 	);
 }

@@ -77,8 +77,8 @@ const _pages = [
 		],
 	},
 	{
-		name: "行事予定",
-		href: "/event",
+		name: "予定表",
+		href: "/calendar",
 		icon: FaCalendar,
 	},
 	{

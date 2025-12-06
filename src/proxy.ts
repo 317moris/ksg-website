@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 export const config = {
-	matcher: ["/auth", "/dashboard", "/calendar"],
+	matcher: ["/auth", "/dashboard"],
 };
 
 export default function proxy(request: NextRequest) {

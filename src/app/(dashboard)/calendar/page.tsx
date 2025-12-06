@@ -1,32 +1,43 @@
 "use client";
 
+// 要リファクタリング
+
 import {
 	Button,
 	ClientOnly,
 	Container,
 	FormatNumber,
+	List,
 	SimpleGrid,
 	Table,
 	Text,
 	VStack,
 } from "@chakra-ui/react";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, format } from "date-fns";
+import NextLink from "next/link";
 import { useState } from "react";
 import { Aria } from "@/components/ui/aria";
 import Loading from "../loading";
 import _plans from "./_data/plans.json";
 
 export default function Page() {
-	const [today, _setToday] = useState(new Date());
+	const [_today, _setToday] = useState(new Date());
+	const today = new Date(
+		_today.getFullYear(),
+		_today.getMonth(),
+		_today.getDate(),
+	);
 
+	// 今年4月1日以降来年6月1日未満の日数を求め、日数分の長さの配列を生成
 	const dateNums = differenceInDays(
-		new Date(today.getFullYear() + 1, 6, 1),
+		new Date(today.getFullYear() + 1, 5, 1),
 		new Date(today.getFullYear(), 3, 1),
 	);
 	const _dates = new Array(dateNums)
 		.fill(0)
 		.map((_, i) => ({ date: new Date(today.getFullYear(), 3, i + 1), key: i }));
 
+	// 月ごとに分割, 前月末の曜日分の空の日を追加
 	const dates: {
 		year: number;
 		month: number;
@@ -46,6 +57,7 @@ export default function Page() {
 		dates[dates.length - 1]?.dates.push(date);
 	}
 
+	// stringの日付をDateに変えるfor of
 	const plans: {
 		date: Date;
 		endDate?: Date;
@@ -64,94 +76,118 @@ export default function Page() {
 
 	return (
 		<ClientOnly fallback={<Loading />}>
-			<Container>
-				<SimpleGrid columns={1} gap="2">
-					{dates.map((_date, _i) => (
-						<Aria
-							key={`month-${_date.year}-${_date.month}`}
-							title={`${_date.month + 1}月`}
-							spaceY="0.5"
-						>
-							<Table.Root
-								hideBelow="sm"
-								size="sm"
-								zIndex="1"
-								pos="sticky"
-								top={["0", "14"]}
+			{() => (
+				<Container as="main" py="4">
+					<SimpleGrid columns={1} gap="2">
+						{/* 月ごとのAria */}
+						{dates.map((_date, _i) => (
+							<Aria
+								key={`month-${_date.year}-${_date.month}`}
+								title={`${_date.month + 1}月`}
+								spaceY="0.5"
 							>
-								<Table.Header>
-									<Table.Row>
-										{["日", "月", "火", "水", "木", "金", "土"].map((day) => (
-											<Table.ColumnHeader key={day}>{day}</Table.ColumnHeader>
-										))}
-									</Table.Row>
-								</Table.Header>
-							</Table.Root>
-							<SimpleGrid gap="0.5" columns={[1, 7]}>
-								{_date.dates.map((date) => {
-									// null: 先月,
-									// []: 予定なし
-									// length > 0: 予定あり
-									const datePlans =
-										date.date !== null
-											? plans.filter(
-													(plan) =>
-														// biome-ignore lint/style/noNonNullAssertion: <?????>
-														differenceInDays(date.date!, plan.date) === 0,
-												)
-											: null;
-									const holidays = datePlans?.filter((plan) => plan.isHoliday);
+								<Table.Root
+									hideBelow="sm"
+									size="sm"
+									zIndex="1"
+									pos="sticky"
+									top={["0", "14"]}
+								>
+									<Table.Header>
+										<Table.Row>
+											{["日", "月", "火", "水", "木", "金", "土"].map((day) => (
+												<Table.ColumnHeader key={day}>{day}</Table.ColumnHeader>
+											))}
+										</Table.Row>
+									</Table.Header>
+								</Table.Root>
+								<SimpleGrid gap="0.5" columns={[1, 7]}>
+									{_date.dates.map((date) => {
+										// null: 先月,
+										// length === 0: 予定なし
+										// length > 0: 予定あり
+										const datePlans =
+											date.date !== null
+												? plans.filter(
+														(plan) =>
+															// biome-ignore lint/style/noNonNullAssertion: <?????>
+															differenceInDays(date.date!, plan.date) === 0,
+													)
+												: null;
+										const holidays = datePlans?.filter(
+											(plan) => plan.isHoliday,
+										);
 
-									return (
-										<Button
-											key={`${_date.month}-${date.key}`}
-											h="full"
-											variant="surface"
-											flexDir="column"
-											justifyContent="start"
-											py="2"
-											overflow="hidden"
-											hideBelow={!datePlans ? "sm" : undefined}
-											{...(datePlans !== null
-												? {
-														...(datePlans.length !== 0 && {
-															colorPalette: "green",
-															...(holidays?.length !== 0 && {
-																borderColor: "red.emphasized",
-															}),
-															...(datePlans.length === holidays?.length && {
-																colorPalette: "red",
-																borderColor: "border",
-															}),
-														}),
-													}
-												: {
-														disabled: true,
-													})}
-										>
-											{date.date && (
-												<VStack w="full" align="start" fontFamily="mono">
+										const buttonInner = (
+											<VStack w="full" align="start" fontFamily="mono">
+												<Text fontSize="lg">
 													<FormatNumber
-														value={date.date.getDate()}
+														value={date.date?.getDate() ?? 0}
 														minimumIntegerDigits={2}
 													/>
+												</Text>
+												<List.Root>
 													{datePlans?.map((plan) => (
-														<Text
+														<List.Item
 															key={`${plan.date.toISOString()}-${plan.name}`}
+															color={plan.isHoliday ? "red.fg" : "current"}
 														>
 															{plan.name}
-														</Text>
+														</List.Item>
 													))}
-												</VStack>
-											)}
-										</Button>
-									);
-								})}
-							</SimpleGrid>
-						</Aria>
-					))}
-				</SimpleGrid>
-			</Container>
+												</List.Root>
+											</VStack>
+										);
+
+										return (
+											<Button
+												key={`${_date.month}-${date.key}`}
+												h="full"
+												variant="surface"
+												flexDir="column"
+												justifyContent="start"
+												py="2"
+												overflow="hidden"
+												whiteSpace="normal"
+												hideBelow={!datePlans ? "sm" : undefined}
+												{...(datePlans !== null
+													? {
+															...(datePlans.length !== 0 && {
+																colorPalette: "green",
+																...(holidays?.length !== 0 && {
+																	borderColor: "red.emphasized",
+																}),
+																...(datePlans.length === holidays?.length && {
+																	colorPalette: "red",
+																	borderColor: "border",
+																}),
+															}),
+														}
+													: {
+															disabled: true,
+														})}
+												{...(date.date &&
+													differenceInDays(date.date, today) === 0 && {
+														colorPalette: "yellow",
+													})}
+												asChild={Boolean(date.date)}
+											>
+												{date.date && (
+													<NextLink
+														href={`/calendar/${format(date.date, "yyyy-MM-dd")}`}
+													>
+														{buttonInner}
+													</NextLink>
+												)}
+											</Button>
+										);
+									})}
+								</SimpleGrid>
+							</Aria>
+						))}
+					</SimpleGrid>
+				</Container>
+			)}
 		</ClientOnly>
 	);
 }
