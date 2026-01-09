@@ -20,11 +20,7 @@ export default function PrevNextPost({
 	nextPost?: MicroCMSListResponse<RecentPost>;
 } & StackProps) {
 	return (
-		// 		 what the heck is this
-		// 		型 'number | String | "-moz-initial" | "inherit" | "initial" | "revert" | "revert-layer" | "unset" | "auto" | readonly NonNullable<Columns<String | Number> | undefined>[] | (AnyString | ... 3 more ... | undefined)[] | { ...; }' を型 'ConditionalValue<number> | undefined' に割り当てることはできません。
-		//   型 'String' を型 'ConditionalValue<number> | undefined' に割り当てることはできません。
-		//     型 'String' には 型 '(number | null)[]' からの次のプロパティがありません: pop, push, join, reverse、27 など。ts(2322)
-		// simple-grid.d.ts(11, 5): 予期された型は、型 'IntrinsicAttributes & SimpleGridProps & RefAttributes<HTMLDivElement>' に対してここで宣言されたプロパティ 'columns' から取得されています
+		// @ts-expect-error
 		<SimpleGrid columns={2} gap="4" {...rest}>
 			<Field.Root maxW="md" flex={1} alignItems="start">
 				<Field.Label>前のニュース</Field.Label>
